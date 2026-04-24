@@ -256,7 +256,7 @@ function Hero() {
                 <span className="t-cmd">whoami</span>
               </div>
               <div className="t-out">
-                <span>Mahi Agarwal</span> — ECE, 2nd year
+                <span>Mahi Agarwal</span> — ECE, 3rd year
               </div>
               <div className="t-line" style={{ marginTop: "0.5rem" }}>
                 <span className="t-prompt">❯</span>
@@ -330,7 +330,7 @@ function About() {
             transition={{ duration: 0.6, delay: 0.15 }}
           >
             <p>
-              Hey! I'm <strong>Mahi</strong>, a 2nd year Electronics &
+              Hey! I'm <strong>Mahi</strong>, a 3rd year Electronics &
               Communication Engineering student at <strong>JIIT Noida</strong>.
               I live in the hostel, survive on chai, and spend way too much time
               making things on my laptop.
