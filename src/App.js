@@ -425,7 +425,7 @@ function Projects() {
               )}
 
               <div className="project-body">
-                <div className="project-number">// {p.id}</div>
+                <div className="project-number">{p.id}</div>
                 <div className="project-name">{p.name}</div>
                 <p className="project-desc">{p.desc}</p>
                 <div className="project-tech">
