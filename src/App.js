@@ -18,6 +18,7 @@ import { FiExternalLink } from "react-icons/fi";
 import photo from "./assets/photo.jpg";
 import girvi from "./assets/girvi-len-den.png";
 import interestCalc from "./assets/interest-calc.png";
+import professorPortfolio from "./assets/professor-portfolio.png";
 import "./App.css";
 
 // ─────────────────────────────────────────
@@ -50,7 +51,7 @@ const PROJECTS = [
     name: "Professor Portfolio",
     desc: "React portfolio for Prof. Shweta Srivastava, Director at JIIT Noida. Built from her actual CV — iterated through multiple design versions.",
     tech: ["React", "CSS", "Responsive"],
-    img: null,
+    img: professorPortfolio,
     imgLabel: "[ professor-portfolio.png ]",
     github: "#", // TODO: Replace with actual GitHub repo URL
     live: null,
