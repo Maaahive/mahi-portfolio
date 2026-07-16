@@ -16,6 +16,8 @@ import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FiExternalLink } from "react-icons/fi";
 import photo from "./assets/photo.jpg";
+import girvi from "./assets/girvi-len-den.png";
+import interestCalc from "./assets/interest-calc.png";
 import "./App.css";
 
 // ─────────────────────────────────────────
@@ -28,7 +30,7 @@ const PROJECTS = [
     name: "Girvi Len Den",
     desc: "A loan tracking web app with a vintage UI. Per-entry interest rates, category selection, localStorage persistence, and Excel export.",
     tech: ["HTML", "CSS", "JavaScript", "localStorage"],
-    img: null,
+    img: girvi,
     imgLabel: "[ girvi-len-den.png ]",
     github: "#", // TODO: Replace with actual GitHub repo URL
     live: null,
@@ -38,7 +40,7 @@ const PROJECTS = [
     name: "Interest Calculator",
     desc: "JS-based calculator with per-entry interest rates, multiple category selection, and Excel export. Handles edge cases gracefully.",
     tech: ["JavaScript", "Excel Export", "DOM"],
-    img: null,
+    img: interestCalc,
     imgLabel: "[ interest-calc.png ]",
     github: "#", // TODO: Replace with actual GitHub repo URL
     live: null,
