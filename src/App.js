@@ -232,7 +232,7 @@ function Hero() {
                 3. Import: import myPhoto from './assets/photo.jpg'
                 4. Replace div.photo-placeholder with:
                    <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
-            <div className="photo-placeholder">[ photo.jpg ]</div>
+            <div className="photo-placeholder">[ photo.jpeg ]</div>
             <div className="photo-scanline" />
             <div className="photo-corner tl" />
             <div className="photo-corner tr" />
@@ -254,11 +254,7 @@ function Hero() {
                 <span className="t-cmd">whoami</span>
               </div>
               <div className="t-out">
-<<<<<<< HEAD
                 <span>Mahi Agarwal</span> — ECE, 4th year
-=======
-                <span>Mahi Agarwal</span> — ECE, 2nd year
->>>>>>> e1d7031944fa6e88c3d462247f385cef06a3af1a
               </div>
               <div className="t-line" style={{ marginTop: "0.5rem" }}>
                 <span className="t-prompt">❯</span>
@@ -319,11 +315,7 @@ function About() {
             transition={{ delay: 0.15 }}
           >
             <p>
-<<<<<<< HEAD
               Hey! I'm <strong>Mahi</strong>, a Final year Electronics &
-=======
-              Hey! I'm <strong>Mahi</strong>, a 2nd year Electronics &
->>>>>>> e1d7031944fa6e88c3d462247f385cef06a3af1a
               Communication Engineering student at <strong>JIIT Noida</strong>.
               I live in the hostel, survive on chai, and spend way too much time
               making things on my laptop.
