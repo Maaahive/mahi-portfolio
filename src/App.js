@@ -16,7 +16,6 @@ import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FiExternalLink } from "react-icons/fi";
 import "./App.css";
-import myPhoto from "./assets/photo.jpeg";
 
 // ─────────────────────────────────────────
 // DATA
@@ -51,16 +50,6 @@ const PROJECTS = [
     img: null,
     imgLabel: "[ professor-portfolio.png ]",
     github: "#", // TODO: Replace with actual GitHub repo URL
-    live: null,
-  },
-  {
-    id: "004",
-    name: "HENNGE Admission Challenge",
-    desc: "Solved a 3-mission challenge — recursive Python (no loops/comprehensions), secret gist, HTTP POST with HMAC-SHA512 TOTP auth. Got the 200. ✓",
-    tech: ["Python", "TOTP", "HMAC-SHA512", "HTTP Auth"],
-    img: null,
-    imgLabel: "[ hennge-200.png ]",
-    github: "https://gist.github.com/Maaahive/6aff43322d1353a78557560053d4c279",
     live: null,
   },
 ];
@@ -243,9 +232,7 @@ function Hero() {
                 3. Import: import myPhoto from './assets/photo.jpg'
                 4. Replace div.photo-placeholder with:
                    <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
-            <div className="photo-placeholder">
-              <img src={myPhoto} alt="Mahi" className="photo-img" />
-            </div>
+            <div className="photo-placeholder">[ photo.jpg ]</div>
             <div className="photo-scanline" />
             <div className="photo-corner tl" />
             <div className="photo-corner tr" />
@@ -267,7 +254,7 @@ function Hero() {
                 <span className="t-cmd">whoami</span>
               </div>
               <div className="t-out">
-                <span>Mahi Agarwal</span> — ECE, 2nd year
+                <span>Mahi Agarwal</span> — ECE, 4th year
               </div>
               <div className="t-line" style={{ marginTop: "0.5rem" }}>
                 <span className="t-prompt">❯</span>
@@ -328,7 +315,7 @@ function About() {
             transition={{ delay: 0.15 }}
           >
             <p>
-              Hey! I'm <strong>Mahi</strong>, a 2nd year Electronics &
+              Hey! I'm <strong>Mahi</strong>, a Final year Electronics &
               Communication Engineering student at <strong>JIIT Noida</strong>.
               I live in the hostel, survive on chai, and spend way too much time
               making things on my laptop.
@@ -527,7 +514,7 @@ function ProjectCard({ p, i }) {
       </div>
 
       <div className="project-body">
-        <div className="project-number">// {p.id}</div>
+        <div className="project-number">{`// ${p.id}`}</div>
         <div className="project-name">{p.name}</div>
         <p className="project-desc">{p.desc}</p>
         <div className="project-footer">
