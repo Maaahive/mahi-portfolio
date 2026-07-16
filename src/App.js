@@ -323,8 +323,9 @@ function About() {
             <p>
               Hey! I'm <strong>Mahi</strong>, a Final year Electronics &
               Communication Engineering student at <strong>JIIT Noida</strong>.
-              I live in the hostel, survive on chai, and spend way too much time
-              making things on my laptop.
+              Powered by chai and curiosity, I spend way too much time building
+              things on my laptop—and honestly, I wouldn't have it any other
+              way.
             </p>
             <p>
               I started with web dev — HTML, CSS, JS — and somewhere along the
