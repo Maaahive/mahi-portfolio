@@ -15,7 +15,7 @@ import {
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FiExternalLink } from "react-icons/fi";
-import photo from "./src/assets/mahi.jpg";
+import photo from "./src/assets/mahi_photo.jpg";
 import "./App.css";
 
 // ─────────────────────────────────────────
