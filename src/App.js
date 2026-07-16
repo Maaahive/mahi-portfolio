@@ -656,7 +656,7 @@ function Contact() {
               </a>
               {/* TODO: Replace YOUR_USERNAME with your actual LinkedIn handle */}
               <a
-                href="https://www.linkedin.com/in/mahi-agarwal"
+                href="https://www.linkedin.com/in/mahi-agarwal-5ba73121b/"
                 target="_blank"
                 rel="noreferrer"
                 className="contact-link"
