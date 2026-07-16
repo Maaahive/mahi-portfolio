@@ -15,6 +15,7 @@ import {
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FiExternalLink } from "react-icons/fi";
+import photo from "./assets/photo.jpeg";
 import "./App.css";
 
 // ─────────────────────────────────────────
@@ -233,7 +234,7 @@ function Hero() {
                 4. Replace div.photo-placeholder with:
                    <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
             <div className="photo-placeholder">
-              <img src="./assets/photo.jpeg" alt="Mahi" className="photo-img" />
+              <img src={photo} alt="Mahi" className="photo-img" />
             </div>
             <div className="photo-scanline" />
             <div className="photo-corner tl" />
