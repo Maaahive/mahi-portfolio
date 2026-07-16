@@ -33,7 +33,7 @@ const PROJECTS = [
     tech: ["HTML", "CSS", "JavaScript", "localStorage"],
     img: girvi,
     imgLabel: "[ girvi-len-den.png ]",
-    github: "#", // TODO: Replace with actual GitHub repo URL
+    github: "https://github.com/Maaahive/GirviLedger.git",
     live: null,
   },
   {
@@ -43,7 +43,7 @@ const PROJECTS = [
     tech: ["JavaScript", "Excel Export", "DOM"],
     img: interestCalc,
     imgLabel: "[ interest-calc.png ]",
-    github: "#", // TODO: Replace with actual GitHub repo URL
+    github: "https://github.com/Maaahive/GirviBook.git",
     live: null,
   },
   {
@@ -53,7 +53,7 @@ const PROJECTS = [
     tech: ["React", "CSS", "Responsive"],
     img: professorPortfolio,
     imgLabel: "[ professor-portfolio.png ]",
-    github: "#", // TODO: Replace with actual GitHub repo URL
+    github: "https://github.com/Maaahive/shweta-mam-portfolio.git",
     live: null,
   },
 ];
