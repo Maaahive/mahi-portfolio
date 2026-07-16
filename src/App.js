@@ -18,7 +18,7 @@ import { FiExternalLink } from "react-icons/fi";
 import photo from "./assets/photo.jpg";
 import girvi from "./assets/girvi-len-den.png";
 import interestCalc from "./assets/interest-calc.png";
-import professorPortfolio from "./assets/professor-portfolio.png";
+import professorPortfolio from "./assets/prof-shweta-srivastava.png";
 import "./App.css";
 
 // ─────────────────────────────────────────
