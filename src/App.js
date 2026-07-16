@@ -232,7 +232,9 @@ function Hero() {
                 3. Import: import myPhoto from './assets/photo.jpg'
                 4. Replace div.photo-placeholder with:
                    <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
-            <div className="photo-placeholder">[ photo.jpeg ]</div>
+            <div className="photo-placeholder">
+              <img src= "photo.jpeg" alt="Mahi" className="photo-img" />
+            </div>
             <div className="photo-scanline" />
             <div className="photo-corner tl" />
             <div className="photo-corner tr" />
