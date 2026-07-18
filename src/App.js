@@ -20,6 +20,10 @@ import { FiExternalLink, FiCode } from "react-icons/fi";
 import { TbAntenna } from "react-icons/tb";
 import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
+import photo from "./assets/photo.jpg";
+import girvi from "./assets/girvi-len-den.png";
+import interestCalc from "./assets/interest-calc.png";
+import professorPortfolio from "./assets/prof-shweta-srivastava.png";
 import "./App.css";
 
 // ─────────────────────────────────────────
@@ -32,7 +36,7 @@ const PROJECTS = [
     name: "Girvi Len Den",
     desc: "A loan tracking web app with a vintage UI. Per-entry interest rates, category selection, localStorage persistence, and Excel export.",
     tech: ["HTML", "CSS", "JavaScript", "localStorage"],
-    img: null,
+    img: girvi,
     imgLabel: "[ girvi-len-den.png ]",
     github: "#", // TODO: Replace with actual GitHub repo URL
     live: null,
@@ -42,7 +46,7 @@ const PROJECTS = [
     name: "Interest Calculator",
     desc: "JS-based calculator with per-entry interest rates, multiple category selection, and Excel export. Handles edge cases gracefully.",
     tech: ["JavaScript", "Excel Export", "DOM"],
-    img: null,
+    img: interestCalc,
     imgLabel: "[ interest-calc.png ]",
     github: "#", // TODO: Replace with actual GitHub repo URL
     live: null,
@@ -52,7 +56,7 @@ const PROJECTS = [
     name: "Professor Portfolio",
     desc: "React portfolio for Prof. Shweta Srivastava, Director at JIIT Noida. Built from her actual CV — iterated through multiple design versions.",
     tech: ["React", "CSS", "Responsive"],
-    img: null,
+    img: professorPortfolio,
     imgLabel: "[ professor-portfolio.png ]",
     github: "#", // TODO: Replace with actual GitHub repo URL
     live: null,
@@ -259,7 +263,7 @@ function Hero() {
                   3. Import: import myPhoto from './assets/photo.jpg'
                   4. Replace div.photo-placeholder with:
                      <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
-              <div className="photo-placeholder">[ photo.jpg ]</div>
+              <div className="photo-placeholder"><img src={photo} alt="Mahi" className="photo-img" /></div>
               <div className="photo-scanline" />
               <div className="photo-corner tl" />
               <div className="photo-corner tr" />
