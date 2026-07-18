@@ -16,7 +16,7 @@ import {
 } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { FiExternalLink, FiCode } from "react-icons/fi";
+import { FiExternalLink, FiCode, FiFileText } from "react-icons/fi";
 import { TbAntenna } from "react-icons/tb";
 import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
@@ -240,6 +240,14 @@ function Hero() {
             >
               Get In Touch
             </Link>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline"
+            >
+              <FiFileText size={15} /> Resume
+            </a>
           </motion.div>
         </div>
 
@@ -250,35 +258,19 @@ function Hero() {
           animate="visible"
           variants={fadeUp}
         >
-          {/* PHOTO — techy scan-line effect on hover */}
-          <div className="photo-stack">
-            <div className="photo-frame-accent">
-              <div className="photo-placeholder">[ img_02.jpg ]</div>
-            </div>
-
-            <div className="photo-frame">
-              {/* TODO: When you have your photo:
-                  1. Create src/assets/ folder
-                  2. Add photo (e.g. photo.jpg)
-                  3. Import: import myPhoto from './assets/photo.jpg'
-                  4. Replace div.photo-placeholder with:
-                     <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
-              <div className="photo-placeholder"><img src={photo} alt="Mahi" className="photo-img" /></div>
+          {/* PHOTO — tilted polaroid with scanline + rgb-glitch flicker */}
+          <div className="photo-frame">
+            {/* TODO: When you have your photo:
+                1. Create src/assets/ folder
+                2. Add photo (e.g. photo.jpg)
+                3. Import: import myPhoto from './assets/photo.jpg'
+                4. Replace div.photo-placeholder with:
+                   <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
+            <div className="photo-image-area">
+              <img src={photo} alt="Mahi" className="photo-img" />
               <div className="photo-scanline" />
-              <div className="photo-corner tl" />
-              <div className="photo-corner tr" />
-              <div className="photo-corner bl" />
-              <div className="photo-corner br" />
             </div>
-
-            <motion.div
-              className="photo-float-badge"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <TbAntenna size={15} />
-              <span>RF & Embedded</span>
-            </motion.div>
+            <div className="photo-caption">[ mahi.jpg ]</div>
           </div>
 
           {/* TERMINAL */}
