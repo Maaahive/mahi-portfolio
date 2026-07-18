@@ -346,11 +346,11 @@ body::after {
 /* ── PHOTO — tilted polaroid, scanline + rgb-glitch ── */
 .photo-frame {
   position: relative;
-  width: 308px;
+  width: 380px;
   background: var(--bg3);
   border: 1px solid var(--border);
   border-radius: 4px;
-  padding: 14px 14px 46px;
+  padding: 14px 14px 56px;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
   transform: rotate(-4deg);
   transition: transform 0.35s ease;
@@ -362,7 +362,7 @@ body::after {
 .photo-image-area {
   position: relative;
   width: 100%;
-  height: 280px;
+  height: 360px;
   overflow: hidden;
   border-radius: 2px;
   background: var(--bg2);
