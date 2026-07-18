@@ -129,12 +129,42 @@ body::after {
 .hero-right { display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
 
 /* ── PHOTO — techy corners + scan effect ── */
+.photo-stack { position: relative; width: 300px; height: 300px; }
+
 .photo-frame {
   position: relative;
+  z-index: 1;
   width: 300px; height: 300px;
   border-radius: 12px;
   overflow: hidden;
+  background: var(--bg3);
 }
+
+.photo-frame-accent {
+  position: absolute;
+  bottom: -22px; left: -22px;
+  width: 130px; height: 130px;
+  border-radius: 10px;
+  overflow: hidden;
+  transform: rotate(-8deg);
+  z-index: 0;
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+.photo-frame-accent .photo-placeholder { font-size: 0.55rem; border-radius: 9px; }
+
+.photo-float-badge {
+  position: absolute;
+  top: 18px; right: -30px;
+  z-index: 2;
+  display: flex; align-items: center; gap: 0.4rem;
+  background: var(--bg3); border: 1px solid var(--border);
+  padding: 0.5rem 0.85rem; border-radius: 999px;
+  font-family: var(--mono); font-size: 0.68rem; color: var(--text);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  white-space: nowrap;
+}
+.photo-float-badge svg { color: var(--purple); flex-shrink: 0; }
 .photo-img {
   width: 100%; height: 100%;
   object-fit: cover; border-radius: 12px;
@@ -257,6 +287,13 @@ body::after {
 .tag:hover { border-color: var(--purple); color: var(--purple); }
 
 /* ── SKILL ICONS GRID ── */
+.skill-group-label {
+  font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim);
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin: 2rem 0 1rem;
+}
+.skill-group-label:first-of-type { margin-top: 0; }
+
 .skill-icons-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -319,8 +356,21 @@ body::after {
 .project-img-placeholder {
   width: 100%; height: 180px;
   background: var(--bg2); border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.1em;
+  display: flex; flex-direction: column;
+}
+.mockup-bar {
+  background: var(--bg3); padding: 0.5rem 0.75rem;
+  display: flex; align-items: center; gap: 0.4rem;
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.mockup-bar .dot { width: 7px; height: 7px; }
+.mockup-url {
+  font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim);
+  letter-spacing: 0.05em; margin: 0 auto;
+}
+.mockup-body {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  color: var(--text-dim);
 }
 
 /* hover overlay */
@@ -350,6 +400,7 @@ body::after {
   font-family: var(--mono); font-size: 0.65rem;
   padding: 0.25rem 0.6rem; border-radius: 2px;
   background: var(--purple-glow); color: var(--purple); letter-spacing: 0.05em;
+  display: inline-flex; align-items: center; gap: 0.3rem;
 }
 .project-github-link {
   color: var(--text-dim); text-decoration: none;
@@ -416,4 +467,6 @@ body::after {
   .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   .section-wrapper { padding: 4rem 1.5rem; }
   .footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  .photo-frame-accent { bottom: -14px; left: -14px; width: 90px; height: 90px; }
+  .photo-float-badge { right: -8px; font-size: 0.6rem; padding: 0.4rem 0.7rem; }
 }

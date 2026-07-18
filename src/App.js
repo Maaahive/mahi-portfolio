@@ -11,14 +11,15 @@ import {
   SiGit,
   SiOpencv,
   SiGithub,
+  SiAnsys,
+  SiProteus,
 } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { FiExternalLink } from "react-icons/fi";
-import photo from "./assets/photo.jpg";
-import girvi from "./assets/girvi-len-den.png";
-import interestCalc from "./assets/interest-calc.png";
-import professorPortfolio from "./assets/prof-shweta-srivastava.png";
+import { FiExternalLink, FiCode } from "react-icons/fi";
+import { TbAntenna } from "react-icons/tb";
+import { PiWaveformBold } from "react-icons/pi";
+import { LuCircuitBoard } from "react-icons/lu";
 import "./App.css";
 
 // ─────────────────────────────────────────
@@ -31,9 +32,9 @@ const PROJECTS = [
     name: "Girvi Len Den",
     desc: "A loan tracking web app with a vintage UI. Per-entry interest rates, category selection, localStorage persistence, and Excel export.",
     tech: ["HTML", "CSS", "JavaScript", "localStorage"],
-    img: girvi,
+    img: null,
     imgLabel: "[ girvi-len-den.png ]",
-    github: "https://github.com/Maaahive/GirviLedger.git",
+    github: "#", // TODO: Replace with actual GitHub repo URL
     live: null,
   },
   {
@@ -41,9 +42,9 @@ const PROJECTS = [
     name: "Interest Calculator",
     desc: "JS-based calculator with per-entry interest rates, multiple category selection, and Excel export. Handles edge cases gracefully.",
     tech: ["JavaScript", "Excel Export", "DOM"],
-    img: interestCalc,
+    img: null,
     imgLabel: "[ interest-calc.png ]",
-    github: "https://github.com/Maaahive/GirviBook.git",
+    github: "#", // TODO: Replace with actual GitHub repo URL
     live: null,
   },
   {
@@ -51,11 +52,28 @@ const PROJECTS = [
     name: "Professor Portfolio",
     desc: "React portfolio for Prof. Shweta Srivastava, Director at JIIT Noida. Built from her actual CV — iterated through multiple design versions.",
     tech: ["React", "CSS", "Responsive"],
-    img: professorPortfolio,
+    img: null,
     imgLabel: "[ professor-portfolio.png ]",
-    github: "https://github.com/Maaahive/shweta-mam-portfolio.git",
+    github: "#", // TODO: Replace with actual GitHub repo URL
     live: null,
   },
+];
+
+const TECH_ICON_MAP = {
+  HTML: SiHtml5,
+  CSS: SiCss,
+  JavaScript: SiJavascript,
+  Python: SiPython,
+  React: SiReact,
+  Git: SiGit,
+};
+
+const RF_SKILLS = [
+  { name: "HFSS", Icon: SiAnsys, color: "#ffc72c" },
+  { name: "VNA", Icon: TbAntenna, color: "#22c55e" },
+  { name: "MATLAB", Icon: PiWaveformBold, color: "#d95319" },
+  { name: "Cadence", Icon: LuCircuitBoard, color: "#f472b6" },
+  { name: "Proteus", Icon: SiProteus, color: "#1857a4" },
 ];
 
 const SKILLS = [
@@ -229,21 +247,34 @@ function Hero() {
           variants={fadeUp}
         >
           {/* PHOTO — techy scan-line effect on hover */}
-          <div className="photo-frame">
-            {/* TODO: When you have your photo:
-                1. Create src/assets/ folder
-                2. Add photo (e.g. photo.jpg)
-                3. Import: import myPhoto from './assets/photo.jpg'
-                4. Replace div.photo-placeholder with:
-                   <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
-            <div className="photo-placeholder">
-              <img src={photo} alt="Mahi" className="photo-img" />
+          <div className="photo-stack">
+            <div className="photo-frame-accent">
+              <div className="photo-placeholder">[ img_02.jpg ]</div>
             </div>
-            <div className="photo-scanline" />
-            <div className="photo-corner tl" />
-            <div className="photo-corner tr" />
-            <div className="photo-corner bl" />
-            <div className="photo-corner br" />
+
+            <div className="photo-frame">
+              {/* TODO: When you have your photo:
+                  1. Create src/assets/ folder
+                  2. Add photo (e.g. photo.jpg)
+                  3. Import: import myPhoto from './assets/photo.jpg'
+                  4. Replace div.photo-placeholder with:
+                     <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
+              <div className="photo-placeholder">[ photo.jpg ]</div>
+              <div className="photo-scanline" />
+              <div className="photo-corner tl" />
+              <div className="photo-corner tr" />
+              <div className="photo-corner bl" />
+              <div className="photo-corner br" />
+            </div>
+
+            <motion.div
+              className="photo-float-badge"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <TbAntenna size={15} />
+              <span>RF & Embedded</span>
+            </motion.div>
           </div>
 
           {/* TERMINAL */}
@@ -260,7 +291,7 @@ function Hero() {
                 <span className="t-cmd">whoami</span>
               </div>
               <div className="t-out">
-                <span>Mahi Agarwal</span> — ECE, 4th year
+                <span>Mahi Agarwal</span> — ECE, 2nd year
               </div>
               <div className="t-line" style={{ marginTop: "0.5rem" }}>
                 <span className="t-prompt">❯</span>
@@ -321,11 +352,10 @@ function About() {
             transition={{ delay: 0.15 }}
           >
             <p>
-              Hey! I'm <strong>Mahi</strong>, a Final year Electronics &
+              Hey! I'm <strong>Mahi</strong>, a 2nd year Electronics &
               Communication Engineering student at <strong>JIIT Noida</strong>.
-              Powered by chai and curiosity, I spend way too much time building
-              things on my laptop—and honestly, I wouldn't have it any other
-              way.
+              I live in the hostel, survive on chai, and spend way too much time
+              making things on my laptop.
             </p>
             <p>
               I started with web dev — HTML, CSS, JS — and somewhere along the
@@ -352,6 +382,10 @@ function About() {
                 tags: ["Python", "JavaScript", "SQL", "HTML/CSS"],
               },
               { cat: "Libraries & Tools", tags: ["React", "OpenCV", "Git"] },
+              {
+                cat: "RF & Hardware",
+                tags: ["HFSS", "MATLAB", "VNA", "Cadence Virtuoso", "Proteus"],
+              },
               {
                 cat: "Currently exploring",
                 tags: ["Machine Learning", "REST APIs"],
@@ -453,8 +487,16 @@ function Skills() {
         >
           What I work with
         </motion.h2>
+        <div className="skill-group-label">{"// core stack"}</div>
         <div className="skill-icons-grid">
           {SKILLS.map((s, i) => (
+            <SkillIcon key={s.name} skill={s} i={i} />
+          ))}
+        </div>
+
+        <div className="skill-group-label">{"// rf & hardware"}</div>
+        <div className="skill-icons-grid">
+          {RF_SKILLS.map((s, i) => (
             <SkillIcon key={s.name} skill={s} i={i} />
           ))}
         </div>
@@ -484,7 +526,17 @@ function ProjectCard({ p, i }) {
         {p.img ? (
           <img src={p.img} alt={p.name} className="project-img" />
         ) : (
-          <div className="project-img-placeholder">{p.imgLabel}</div>
+          <div className="project-img-placeholder">
+            <div className="mockup-bar">
+              <span className="dot dot-r" />
+              <span className="dot dot-y" />
+              <span className="dot dot-g" />
+              <span className="mockup-url">{p.imgLabel}</span>
+            </div>
+            <div className="mockup-body">
+              <FiCode size={26} />
+            </div>
+          </div>
         )}
         <AnimatePresence>
           {hovered && (
@@ -526,11 +578,15 @@ function ProjectCard({ p, i }) {
         <p className="project-desc">{p.desc}</p>
         <div className="project-footer">
           <div className="project-tech">
-            {p.tech.map((t) => (
-              <span className="tech-tag" key={t}>
-                {t}
-              </span>
-            ))}
+            {p.tech.map((t) => {
+              const TechIcon = TECH_ICON_MAP[t];
+              return (
+                <span className="tech-tag" key={t}>
+                  {TechIcon && <TechIcon size={11} />}
+                  {t}
+                </span>
+              );
+            })}
           </div>
           {p.github && p.github !== "#" && (
             <a
@@ -656,7 +712,7 @@ function Contact() {
               </a>
               {/* TODO: Replace YOUR_USERNAME with your actual LinkedIn handle */}
               <a
-                href="https://www.linkedin.com/in/mahi-agarwal-5ba73121b/"
+                href="https://linkedin.com/in/YOUR_USERNAME"
                 target="_blank"
                 rel="noreferrer"
                 className="contact-link"
