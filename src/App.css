@@ -198,8 +198,15 @@ body::after {
   letter-spacing: -0.02em;
   margin-bottom: 1rem;
 }
-.hero-name span {
-  color: var(--purple);
+/* word-level hover color */
+.hero-name {
+  position: relative;
+  cursor: default;
+}
+.hero-word {
+  display: inline-block;
+}
+.hero-word-accent {
   background: linear-gradient(
     135deg,
     var(--purple) 10%,
@@ -211,15 +218,29 @@ body::after {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  transition:
-    background-position 0.6s ease,
-    text-shadow 0.3s ease,
-    letter-spacing 0.3s ease;
 }
-.hero-name span:hover {
-  background-position: 100% center;
-  text-shadow: 0 0 26px rgba(168, 85, 247, 0.55);
-  letter-spacing: 0.01em;
+/* cursor spotlight overlay */
+.hero-spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  color: var(--purple);
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+}
+/* "Mahi" in spotlight = purple (contrasts white base) */
+.hero-spotlight span {
+  color: var(--purple);
+}
+/* "Agarwal." in spotlight = near-white (contrasts purple-gradient base) */
+.spotlight-accent {
+  color: #f0eeff !important;
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.9);
 }
 .hero-role {
   font-family: var(--mono);
@@ -619,13 +640,36 @@ body::after {
   flex-direction: column;
   gap: 1.25rem;
 }
+.skill-group {
+  border-left: 2px solid var(--border);
+  padding-left: 0.85rem;
+  transition: border-color 0.2s;
+}
+.skill-group:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+}
+.skill-category-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
 .skill-category {
   font-family: var(--mono);
   font-size: 0.7rem;
   color: var(--text-dim);
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+}
+.skill-count {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--purple);
+  background: var(--purple-soft);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 0.1em 0.5em;
+  letter-spacing: 0.05em;
 }
 .skill-tags {
   display: flex;
@@ -642,11 +686,42 @@ body::after {
   background: var(--purple-soft);
   transition:
     border-color 0.2s,
-    color 0.2s;
+    color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+  cursor: default;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+.tag::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(168, 85, 247, 0.18) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  background-position: -100% 0;
+  opacity: 0;
+  transition: opacity 0.15s;
 }
 .tag:hover {
   border-color: var(--purple);
   color: var(--purple);
+  background: rgba(168, 85, 247, 0.12);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+}
+.tag:hover::after {
+  opacity: 1;
+  animation: tagShine 0.5s ease forwards;
+}
+@keyframes tagShine {
+  from { background-position: -100% 0; }
+  to   { background-position: 200% 0; }
 }
 
 /* ── SKILL ICONS GRID ── */
@@ -724,8 +799,8 @@ body::after {
 /* ── PROJECTS ── */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 2rem;
 }
 
 .project-card {
@@ -753,12 +828,65 @@ body::after {
   z-index: 1;
 }
 .project-card:hover {
-  border-color: rgba(168, 85, 247, 0.4);
-  transform: translateY(-4px);
-  box-shadow: 0 16px 48px rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.5);
+  transform: scale(1.03);
+  box-shadow: 0 20px 56px rgba(168, 85, 247, 0.18);
 }
 .project-card:hover::before {
   transform: scaleX(1);
+}
+.project-card:hover .project-shimmer {
+  animation: shimmerSweep 0.7s ease forwards;
+}
+
+/* shimmer div */
+.project-shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(168, 85, 247, 0.07) 50%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  background-position: -100% 0;
+  border-radius: 8px;
+}
+@keyframes shimmerSweep {
+  from { background-position: -100% 0; }
+  to   { background-position: 200% 0; }
+}
+
+/* stat strip */
+.project-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.project-stat {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-transform: uppercase;
+}
+.project-stat-link {
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-left: auto;
+}
+.project-stat-link:hover {
+  color: var(--purple);
 }
 
 /* image wrap with overlay */
@@ -767,10 +895,15 @@ body::after {
 }
 .project-img {
   width: 100%;
-  height: 180px;
+  height: 240px;
   object-fit: cover;
   display: block;
   border-bottom: 1px solid var(--border);
+  filter: grayscale(100%);
+  transition: filter 0.4s ease;
+}
+.project-card:hover .project-img {
+  filter: grayscale(0%);
 }
 .project-img-placeholder {
   width: 100%;
@@ -812,32 +945,29 @@ body::after {
 .project-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(10, 10, 15, 0.85);
+  background: rgba(10, 10, 15, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
 }
-.project-overlay-btn {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--purple);
-  border: 1px solid var(--purple);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  text-decoration: none;
+.project-overlay-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0a0a0f;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  transition:
-    background 0.2s,
-    color 0.2s;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, background 0.2s ease;
+  backdrop-filter: blur(4px);
 }
-.project-overlay-btn:hover {
-  background: var(--purple);
-  color: #fff;
+.project-overlay-badge:hover {
+  transform: scale(1.12);
+  background: #ffffff;
 }
 
 .project-body {

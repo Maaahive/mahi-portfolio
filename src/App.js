@@ -16,7 +16,7 @@ import {
 } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { FiExternalLink, FiCode, FiFileText } from "react-icons/fi";
+import { FiExternalLink, FiCode, FiFileText, FiPhone } from "react-icons/fi";
 import { TbAntenna } from "react-icons/tb";
 import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
@@ -181,6 +181,15 @@ function Hero() {
     }),
   };
 
+  const nameRef = useRef(null);
+  const [cursor, setCursor] = useState({ x: 0, y: 0 });
+  const [nameHover, setNameHover] = useState(false);
+
+  const handleNameMove = (e) => {
+    const r = nameRef.current.getBoundingClientRect();
+    setCursor({ x: e.clientX - r.left, y: e.clientY - r.top });
+  };
+
   return (
     <section className="hero" id="hero">
       <div className="hero-inner">
@@ -196,14 +205,32 @@ function Hero() {
           </motion.div>
           <motion.h1
             className="hero-name"
+            ref={nameRef}
+            onMouseMove={handleNameMove}
+            onMouseEnter={() => setNameHover(true)}
+            onMouseLeave={() => setNameHover(false)}
             custom={1}
             initial="hidden"
             animate="visible"
             variants={fadeUp}
           >
-            Mahi
+            <span className="hero-word">Mahi</span>
             <br />
-            <span>Agarwal.</span>
+            <span className="hero-word hero-word-accent">Agarwal.</span>
+            {/* cursor spotlight — same text, masked to a circle around the cursor */}
+            <span
+              className="hero-spotlight"
+              aria-hidden="true"
+              style={{
+                WebkitMaskImage: `radial-gradient(circle 110px at ${cursor.x}px ${cursor.y}px, black 0%, transparent 70%)`,
+                maskImage: `radial-gradient(circle 110px at ${cursor.x}px ${cursor.y}px, black 0%, transparent 70%)`,
+                opacity: nameHover ? 1 : 0,
+              }}
+            >
+              <span>Mahi</span>
+              <br />
+              <span className="spotlight-accent">Agarwal.</span>
+            </span>
           </motion.h1>
           <motion.p
             className="hero-role"
@@ -388,13 +415,23 @@ function About() {
                 tags: ["Women in Tech", "Open Source", "Writing"],
               },
             ].map((s) => (
-              <div key={s.cat}>
-                <div className="skill-category">{s.cat}</div>
+              <div key={s.cat} className="skill-group">
+                <div className="skill-category-row">
+                  <div className="skill-category">{s.cat}</div>
+                </div>
                 <div className="skill-tags">
-                  {s.tags.map((t) => (
-                    <span className="tag" key={t}>
+                  {s.tags.map((t, idx) => (
+                    <motion.span
+                      className="tag"
+                      key={t}
+                      initial={{ opacity: 0, x: -8 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.05 }}
+                      whileHover={{ scale: 1.08, y: -2 }}
+                    >
                       {t}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </div>
@@ -538,16 +575,16 @@ function ProjectCard({ p, i }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.25 }}
             >
               {p.github && (
                 <a
                   href={p.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="project-overlay-btn"
+                  className="project-overlay-badge"
                 >
-                  <SiGithub size={16} /> GitHub
+                  <SiGithub size={22} />
                 </a>
               )}
               {p.live && (
@@ -555,9 +592,9 @@ function ProjectCard({ p, i }) {
                   href={p.live}
                   target="_blank"
                   rel="noreferrer"
-                  className="project-overlay-btn"
+                  className="project-overlay-badge"
                 >
-                  <FiExternalLink size={16} /> Live
+                  <FiExternalLink size={22} />
                 </a>
               )}
             </motion.div>
@@ -569,6 +606,25 @@ function ProjectCard({ p, i }) {
         <div className="project-number">{`// ${p.id}`}</div>
         <div className="project-name">{p.name}</div>
         <p className="project-desc">{p.desc}</p>
+
+        {/* ── stat strip ── */}
+        <div className="project-stats">
+          <span className="project-stat">
+            <FiCode size={11} />
+            {p.tech.length} tech{p.tech.length !== 1 ? "s" : ""}
+          </span>
+          {p.github && p.github !== "#" && (
+            <a
+              href={p.github}
+              target="_blank"
+              rel="noreferrer"
+              className="project-stat project-stat-link"
+            >
+              <SiGithub size={11} /> Source
+            </a>
+          )}
+        </div>
+
         <div className="project-footer">
           <div className="project-tech">
             {p.tech.map((t) => {
@@ -593,6 +649,8 @@ function ProjectCard({ p, i }) {
           )}
         </div>
       </div>
+      {/* ── shimmer sweep on hover ── */}
+      <div className="project-shimmer" />
     </motion.div>
   );
 }
@@ -694,6 +752,12 @@ function Contact() {
                 className="contact-link"
               >
                 <MdEmail size={16} /> Email
+              </a>
+              <a
+                href="tel:+918868993671"
+                className="contact-link"
+              >
+                <FiPhone size={16} /> Call Me
               </a>
               <a
                 href="https://github.com/Maaahive"
