@@ -20,6 +20,7 @@ import { FiExternalLink, FiCode, FiFileText } from "react-icons/fi";
 import { TbAntenna } from "react-icons/tb";
 import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
+import Tilt from "react-parallax-tilt";
 import photo from "./assets/photo.jpg";
 import girvi from "./assets/girvi-len-den.png";
 import interestCalc from "./assets/interest-calc.png";
@@ -259,19 +260,13 @@ function Hero() {
           variants={fadeUp}
         >
           {/* PHOTO — tilted polaroid with scanline + rgb-glitch flicker */}
-          <div className="photo-frame">
-            {/* TODO: When you have your photo:
-                1. Create src/assets/ folder
-                2. Add photo (e.g. photo.jpg)
-                3. Import: import myPhoto from './assets/photo.jpg'
-                4. Replace div.photo-placeholder with:
-                   <img src={myPhoto} alt="Mahi" className="photo-img" /> */}
+          <Tilt className="photo-frame" tiltMaxAngleX={10} tiltMaxAngleY={10} glareEnable={true} glareMaxOpacity={0.2} glareColor="#a855f7" glarePosition="all" scale={1.02} transitionSpeed={1200}>
             <div className="photo-image-area">
               <img src={photo} alt="Mahi" className="photo-img" />
               <div className="photo-scanline" />
             </div>
             <div className="photo-caption">[ mahi.jpg ]</div>
-          </div>
+          </Tilt>
 
           {/* TERMINAL */}
           <div className="terminal">
