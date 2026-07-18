@@ -25,6 +25,7 @@ import photo from "./assets/photo.jpg";
 import girvi from "./assets/girvi-len-den.png";
 import interestCalc from "./assets/interest-calc.png";
 import professorPortfolio from "./assets/prof-shweta-srivastava.png";
+import resume from "./assets/resume.pdf"
 import "./App.css";
 
 // ─────────────────────────────────────────
@@ -242,7 +243,7 @@ function Hero() {
               Get In Touch
             </Link>
             <a
-              href="/resume.pdf"
+              href={resume}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline"
@@ -282,7 +283,7 @@ function Hero() {
                 <span className="t-cmd">whoami</span>
               </div>
               <div className="t-out">
-                <span>Mahi Agarwal</span> — ECE, 2nd year
+                <span>Mahi Agarwal</span> — ECE, Final year
               </div>
               <div className="t-line" style={{ marginTop: "0.5rem" }}>
                 <span className="t-prompt">❯</span>
@@ -343,10 +344,11 @@ function About() {
             transition={{ delay: 0.15 }}
           >
             <p>
-              Hey! I'm <strong>Mahi</strong>, a 2nd year Electronics &
+              Hey! I'm <strong>Mahi</strong>, a Final year Electronics &
               Communication Engineering student at <strong>JIIT Noida</strong>.
-              I live in the hostel, survive on chai, and spend way too much time
-              making things on my laptop.
+              Powered by chai and curiosity, I spend way too much time building
+              things on my laptop—and honestly, I wouldn't have it any other
+              way.
             </p>
             <p>
               I started with web dev — HTML, CSS, JS — and somewhere along the
