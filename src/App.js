@@ -26,6 +26,7 @@ import girvi from "./assets/girvi-len-den.png";
 import interestCalc from "./assets/interest-calc.png";
 import professorPortfolio from "./assets/prof-shweta-srivastava.png";
 import resume from "./assets/resume.pdf"
+import { Analytics } from "@vercel/analytics/react";
 import "./App.css";
 
 // ─────────────────────────────────────────
@@ -868,6 +869,7 @@ export default function App() {
       <Projects />
       <Contact />
       <Footer />
+      <Analytics />
     </>
   );
 }
