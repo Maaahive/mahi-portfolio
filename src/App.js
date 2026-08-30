@@ -120,17 +120,12 @@ const SKILLS = [
   { name: "SQL", Icon: SiMysql, color: "#4479a1" },
   { name: "Git", Icon: SiGit, color: "#f05032" },
   { name: "GitHub", Icon: SiGithub, color: "#ffffff" },
-  { name: "Tailwind CSS", Icon: SiTailwindcss, color: "#06b6d4" },
-  { name: "Node.js", Icon: SiNodedotjs, color: "#5fa04e" },
-  { name: "Express", Icon: SiExpress, color: "#e2e8f0" },
-  { name: "Socket.IO", Icon: SiSocketdotio, color: "#ffffff" },
   { name: "MongoDB", Icon: SiMongodb, color: "#47a248" },
   { name: "OpenCV", Icon: SiOpencv, color: "#5c3ee8" },
   { name: "Scikit-Learn", Icon: SiScikitlearn, color: "#f7931e" },
   { name: "Pandas", Icon: SiPandas, color: "#e70488" },
   { name: "NumPy", Icon: SiNumpy, color: "#4dabcf" },
   { name: "Postman", Icon: SiPostman, color: "#ff6c37" },
-  { name: "Linux", Icon: SiLinux, color: "#fcc624" },
 ];
 
 const RF_SKILLS = [
@@ -368,7 +363,7 @@ function Hero() {
                 <span className="t-cmd">cat skills.txt</span>
               </div>
               <div className="t-out">Python · JavaScript · React · SQL</div>
-              <div className="t-out">HTML/CSS · Git · Node · Express</div>
+              <div className="t-out">HTML/CSS · C++ · Git · OpenCV</div>
               <div className="t-line" style={{ marginTop: "0.5rem" }}>
                 <span className="t-prompt">❯</span>
                 <span className="t-cmd">echo $status</span>
@@ -450,19 +445,19 @@ function About() {
             {[
               {
                 cat: "Languages",
-                tags: ["Python", "JavaScript", "HTML/CSS", "SQL"],
+                tags: ["Python", "JavaScript", "C++", "HTML/CSS", "SQL"],
               },
               {
-                cat: "Web & Backend",
-                tags: ["React", "Tailwind CSS", "Node.js", "Express", "Socket.IO", "MongoDB"],
+                cat: "Libraries & Tools",
+                tags: ["React", "MongoDB", "Git", "GitHub", "Postman"],
+              },
+              {
+                cat: "Data & ML",
+                tags: ["OpenCV", "Scikit-Learn", "Pandas", "NumPy"],
               },
               {
                 cat: "RF & Hardware",
                 tags: ["HFSS", "MATLAB", "VNA", "Cadence Virtuoso", "Proteus"],
-              },
-              {
-                cat: "Libraries & Tools",
-                tags: ["Git", "GitHub", "OpenCV", "Postman"],
               },
               {
                 cat: "Interests",
