@@ -959,10 +959,42 @@ body::after {
 .project-stat-link {
   text-decoration: none;
   transition: color 0.2s;
-  margin-left: auto;
 }
 .project-stat-link:hover {
   color: var(--purple);
+}
+.project-stats-links {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.project-badge-production {
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  padding: 0.12rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+  display: inline-block;
+  animation: live-pulse 2s infinite ease-in-out;
+}
+@keyframes live-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
 }
 
 /* image wrap with overlay */

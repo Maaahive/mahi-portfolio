@@ -46,6 +46,7 @@ const PROJECTS = [
     imgLabel: "[ cartel.png ]",
     github: "https://github.com/Maaahive/Cartel",
     live: "https://cartel-f4hf.onrender.com/",
+    liveLabel: "Live Demo",
   },
   {
     id: "002",
@@ -56,6 +57,8 @@ const PROJECTS = [
     imgLabel: "[ professor-portfolio.png ]",
     github: "https://github.com/Maaahive/shweta-mam-portfolio.git",
     live: "https://prof-shweta-srivastava.vercel.app/",
+    liveLabel: "Live Site",
+    status: "In Production",
   },
   {
     id: "003",
@@ -610,6 +613,7 @@ function ProjectCard({ p, i }) {
                   target="_blank"
                   rel="noreferrer"
                   className="project-overlay-badge"
+                  title={p.liveLabel || "Live Site"}
                 >
                   <FiExternalLink size={22} />
                 </a>
@@ -630,26 +634,34 @@ function ProjectCard({ p, i }) {
             <FiCode size={11} />
             {p.tech.length} tech{p.tech.length !== 1 ? "s" : ""}
           </span>
-          {p.live && (
-            <a
-              href={p.live}
-              target="_blank"
-              rel="noreferrer"
-              className="project-stat project-stat-link"
-            >
-              <FiExternalLink size={11} /> Live Demo
-            </a>
+          {p.status && (
+            <span className="project-stat project-badge-production">
+              <span className="live-dot" />
+              {p.status}
+            </span>
           )}
-          {p.github && p.github !== "#" && (
-            <a
-              href={p.github}
-              target="_blank"
-              rel="noreferrer"
-              className="project-stat project-stat-link"
-            >
-              <SiGithub size={11} /> Source
-            </a>
-          )}
+          <div className="project-stats-links">
+            {p.live && (
+              <a
+                href={p.live}
+                target="_blank"
+                rel="noreferrer"
+                className="project-stat project-stat-link"
+              >
+                <FiExternalLink size={11} /> {p.liveLabel || "Live Site"}
+              </a>
+            )}
+            {p.github && p.github !== "#" && (
+              <a
+                href={p.github}
+                target="_blank"
+                rel="noreferrer"
+                className="project-stat project-stat-link"
+              >
+                <SiGithub size={11} /> Source
+              </a>
+            )}
+          </div>
         </div>
 
         <div className="project-footer">
@@ -671,7 +683,7 @@ function ProjectCard({ p, i }) {
                 target="_blank"
                 rel="noreferrer"
                 className="project-github-link"
-                title="Live Demo"
+                title={p.liveLabel || "Live Site"}
               >
                 <FiExternalLink size={16} />
               </a>
