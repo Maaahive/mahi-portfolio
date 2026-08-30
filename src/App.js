@@ -22,7 +22,6 @@ import {
   SiPandas,
   SiNumpy,
   SiPostman,
-  SiLinux,
   SiAnsys,
   SiProteus,
   SiArduino,
