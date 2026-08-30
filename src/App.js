@@ -18,13 +18,11 @@ import {
   SiSocketdotio,
   SiMongodb,
   SiOpencv,
-  SiTensorflow,
   SiScikitlearn,
   SiPandas,
   SiNumpy,
   SiPostman,
   SiLinux,
-  SiVercel,
   SiAnsys,
   SiProteus,
   SiArduino,
@@ -33,8 +31,7 @@ import {
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FiExternalLink, FiCode, FiFileText, FiPhone } from "react-icons/fi";
-import { TbAntenna, TbApi } from "react-icons/tb";
-import { VscCode } from "react-icons/vsc";
+import { TbAntenna } from "react-icons/tb";
 import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
 import Tilt from "react-parallax-tilt";
@@ -110,7 +107,6 @@ const TECH_ICON_MAP = {
   Express: SiExpress,
   MongoDB: SiMongodb,
   Postman: SiPostman,
-  TensorFlow: SiTensorflow,
   OpenCV: SiOpencv,
 };
 
@@ -128,17 +124,13 @@ const SKILLS = [
   { name: "Node.js", Icon: SiNodedotjs, color: "#5fa04e" },
   { name: "Express", Icon: SiExpress, color: "#e2e8f0" },
   { name: "Socket.IO", Icon: SiSocketdotio, color: "#ffffff" },
-  { name: "REST APIs", Icon: TbApi, color: "#38bdf8" },
   { name: "MongoDB", Icon: SiMongodb, color: "#47a248" },
   { name: "OpenCV", Icon: SiOpencv, color: "#5c3ee8" },
-  { name: "TensorFlow", Icon: SiTensorflow, color: "#ff6f00" },
   { name: "Scikit-Learn", Icon: SiScikitlearn, color: "#f7931e" },
   { name: "Pandas", Icon: SiPandas, color: "#e70488" },
   { name: "NumPy", Icon: SiNumpy, color: "#4dabcf" },
   { name: "Postman", Icon: SiPostman, color: "#ff6c37" },
   { name: "Linux", Icon: SiLinux, color: "#fcc624" },
-  { name: "VS Code", Icon: VscCode, color: "#007acc" },
-  { name: "Vercel", Icon: SiVercel, color: "#ffffff" },
 ];
 
 const RF_SKILLS = [
