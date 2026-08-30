@@ -20,11 +20,21 @@ import {
   SiMongodb,
   SiPostman,
   SiTensorflow,
+  SiCplusplus,
+  SiTypescript,
+  SiVite,
+  SiPostgresql,
+  SiPandas,
+  SiNumpy,
+  SiLinux,
+  SiVercel,
+  SiArduino,
 } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FiExternalLink, FiCode, FiFileText, FiPhone } from "react-icons/fi";
-import { TbAntenna } from "react-icons/tb";
+import { TbAntenna, TbApi } from "react-icons/tb";
+import { VscCode } from "react-icons/vsc";
 import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
 import Tilt from "react-parallax-tilt";
@@ -90,7 +100,9 @@ const TECH_ICON_MAP = {
   HTML: SiHtml5,
   CSS: SiCss,
   JavaScript: SiJavascript,
+  TypeScript: SiTypescript,
   Python: SiPython,
+  "C++": SiCplusplus,
   React: SiReact,
   Git: SiGit,
   "Node.js": SiNodedotjs,
@@ -98,9 +110,11 @@ const TECH_ICON_MAP = {
   "Tailwind CSS": SiTailwindcss,
   Express: SiExpress,
   MongoDB: SiMongodb,
+  PostgreSQL: SiPostgresql,
   Postman: SiPostman,
   TensorFlow: SiTensorflow,
   OpenCV: SiOpencv,
+  Vite: SiVite,
 };
 
 const WEB_SKILLS = [
@@ -109,19 +123,33 @@ const WEB_SKILLS = [
   { name: "Express", Icon: SiExpress, color: "#e2e8f0" },
   { name: "Socket.IO", Icon: SiSocketdotio, color: "#ffffff" },
   { name: "JavaScript", Icon: SiJavascript, color: "#f7df1e" },
+  { name: "TypeScript", Icon: SiTypescript, color: "#3178c6" },
   { name: "Tailwind CSS", Icon: SiTailwindcss, color: "#06b6d4" },
   { name: "HTML5", Icon: SiHtml5, color: "#e34f26" },
   { name: "CSS3", Icon: SiCss, color: "#1572b6" },
+  { name: "Vite", Icon: SiVite, color: "#bd34fe" },
 ];
 
 const BACKEND_ML_SKILLS = [
   { name: "Python", Icon: SiPython, color: "#3776ab" },
+  { name: "C++", Icon: SiCplusplus, color: "#00599c" },
   { name: "MongoDB", Icon: SiMongodb, color: "#47a248" },
   { name: "SQL", Icon: SiMysql, color: "#4479a1" },
+  { name: "PostgreSQL", Icon: SiPostgresql, color: "#4169e1" },
   { name: "TensorFlow", Icon: SiTensorflow, color: "#ff6f00" },
   { name: "OpenCV", Icon: SiOpencv, color: "#5c3ee8" },
-  { name: "Postman", Icon: SiPostman, color: "#ff6c37" },
+  { name: "Pandas", Icon: SiPandas, color: "#e70488" },
+  { name: "NumPy", Icon: SiNumpy, color: "#4dabcf" },
+  { name: "REST APIs", Icon: TbApi, color: "#38bdf8" },
+];
+
+const TOOLS_PLATFORMS_SKILLS = [
   { name: "Git", Icon: SiGit, color: "#f05032" },
+  { name: "GitHub", Icon: SiGithub, color: "#ffffff" },
+  { name: "Postman", Icon: SiPostman, color: "#ff6c37" },
+  { name: "Linux", Icon: SiLinux, color: "#fcc624" },
+  { name: "VS Code", Icon: VscCode, color: "#007acc" },
+  { name: "Vercel", Icon: SiVercel, color: "#ffffff" },
 ];
 
 const RF_SKILLS = [
@@ -130,6 +158,7 @@ const RF_SKILLS = [
   { name: "MATLAB", Icon: PiWaveformBold, color: "#d95319" },
   { name: "Cadence", Icon: LuCircuitBoard, color: "#f472b6" },
   { name: "Proteus", Icon: SiProteus, color: "#1857a4" },
+  { name: "Arduino", Icon: SiArduino, color: "#00979d" },
 ];
 
 // ─────────────────────────────────────────
@@ -496,34 +525,42 @@ function SkillIcon({ skill, i }) {
   return (
     <motion.div
       className="skill-icon-card"
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.35, delay: (i % 8) * 0.04 }}
+      transition={{ duration: 0.4, delay: (i % 8) * 0.05 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <motion.div
         className="skill-icon-svg"
-        animate={{ scale: hovered ? 1.18 : 1, y: hovered ? -3 : 0 }}
-        transition={{ type: "spring", stiffness: 320, damping: 20 }}
+        animate={{ scale: hovered ? 1.25 : 1, y: hovered ? -6 : 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 18 }}
         style={{ color: hovered ? color : "var(--text-muted)" }}
       >
-        <Icon size={38} />
+        <Icon size={42} />
       </motion.div>
 
-      <span
-        className="skill-icon-label"
-        style={{ color: hovered ? color : "var(--text-dim)" }}
-      >
-        {name}
-      </span>
+      <AnimatePresence>
+        {hovered && (
+          <motion.span
+            className="skill-icon-label"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+            transition={{ duration: 0.15 }}
+            style={{ color }}
+          >
+            {name}
+          </motion.span>
+        )}
+      </AnimatePresence>
 
       <motion.div
         className="skill-icon-glow"
         animate={{ opacity: hovered ? 1 : 0 }}
         style={{
-          background: `radial-gradient(circle, ${color}25 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${color}30 0%, transparent 70%)`,
         }}
       />
     </motion.div>
@@ -562,6 +599,13 @@ function Skills() {
         <div className="skill-group-label">{"// backend, data & ml"}</div>
         <div className="skill-icons-grid">
           {BACKEND_ML_SKILLS.map((s, i) => (
+            <SkillIcon key={s.name} skill={s} i={i} />
+          ))}
+        </div>
+
+        <div className="skill-group-label">{"// dev tools & platforms"}</div>
+        <div className="skill-icons-grid">
+          {TOOLS_PLATFORMS_SKILLS.map((s, i) => (
             <SkillIcon key={s.name} skill={s} i={i} />
           ))}
         </div>

@@ -815,8 +815,8 @@ body::after {
 
 .skill-icons-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 1.25rem;
 }
 
 .skill-icon-card {
@@ -824,28 +824,21 @@ body::after {
   background: var(--bg3);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 1.4rem 0.75rem 1.1rem;
+  padding: 1.75rem 1rem 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  min-height: 112px;
-  transition:
-    border-color 0.25s,
-    transform 0.25s,
-    box-shadow 0.25s;
+  gap: 0.6rem;
+  min-height: 110px;
+  transition: border-color 0.2s;
   overflow: hidden;
-  cursor: default;
 }
 .skill-icon-card:hover {
-  border-color: rgba(168, 85, 247, 0.5);
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.5);
+  border-color: rgba(168, 85, 247, 0.4);
 }
 
 .skill-icon-svg {
-  transition: color 0.25s;
+  transition: color 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -855,11 +848,11 @@ body::after {
 .skill-icon-label {
   font-family: var(--mono);
   font-size: 0.68rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-align: center;
   z-index: 1;
-  transition: color 0.25s;
-  white-space: nowrap;
+  position: absolute;
+  bottom: 10px;
 }
 
 .skill-icon-glow {
