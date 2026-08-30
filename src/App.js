@@ -16,6 +16,10 @@ import {
   SiNodedotjs,
   SiSocketdotio,
   SiTailwindcss,
+  SiExpress,
+  SiMongodb,
+  SiPostman,
+  SiTensorflow,
 } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -92,7 +96,33 @@ const TECH_ICON_MAP = {
   "Node.js": SiNodedotjs,
   "Socket.IO": SiSocketdotio,
   "Tailwind CSS": SiTailwindcss,
+  Express: SiExpress,
+  MongoDB: SiMongodb,
+  Postman: SiPostman,
+  TensorFlow: SiTensorflow,
+  OpenCV: SiOpencv,
 };
+
+const WEB_SKILLS = [
+  { name: "React", Icon: SiReact, color: "#61dafb" },
+  { name: "Node.js", Icon: SiNodedotjs, color: "#5fa04e" },
+  { name: "Express", Icon: SiExpress, color: "#e2e8f0" },
+  { name: "Socket.IO", Icon: SiSocketdotio, color: "#ffffff" },
+  { name: "JavaScript", Icon: SiJavascript, color: "#f7df1e" },
+  { name: "Tailwind CSS", Icon: SiTailwindcss, color: "#06b6d4" },
+  { name: "HTML5", Icon: SiHtml5, color: "#e34f26" },
+  { name: "CSS3", Icon: SiCss, color: "#1572b6" },
+];
+
+const BACKEND_ML_SKILLS = [
+  { name: "Python", Icon: SiPython, color: "#3776ab" },
+  { name: "MongoDB", Icon: SiMongodb, color: "#47a248" },
+  { name: "SQL", Icon: SiMysql, color: "#4479a1" },
+  { name: "TensorFlow", Icon: SiTensorflow, color: "#ff6f00" },
+  { name: "OpenCV", Icon: SiOpencv, color: "#5c3ee8" },
+  { name: "Postman", Icon: SiPostman, color: "#ff6c37" },
+  { name: "Git", Icon: SiGit, color: "#f05032" },
+];
 
 const RF_SKILLS = [
   { name: "HFSS", Icon: SiAnsys, color: "#ffc72c" },
@@ -100,17 +130,6 @@ const RF_SKILLS = [
   { name: "MATLAB", Icon: PiWaveformBold, color: "#d95319" },
   { name: "Cadence", Icon: LuCircuitBoard, color: "#f472b6" },
   { name: "Proteus", Icon: SiProteus, color: "#1857a4" },
-];
-
-const SKILLS = [
-  { name: "Python", Icon: SiPython, color: "#3776ab" },
-  { name: "JavaScript", Icon: SiJavascript, color: "#f7df1e" },
-  { name: "React", Icon: SiReact, color: "#61dafb" },
-  { name: "SQL", Icon: SiMysql, color: "#4479a1" },
-  { name: "HTML5", Icon: SiHtml5, color: "#e34f26" },
-  { name: "CSS3", Icon: SiCss, color: "#1572b6" },
-  { name: "Git", Icon: SiGit, color: "#f05032" },
-  { name: "OpenCV", Icon: SiOpencv, color: "#5c3ee8" },
 ];
 
 // ─────────────────────────────────────────
@@ -336,8 +355,8 @@ function Hero() {
                 <span className="t-prompt">❯</span>
                 <span className="t-cmd">cat skills.txt</span>
               </div>
-              <div className="t-out">Python · JS · SQL · React</div>
-              <div className="t-out">OpenCV · HTML/CSS · Git</div>
+              <div className="t-out">React · Node.js · Express · Socket.IO</div>
+              <div className="t-out">Python · JS · Tailwind · MongoDB · Git</div>
               <div className="t-line" style={{ marginTop: "0.5rem" }}>
                 <span className="t-prompt">❯</span>
                 <span className="t-cmd">echo $status</span>
@@ -418,21 +437,24 @@ function About() {
           >
             {[
               {
-                cat: "Languages",
-                tags: ["Python", "JavaScript", "SQL", "HTML/CSS"],
+                cat: "Full-Stack & Web",
+                tags: ["React", "Node.js", "Express", "Socket.IO", "JavaScript", "Tailwind CSS"],
               },
-              { cat: "Libraries & Tools", tags: ["React", "OpenCV", "Git"] },
+              {
+                cat: "Backend & ML",
+                tags: ["Python", "MongoDB", "SQL", "TensorFlow", "OpenCV", "REST APIs"],
+              },
               {
                 cat: "RF & Hardware",
                 tags: ["HFSS", "MATLAB", "VNA", "Cadence Virtuoso", "Proteus"],
               },
               {
-                cat: "Currently exploring",
-                tags: ["Machine Learning", "REST APIs"],
+                cat: "Tools & Workflow",
+                tags: ["Git", "GitHub", "Postman", "Linux", "VS Code"],
               },
               {
                 cat: "Interests",
-                tags: ["Women in Tech", "Open Source", "Writing"],
+                tags: ["Full-Stack Dev", "Women in Tech", "Open Source", "Real-Time Systems"],
               },
             ].map((s) => (
               <div key={s.cat} className="skill-group">
@@ -474,42 +496,34 @@ function SkillIcon({ skill, i }) {
   return (
     <motion.div
       className="skill-icon-card"
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: i * 0.06 }}
+      transition={{ duration: 0.35, delay: (i % 8) * 0.04 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <motion.div
         className="skill-icon-svg"
-        animate={{ scale: hovered ? 1.25 : 1, y: hovered ? -6 : 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 18 }}
+        animate={{ scale: hovered ? 1.18 : 1, y: hovered ? -3 : 0 }}
+        transition={{ type: "spring", stiffness: 320, damping: 20 }}
         style={{ color: hovered ? color : "var(--text-muted)" }}
       >
-        <Icon size={42} />
+        <Icon size={38} />
       </motion.div>
 
-      <AnimatePresence>
-        {hovered && (
-          <motion.span
-            className="skill-icon-label"
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 4 }}
-            transition={{ duration: 0.15 }}
-            style={{ color }}
-          >
-            {name}
-          </motion.span>
-        )}
-      </AnimatePresence>
+      <span
+        className="skill-icon-label"
+        style={{ color: hovered ? color : "var(--text-dim)" }}
+      >
+        {name}
+      </span>
 
       <motion.div
         className="skill-icon-glow"
         animate={{ opacity: hovered ? 1 : 0 }}
         style={{
-          background: `radial-gradient(circle, ${color}30 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${color}25 0%, transparent 70%)`,
         }}
       />
     </motion.div>
@@ -537,9 +551,17 @@ function Skills() {
         >
           What I work with
         </motion.h2>
-        <div className="skill-group-label">{"// core stack"}</div>
+
+        <div className="skill-group-label">{"// full-stack & web"}</div>
         <div className="skill-icons-grid">
-          {SKILLS.map((s, i) => (
+          {WEB_SKILLS.map((s, i) => (
+            <SkillIcon key={s.name} skill={s} i={i} />
+          ))}
+        </div>
+
+        <div className="skill-group-label">{"// backend, data & ml"}</div>
+        <div className="skill-icons-grid">
+          {BACKEND_ML_SKILLS.map((s, i) => (
             <SkillIcon key={s.name} skill={s} i={i} />
           ))}
         </div>
