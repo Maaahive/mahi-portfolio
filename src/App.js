@@ -13,6 +13,9 @@ import {
   SiGithub,
   SiAnsys,
   SiProteus,
+  SiNodedotjs,
+  SiSocketdotio,
+  SiTailwindcss,
 } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -22,6 +25,7 @@ import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
 import Tilt from "react-parallax-tilt";
 import photo from "./assets/photo.jpg";
+import cartel from "./assets/cartel.png";
 import girvi from "./assets/girvi-len-den.png";
 import interestCalc from "./assets/interest-calc.png";
 import professorPortfolio from "./assets/prof-shweta-srivastava.png";
@@ -35,6 +39,16 @@ import "./App.css";
 const PROJECTS = [
   {
     id: "001",
+    name: "Cartel",
+    desc: "A real-time group ordering platform for shared grocery carts with live WebSocket sync, automated bill splitting, and session codes.",
+    tech: ["React", "Node.js", "Socket.IO", "Tailwind CSS"],
+    img: cartel,
+    imgLabel: "[ cartel.png ]",
+    github: "https://github.com/Maaahive/Cartel",
+    live: "https://cartel-f4hf.onrender.com/",
+  },
+  {
+    id: "002",
     name: "Girvi Len Den",
     desc: "A loan tracking web app with a vintage UI. Per-entry interest rates, category selection, localStorage persistence, and Excel export.",
     tech: ["HTML", "CSS", "JavaScript", "localStorage"],
@@ -44,7 +58,7 @@ const PROJECTS = [
     live: null,
   },
   {
-    id: "002",
+    id: "003",
     name: "Interest Calculator",
     desc: "JS-based calculator with per-entry interest rates, multiple category selection, and Excel export. Handles edge cases gracefully.",
     tech: ["JavaScript", "Excel Export", "DOM"],
@@ -54,7 +68,7 @@ const PROJECTS = [
     live: null,
   },
   {
-    id: "003",
+    id: "004",
     name: "Professor Portfolio",
     desc: "React portfolio for Prof. Shweta Srivastava, Director at JIIT Noida. Built from her actual CV — iterated through multiple design versions.",
     tech: ["React", "CSS", "Responsive"],
@@ -72,6 +86,9 @@ const TECH_ICON_MAP = {
   Python: SiPython,
   React: SiReact,
   Git: SiGit,
+  "Node.js": SiNodedotjs,
+  "Socket.IO": SiSocketdotio,
+  "Tailwind CSS": SiTailwindcss,
 };
 
 const RF_SKILLS = [
@@ -613,6 +630,16 @@ function ProjectCard({ p, i }) {
             <FiCode size={11} />
             {p.tech.length} tech{p.tech.length !== 1 ? "s" : ""}
           </span>
+          {p.live && (
+            <a
+              href={p.live}
+              target="_blank"
+              rel="noreferrer"
+              className="project-stat project-stat-link"
+            >
+              <FiExternalLink size={11} /> Live Demo
+            </a>
+          )}
           {p.github && p.github !== "#" && (
             <a
               href={p.github}
@@ -637,16 +664,30 @@ function ProjectCard({ p, i }) {
               );
             })}
           </div>
-          {p.github && p.github !== "#" && (
-            <a
-              href={p.github}
-              target="_blank"
-              rel="noreferrer"
-              className="project-github-link"
-            >
-              <SiGithub size={16} />
-            </a>
-          )}
+          <div className="project-links" style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            {p.live && (
+              <a
+                href={p.live}
+                target="_blank"
+                rel="noreferrer"
+                className="project-github-link"
+                title="Live Demo"
+              >
+                <FiExternalLink size={16} />
+              </a>
+            )}
+            {p.github && p.github !== "#" && (
+              <a
+                href={p.github}
+                target="_blank"
+                rel="noreferrer"
+                className="project-github-link"
+                title="Source Code"
+              >
+                <SiGithub size={16} />
+              </a>
+            )}
+          </div>
         </div>
       </div>
       {/* ── shimmer sweep on hover ── */}
