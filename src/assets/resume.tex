@@ -1,0 +1,130 @@
+\documentclass[11pt, a4paper]{article}
+
+% ============ PACKAGES ============
+\usepackage[left=0.55in, right=0.55in, top=0.45in, bottom=0.45in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% ============ COLORS ============
+\definecolor{accent}{RGB}{20, 20, 20}
+\definecolor{linkcolor}{RGB}{30, 64, 175}
+
+% ============ HYPERLINKS ============
+\hypersetup{
+    colorlinks=true,
+    urlcolor=linkcolor,
+    linkcolor=linkcolor
+}
+
+% ============ SECTION FORMATTING ============
+\titleformat{\section}
+{\large\bfseries\color{accent}}
+{}{0em}{}
+[\titlerule]
+\titlespacing{\section}{0pt}{8pt}{4pt}
+
+% ============ LIST FORMATTING ============
+\setlist[itemize]{leftmargin=*, itemsep=1.5pt, topsep=2pt, parsep=0pt}
+
+% ============ CUSTOM COMMANDS ============
+\newcommand{\resumeItem}[1]{\item{\small #1}}
+
+\newcommand{\resumeSubheading}[4]{
+    \vspace{1pt}
+    \noindent\textbf{\normalsize #1} \hfill \textbf{\small #2}\\
+    \textit{\small #3} \hfill \textit{\small #4}\par
+    \vspace{1pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \vspace{2pt}
+    \noindent\textbf{\small #1} \hfill \textit{\small #2}\par
+    \vspace{1pt}
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% ------------ HEADER ------------
+\begin{center}
+    {\LARGE \textbf{MAHI AGARWAL}}\\[5pt]
+    \small
+    \faIcon{map-marker-alt} Noida, India \quad $|$ \quad
+    \faIcon{phone} +91 8868993671 \quad $|$ \quad
+    \faIcon{envelope} \href{mailto:mahiagarwal985@gmail.com}{mahiagarwal985@gmail.com} \\[3pt]
+    \faIcon{globe} \href{https://mahiagarwal.vercel.app}{mahiagarwal.vercel.app} \quad $|$ \quad
+    \faIcon{github} \href{https://github.com/Maaahive}{github.com/Maaahive} \quad $|$ \quad
+    \faIcon{linkedin} \href{https://linkedin.com/in/mahiagarwal}{linkedin.com/in/mahiagarwal}
+\end{center}
+
+\vspace{-6pt}
+
+% ------------ SUMMARY ------------
+\section*{Summary}
+\vspace{-2pt}
+\small
+Final-year Electronics and Communication Engineering undergraduate at JIIT Noida with hands-on full-stack development experience across React.js, Node.js, and Python. Proven track record of independently designing, building, and deploying production web applications --- from a real-time collaborative grocery platform with WebSocket sync to a live faculty portfolio for an institutional director. Looking to apply a strong problem-solving mindset and builder's instinct to a Software Engineering role.
+
+% ------------ TECHNICAL SKILLS ------------
+\section*{Technical Skills}
+\vspace{-2pt}
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+    \small
+    \item \textbf{Languages:} Python, C++, JavaScript, SQL, HTML5, CSS3
+    \item \textbf{Web Development:} React.js, Node.js, Express.js, Socket.IO, Tailwind CSS, REST APIs
+    \item \textbf{Databases \& Tools:} MongoDB, MySQL, Git, GitHub, Postman, OpenCV, Scikit-Learn
+    \item \textbf{RF \& Hardware:} HFSS, MATLAB, VNA (Vector Network Analyzer), Cadence Virtuoso, Proteus
+\end{itemize}
+
+% ------------ PROJECTS ------------
+\section*{Projects}
+\vspace{-2pt}
+
+\resumeProjectHeading{Cartel --- Group Grocery Ordering Platform \href{https://cartel-f4hf.onrender.com/}{\faIcon{external-link-alt}} \href{https://github.com/Maaahive/Cartel}{\faIcon{github}}}{React.js, Node.js, Socket.IO, Tailwind CSS}
+\begin{itemize}
+    \resumeItem{Architected a real-time collaborative ordering web platform enabling hostel and roommate groups to join via 6-digit session codes and curate shared grocery carts simultaneously with live bi-directional WebSocket state sync.}
+    \resumeItem{Engineered an automated bill-splitting engine supporting individual items, open cost splits with opt-in mechanics, proportional delivery/platform fee distribution, and real-time group payment tracking.}
+    \resumeItem{Built a responsive mobile-first dark UI with interactive demo bot simulation; deployed live on Render (\href{https://cartel-f4hf.onrender.com/}{cartel-f4hf.onrender.com}).}
+\end{itemize}
+
+\resumeProjectHeading{Prof. Shweta Srivastava --- Academic Portfolio \href{https://prof-shweta-srivastava.vercel.app/}{\faIcon{external-link-alt}} \href{https://github.com/Maaahive/shweta-mam-portfolio}{\faIcon{github}}}{React.js, Vite, Responsive CSS}
+\begin{itemize}
+    \resumeItem{Independently designed, developed, and deployed an end-to-end academic portfolio website for Prof. Shweta Srivastava, Director at JIIT Noida, structured from her verified curriculum vitae.}
+    \resumeItem{Built high-performance, reusable React components with smooth section navigation and mobile-responsive layout; deployed live in production on Vercel (\href{https://prof-shweta-srivastava.vercel.app/}{prof-shweta-srivastava.vercel.app}).}
+\end{itemize}
+
+\resumeProjectHeading{Girvi Len Den --- Loan \& Interest Ledger App \href{https://github.com/Maaahive/GirviLedger}{\faIcon{github}}}{HTML5, CSS3, JavaScript, localStorage}
+\begin{itemize}
+    \resumeItem{Built an offline-first loan tracking web application featuring vintage typography and intuitive ledger workflows, supporting dynamic per-entry interest rates, category selection, and automated balance calculation.}
+    \resumeItem{Implemented localStorage persistence and one-click Excel sheet export, enabling seamless record management for non-technical users completely offline.}
+\end{itemize}
+
+\resumeProjectHeading{Interest Calculator \href{https://github.com/Maaahive/GirviBook}{\faIcon{github}}}{JavaScript, DOM Manipulation, SheetJS}
+\begin{itemize}
+    \resumeItem{Engineered a modular JavaScript calculation tool supporting custom interest schedules across flexible date intervals and categories, handling edge cases such as leap years and mid-tenure rate adjustments gracefully.}
+    \resumeItem{Developed interactive tabular data views with client-side spreadsheet export capabilities for instant financial summaries.}
+\end{itemize}
+
+% ------------ EDUCATION ------------
+\section*{Education}
+\vspace{-2pt}
+\resumeSubheading{Jaypee Institute of Information Technology (JIIT)}{Noida, India}{B.Tech. in Electronics and Communication Engineering}{July 2023 -- Present}
+
+\resumeSubheading{P.M.S. Public School}{Moradabad, India}{Class XII (CBSE)}{Mar 2022 -- Mar 2023}
+
+% ------------ CERTIFICATIONS ------------
+\section*{Certifications \& Training}
+\vspace{-2pt}
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+    \small
+    \item \textbf{AI Agents Intensive} (Google / Kaggle) --- Autonomous agent workflows, prompt design, and GenAI prototyping
+    \item \textbf{Java Programming} (IIT Bhubaneswar) --- OOP principles, exception handling, data structures, and algorithms
+\end{itemize}
+
+\end{document}
