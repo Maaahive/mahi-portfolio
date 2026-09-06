@@ -29,7 +29,7 @@ import {
 } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { FiExternalLink, FiCode, FiFileText, FiPhone } from "react-icons/fi";
+import { FiExternalLink, FiCode, FiFileText } from "react-icons/fi";
 import { TbAntenna } from "react-icons/tb";
 import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
@@ -834,12 +834,6 @@ function Contact() {
                 className="contact-link"
               >
                 <MdEmail size={16} /> Email
-              </a>
-              <a
-                href="tel:+918868993671"
-                className="contact-link"
-              >
-                <FiPhone size={16} /> Call Me
               </a>
               <a
                 href="https://github.com/Maaahive"
