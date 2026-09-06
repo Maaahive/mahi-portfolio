@@ -805,33 +805,29 @@ function Contact() {
 
     setStatus("sending");
     try {
-      const response = await fetch(
-        "https://formsubmit.co/ajax/mahiagarwal985@gmail.com",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            name: form.name,
-            email: form.email,
-            message: form.message,
-            _subject: `New Message from ${form.name} (${form.email}) — Portfolio`,
-            _template: "table",
-          }),
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          message: form.message.trim(),
+        }),
+      });
 
-      if (response.ok) {
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok && data.success) {
         setStatus("success");
         setForm({ name: "", email: "", message: "" });
         setTimeout(() => setStatus("idle"), 5000);
       } else {
-        throw new Error("Form submission failed");
+        throw new Error(data.error || "Form submission failed");
       }
     } catch (error) {
-      console.error("Direct email send error:", error);
+      console.error("Contact form error:", error);
       setStatus("error");
       const subject = encodeURIComponent(`Portfolio Contact from ${form.name}`);
       const body = encodeURIComponent(
