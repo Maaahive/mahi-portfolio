@@ -26,6 +26,8 @@ import {
   SiProteus,
   SiArduino,
   SiRaspberrypi,
+  SiElectron,
+  SiSpotify,
 } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -34,12 +36,13 @@ import { TbAntenna } from "react-icons/tb";
 import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
 import Tilt from "react-parallax-tilt";
-import photo from "./assets/photo.jpg";
+import photo from "./assets/photo.png";
+import offTrack from "./assets/off-track.png";
 import cartel from "./assets/cartel.png";
 import girvi from "./assets/girvi-len-den.png";
 import interestCalc from "./assets/interest-calc.png";
 import professorPortfolio from "./assets/prof-shweta-srivastava.png";
-import resume from "./assets/resume.pdf"
+import resume from "./assets/resume.pdf";
 import "./App.css";
 
 // ─────────────────────────────────────────
@@ -49,6 +52,17 @@ import "./App.css";
 const PROJECTS = [
   {
     id: "001",
+    name: "Off-Track",
+    desc: "Lightweight floating frosted-glass desktop music player. 100% ad-free YouTube audio streaming with two-way Spotify library sync and playback handoff.",
+    tech: ["Electron", "Node.js", "JavaScript", "Spotify API"],
+    img: offTrack,
+    imgLabel: "[ off-track.png ]",
+    github: "https://github.com/Maaahive/Off-Track",
+    live: null,
+    status: "Desktop App",
+  },
+  {
+    id: "002",
     name: "Cartel",
     desc: "A real-time group ordering platform for shared grocery carts with live WebSocket sync, automated bill splitting, and session codes.",
     tech: ["React", "Node.js", "Socket.IO", "Tailwind CSS"],
@@ -59,7 +73,7 @@ const PROJECTS = [
     liveLabel: "Live Demo",
   },
   {
-    id: "002",
+    id: "003",
     name: "Professor Portfolio",
     desc: "React portfolio for Prof. Shweta Srivastava, Director at JIIT Noida. Built from her actual CV — iterated through multiple design versions.",
     tech: ["React", "CSS", "Responsive"],
@@ -71,7 +85,7 @@ const PROJECTS = [
     status: "In Production",
   },
   {
-    id: "003",
+    id: "004",
     name: "Girvi Len Den",
     desc: "A loan tracking web app with a vintage UI. Per-entry interest rates, category selection, localStorage persistence, and Excel export.",
     tech: ["HTML", "CSS", "JavaScript", "localStorage"],
@@ -81,7 +95,7 @@ const PROJECTS = [
     live: null,
   },
   {
-    id: "004",
+    id: "005",
     name: "Interest Calculator",
     desc: "JS-based calculator with per-entry interest rates, multiple category selection, and Excel export. Handles edge cases gracefully.",
     tech: ["JavaScript", "Excel Export", "DOM"],
@@ -107,6 +121,9 @@ const TECH_ICON_MAP = {
   MongoDB: SiMongodb,
   Postman: SiPostman,
   OpenCV: SiOpencv,
+  Electron: SiElectron,
+  "Spotify API": SiSpotify,
+  Spotify: SiSpotify,
 };
 
 const SKILLS = [
@@ -774,19 +791,58 @@ function Projects() {
 
 function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle");
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = () => {
-    const subject = encodeURIComponent(`Portfolio Contact from ${form.name}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`,
-    );
-    window.location.href = `mailto:mahiagarwal985@gmail.com?subject=${subject}&body=${body}`;
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
+  const handleSubmit = async (e) => {
+    e?.preventDefault();
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      alert("Please fill in your name, email, and message.");
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/mahiagarwal985@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            message: form.message,
+            _subject: `New Message from ${form.name} (${form.email}) — Portfolio`,
+            _template: "table",
+          }),
+        },
+      );
+
+      if (response.ok) {
+        setStatus("success");
+        setForm({ name: "", email: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      console.error("Direct email send error:", error);
+      setStatus("error");
+      const subject = encodeURIComponent(`Portfolio Contact from ${form.name}`);
+      const body = encodeURIComponent(
+        `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`,
+      );
+      window.open(
+        `mailto:mahiagarwal985@gmail.com?subject=${subject}&body=${body}`,
+        "_blank",
+      );
+      setTimeout(() => setStatus("idle"), 5000);
+    }
   };
 
   return (
@@ -897,10 +953,37 @@ function Contact() {
               <motion.button
                 className="form-submit"
                 onClick={handleSubmit}
+                disabled={status === "sending"}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                style={{
+                  background:
+                    status === "success"
+                      ? "rgba(34, 197, 94, 0.2)"
+                      : status === "error"
+                      ? "rgba(239, 68, 68, 0.2)"
+                      : undefined,
+                  borderColor:
+                    status === "success"
+                      ? "#22c55e"
+                      : status === "error"
+                      ? "#ef4444"
+                      : undefined,
+                  color:
+                    status === "success"
+                      ? "#4ade80"
+                      : status === "error"
+                      ? "#f87171"
+                      : undefined,
+                }}
               >
-                {sent ? "✓ Opening mail client..." : "SEND MESSAGE →"}
+                {status === "sending"
+                  ? "SENDING MESSAGE..."
+                  : status === "success"
+                  ? "✓ MESSAGE SENT TO MAHI!"
+                  : status === "error"
+                  ? "✓ OPENED MAIL DRAFT (FALLBACK)"
+                  : "SEND MESSAGE →"}
               </motion.button>
             </div>
           </motion.div>
