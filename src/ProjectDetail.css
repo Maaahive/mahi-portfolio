@@ -1,0 +1,282 @@
+﻿/* ────────────────────────────────────────────
+   PROJECT DETAIL PAGE
+   ──────────────────────────────────────────── */
+
+.pd-root {
+  min-height: 100vh;
+  background: #050505;
+  color: #e5e5e5;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.pd-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Back button ── */
+.pd-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #999;
+  font-size: 0.82rem;
+  font-family: inherit;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.02em;
+}
+
+.pd-back-btn:hover {
+  color: #e5e5e5;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Header ── */
+.pd-header {
+  margin-bottom: 2.5rem;
+}
+
+.pd-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.pd-id {
+  font-family: "Courier New", monospace;
+  font-size: 0.78rem;
+  color: #555;
+  letter-spacing: 0.04em;
+}
+
+.pd-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  color: #22c55e;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pd-title {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f0f0f0;
+  margin: 0 0 0.5rem;
+  line-height: 1.1;
+}
+
+.pd-tagline {
+  font-size: 1rem;
+  color: #888;
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
+/* ── Tech tags ── */
+.pd-tech-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.pd-tech-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: #bbb;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Header links ── */
+.pd-header-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.pd-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-family: inherit;
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.pd-link-primary {
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  border: 1px solid transparent;
+}
+
+.pd-link-primary:hover {
+  background: #fff;
+}
+
+.pd-link-secondary {
+  background: transparent;
+  color: #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pd-link-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+/* ── Hero image ── */
+.pd-hero-img-wrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 3.5rem;
+  background: #111;
+}
+
+.pd-hero-img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* ── Content sections ── */
+.pd-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pd-section {
+  padding: 2rem 0;
+}
+
+.pd-section-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #555;
+  margin-bottom: 1rem;
+  font-family: "Courier New", monospace;
+}
+
+.pd-prose {
+  font-size: 0.97rem;
+  color: #c0c0c0;
+  line-height: 1.8;
+  margin: 0 0 1rem;
+  max-width: 680px;
+}
+
+.pd-prose:last-child {
+  margin-bottom: 0;
+}
+
+.pd-prose-italic {
+  color: #999;
+  font-style: italic;
+}
+
+.pd-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  width: 100%;
+}
+
+/* ── Stats grid ── */
+.pd-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.pd-stat-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pd-stat-icon {
+  color: #555;
+}
+
+.pd-stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.pd-stat-label {
+  font-size: 0.72rem;
+  color: #666;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Footer nav ── */
+.pd-footer-nav {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pd-footer-nav .pd-back-btn {
+  margin-bottom: 0;
+}
+
+/* ── Not found ── */
+.pd-not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  color: #666;
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .pd-container {
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  .pd-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-title {
+    font-size: 2rem;
+  }
+}

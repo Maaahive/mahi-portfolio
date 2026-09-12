@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -60,6 +61,7 @@ const PROJECTS = [
     github: "https://github.com/Maaahive/Off-Track",
     live: null,
     status: "Desktop App",
+    detailSlug: "off-track",
   },
   {
     id: "002",
@@ -71,6 +73,7 @@ const PROJECTS = [
     github: "https://github.com/Maaahive/Cartel",
     live: "https://cartel-f4hf.onrender.com/",
     liveLabel: "Live Demo",
+    detailSlug: "cartel",
   },
   {
     id: "003",
@@ -607,6 +610,7 @@ function Skills() {
 
 function ProjectCard({ p, i }) {
   const [hovered, setHovered] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <motion.div
@@ -618,7 +622,11 @@ function ProjectCard({ p, i }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="project-img-wrap">
+      <div
+        className="project-img-wrap"
+        style={p.detailSlug ? { cursor: "pointer" } : {}}
+        onClick={p.detailSlug ? () => navigate(`/projects/${p.detailSlug}`) : undefined}
+      >
         {p.img ? (
           <img src={p.img} alt={p.name} className="project-img" />
         ) : (
@@ -643,12 +651,22 @@ function ProjectCard({ p, i }) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
             >
+              {p.detailSlug && (
+                <button
+                  className="project-overlay-badge"
+                  onClick={(e) => { e.stopPropagation(); navigate(`/projects/${p.detailSlug}`); }}
+                  style={{ background: "rgba(255,255,255,0.12)", border: "none", cursor: "pointer", color: "#fff" }}
+                >
+                  Case Study
+                </button>
+              )}
               {p.github && (
                 <a
                   href={p.github}
                   target="_blank"
                   rel="noreferrer"
                   className="project-overlay-badge"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <SiGithub size={22} />
                 </a>
@@ -660,6 +678,7 @@ function ProjectCard({ p, i }) {
                   rel="noreferrer"
                   className="project-overlay-badge"
                   title={p.liveLabel || "Live Site"}
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <FiExternalLink size={22} />
                 </a>
@@ -723,6 +742,16 @@ function ProjectCard({ p, i }) {
             })}
           </div>
           <div className="project-links" style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            {p.detailSlug && (
+              <button
+                onClick={() => navigate(`/projects/${p.detailSlug}`)}
+                className="project-github-link"
+                title="Case Study"
+                style={{ background: "none", border: "none", cursor: "pointer", padding: 0, color: "inherit" }}
+              >
+                <FiFileText size={16} />
+              </button>
+            )}
             {p.live && (
               <a
                 href={p.live}
