@@ -329,7 +329,7 @@ function Hero() {
           {/* PHOTO — tilted polaroid with scanline + rgb-glitch flicker */}
           <Tilt className="photo-frame" tiltMaxAngleX={10} tiltMaxAngleY={10} glareEnable={true} glareMaxOpacity={0.2} glareColor="#a855f7" glarePosition="all" scale={1.02} transitionSpeed={1200}>
             <div className="photo-image-area">
-              <img src={photo} alt="Mahi" className="photo-img" />
+              <img src={photo} alt="Mahi" className="photo-img" loading="eager" decoding="async" />
               <div className="photo-scanline" />
             </div>
             <div className="photo-caption">[ mahi.jpg ]</div>
@@ -608,7 +608,7 @@ function ProjectCard({ p, i }) {
         } : undefined}
       >
         {p.img ? (
-          <img src={p.img} alt={p.name} className="project-img" />
+          <img src={p.img} alt={p.name} className="project-img" loading="lazy" decoding="async" />
         ) : (
           <div className="project-img-placeholder">
             <div className="mockup-bar">

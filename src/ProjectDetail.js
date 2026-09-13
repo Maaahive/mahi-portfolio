@@ -306,6 +306,8 @@ export default function ProjectDetail() {
             src={project.heroImg}
             alt={project.name}
             className="pd-hero-img clickable"
+            loading="eager"
+            decoding="async"
             onClick={() => setActiveModalImg({ src: project.heroImg, title: project.name })}
           />
           <div className="pd-hero-caption">{project.heroCaption}</div>
@@ -370,7 +372,7 @@ export default function ProjectDetail() {
                       className="pd-gallery-thumb-wrap clickable"
                       onClick={() => setActiveModalImg({ src: item.img, title: item.title })}
                     >
-                      <img src={item.img} alt={item.title} className="pd-gallery-thumb" />
+                      <img src={item.img} alt={item.title} className="pd-gallery-thumb" loading="lazy" decoding="async" />
                       <div className="pd-gallery-overlay">
                         <FiMaximize2 size={20} />
                       </div>

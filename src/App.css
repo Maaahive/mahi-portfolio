@@ -87,6 +87,9 @@ body::after {
   pointer-events: none;
   z-index: 0;
   opacity: 0.55;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 .aurora-blob-1 {
   width: 600px;
@@ -114,22 +117,22 @@ body::after {
 }
 
 @keyframes auroraFloat1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(80px, 60px) scale(1.1); }
-  66%  { transform: translate(-40px, 100px) scale(0.95); }
-  100% { transform: translate(0, 0) scale(1); }
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  33%  { transform: translate3d(80px, 60px, 0) scale(1.1); }
+  66%  { transform: translate3d(-40px, 100px, 0) scale(0.95); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 @keyframes auroraFloat2 {
-  0%   { transform: translate(0, 0) scale(1); }
-  40%  { transform: translate(-100px, 80px) scale(1.08); }
-  70%  { transform: translate(60px, -50px) scale(0.92); }
-  100% { transform: translate(0, 0) scale(1); }
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  40%  { transform: translate3d(-100px, 80px, 0) scale(1.08); }
+  70%  { transform: translate3d(60px, -50px, 0) scale(0.92); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 @keyframes auroraFloat3 {
-  0%   { transform: translate(0, 0) scale(1); }
-  30%  { transform: translate(60px, -80px) scale(1.12); }
-  65%  { transform: translate(-80px, 40px) scale(0.9); }
-  100% { transform: translate(0, 0) scale(1); }
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  30%  { transform: translate3d(60px, -80px, 0) scale(1.12); }
+  65%  { transform: translate3d(-80px, 40px, 0) scale(0.9); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 
 /* ── CURSOR ── */
@@ -143,6 +146,7 @@ body::after {
   left: 0;
   pointer-events: none;
   z-index: 9999;
+  will-change: transform;
 }
 .cursor-ring {
   width: 32px;
@@ -154,6 +158,7 @@ body::after {
   left: 0;
   pointer-events: none;
   z-index: 9998;
+  will-change: transform;
   transition:
     width 0.2s,
     height 0.2s,
@@ -176,6 +181,8 @@ body::after {
   );
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
   transition: transform 0.8s ease;
 }
 
