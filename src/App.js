@@ -296,12 +296,23 @@ function Hero() {
   };
 
   const nameRef = useRef(null);
-  const [cursor, setCursor] = useState({ x: 0, y: 0 });
-  const [nameHover, setNameHover] = useState(false);
+  const spotlightRef = useRef(null);
 
   const handleNameMove = (e) => {
+    if (!nameRef.current || !spotlightRef.current) return;
     const r = nameRef.current.getBoundingClientRect();
-    setCursor({ x: e.clientX - r.left, y: e.clientY - r.top });
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    spotlightRef.current.style.webkitMaskImage = `radial-gradient(circle 110px at ${x}px ${y}px, black 0%, transparent 70%)`;
+    spotlightRef.current.style.maskImage = `radial-gradient(circle 110px at ${x}px ${y}px, black 0%, transparent 70%)`;
+  };
+
+  const handleNameEnter = () => {
+    if (spotlightRef.current) spotlightRef.current.style.opacity = "1";
+  };
+
+  const handleNameLeave = () => {
+    if (spotlightRef.current) spotlightRef.current.style.opacity = "0";
   };
 
   return (
@@ -321,8 +332,8 @@ function Hero() {
             className="hero-name"
             ref={nameRef}
             onMouseMove={handleNameMove}
-            onMouseEnter={() => setNameHover(true)}
-            onMouseLeave={() => setNameHover(false)}
+            onMouseEnter={handleNameEnter}
+            onMouseLeave={handleNameLeave}
             custom={1}
             initial="hidden"
             animate="visible"
@@ -333,13 +344,10 @@ function Hero() {
             <span className="hero-word hero-word-accent">Agarwal.</span>
             {/* cursor spotlight — same text, masked to a circle around the cursor */}
             <span
+              ref={spotlightRef}
               className="hero-spotlight"
               aria-hidden="true"
-              style={{
-                WebkitMaskImage: `radial-gradient(circle 110px at ${cursor.x}px ${cursor.y}px, black 0%, transparent 70%)`,
-                maskImage: `radial-gradient(circle 110px at ${cursor.x}px ${cursor.y}px, black 0%, transparent 70%)`,
-                opacity: nameHover ? 1 : 0,
-              }}
+              style={{ opacity: 0 }}
             >
               <span>Mahi</span>
               <br />

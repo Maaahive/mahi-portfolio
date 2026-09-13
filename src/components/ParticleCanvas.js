@@ -96,6 +96,17 @@ export default function ParticleCanvas() {
     const linkDistMax = 95;
     const linkDistMaxSq = linkDistMax * linkDistMax;
 
+    let isScrolling = false;
+    let scrollTimer = null;
+    const onScroll = () => {
+      isScrolling = true;
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        isScrolling = false;
+      }, 90);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     const renderParticles = () => {
       if (!isTabActive) return;
       ctx.clearRect(0, 0, width, height);
@@ -115,37 +126,40 @@ export default function ParticleCanvas() {
         ctx.fillStyle = `rgba(255, 107, 74, ${p.alpha * 0.6})`;
         ctx.fill();
 
-        // Optimized mouse proximity calculation (avoids Math.sqrt when out of range)
-        const dxMouse = mouse.x - p.x;
-        const dyMouse = mouse.y - p.y;
-        const distMouseSq = dxMouse * dxMouse + dyMouse * dyMouse;
+        // While user is actively scrolling, skip line math to prioritize 60/120fps native scroll
+        if (!isScrolling) {
+          // Optimized mouse proximity calculation
+          const dxMouse = mouse.x - p.x;
+          const dyMouse = mouse.y - p.y;
+          const distMouseSq = dxMouse * dxMouse + dyMouse * dyMouse;
 
-        if (distMouseSq < mouseDistMaxSq) {
-          const distMouse = Math.sqrt(distMouseSq);
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(mouse.x, mouse.y);
-          const alpha = (1 - distMouse / mouseDistMax) * 0.35;
-          ctx.strokeStyle = `rgba(255, 107, 74, ${alpha})`;
-          ctx.lineWidth = 0.8;
-          ctx.stroke();
-        }
-
-        // Optimized particle constellation lines
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const distSq = dx * dx + dy * dy;
-
-          if (distSq < linkDistMaxSq) {
-            const dist = Math.sqrt(distSq);
+          if (distMouseSq < mouseDistMaxSq) {
+            const distMouse = Math.sqrt(distMouseSq);
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - dist / linkDistMax) * 0.08})`;
-            ctx.lineWidth = 0.6;
+            ctx.lineTo(mouse.x, mouse.y);
+            const alpha = (1 - distMouse / mouseDistMax) * 0.35;
+            ctx.strokeStyle = `rgba(255, 107, 74, ${alpha})`;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
+          }
+
+          // Optimized particle constellation lines
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const distSq = dx * dx + dy * dy;
+
+            if (distSq < linkDistMaxSq) {
+              const dist = Math.sqrt(distSq);
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - dist / linkDistMax) * 0.08})`;
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
           }
         }
       }
@@ -162,7 +176,9 @@ export default function ParticleCanvas() {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVisibilityChange);
+      if (scrollTimer) clearTimeout(scrollTimer);
     };
   }, [matrixMode]);
 

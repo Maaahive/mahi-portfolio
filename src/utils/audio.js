@@ -24,18 +24,28 @@ class SoundEngine {
         }
       });
 
-      // Global hover sound delegation (throttled to max once per 120ms to prevent spam)
+      let isScrolling = false;
+      let scrollTimer = null;
+      window.addEventListener("scroll", () => {
+        isScrolling = true;
+        if (scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          isScrolling = false;
+        }, 90);
+      }, { passive: true });
+
+      // Global hover sound delegation (throttled to max once per 140ms and paused during active scrolling)
       window.addEventListener("mouseover", (e) => {
-        if (!this.enabled) return;
+        if (!this.enabled || isScrolling) return;
         const now = Date.now();
-        if (now - this.lastHoverTime < 120) return;
+        if (now - this.lastHoverTime < 140) return;
 
         const target = e.target;
         if (target && target.closest("a, button, [role='button'], .project-card, .filter-chip")) {
           this.lastHoverTime = now;
           this.playHover();
         }
-      });
+      }, { passive: true });
     }
   }
 
