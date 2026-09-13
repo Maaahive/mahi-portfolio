@@ -76,24 +76,24 @@ export default function ParticleCanvas() {
 
     const isMobile = width < 768;
     const particleCount = isMobile
-      ? Math.min(Math.floor((width * height) / 28000), 22)
-      : Math.min(Math.floor((width * height) / 22000), 44);
+      ? Math.min(Math.floor((width * height) / 22000), 30)
+      : Math.min(Math.floor((width * height) / 16000), 62);
 
     const particles = [];
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        radius: Math.random() * 1.1 + 0.7,
-        alpha: Math.random() * 0.35 + 0.15,
+        vx: (Math.random() - 0.5) * 0.34,
+        vy: (Math.random() - 0.5) * 0.34,
+        radius: Math.random() * 1.4 + 0.9,
+        alpha: Math.random() * 0.35 + 0.35,
       });
     }
 
-    const mouseDistMax = 140;
+    const mouseDistMax = 150;
     const mouseDistMaxSq = mouseDistMax * mouseDistMax;
-    const linkDistMax = 100;
+    const linkDistMax = 105;
     const linkDistMaxSq = linkDistMax * linkDistMax;
 
     let isScrolling = false;
@@ -122,15 +122,15 @@ export default function ParticleCanvas() {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        // Soft, delicate stardust point
+        // Crisp, glowing celestial particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 107, 74, ${p.alpha * 0.5})`;
+        ctx.fillStyle = `rgba(255, 107, 74, ${p.alpha * 0.75})`;
         ctx.fill();
 
-        // While not actively scrolling, draw subtle constellation connections
+        // While not actively scrolling, draw clearly visible constellation connections
         if (!isScrolling) {
-          // Subtle mouse connection line
+          // Responsive mouse connection line
           const dxMouse = mouse.x - p.x;
           const dyMouse = mouse.y - p.y;
           const distMouseSq = dxMouse * dxMouse + dyMouse * dyMouse;
@@ -140,13 +140,13 @@ export default function ParticleCanvas() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(mouse.x, mouse.y);
-            const lineAlpha = (1 - distMouse / mouseDistMax) * 0.28;
+            const lineAlpha = (1 - distMouse / mouseDistMax) * 0.42;
             ctx.strokeStyle = `rgba(255, 107, 74, ${lineAlpha})`;
-            ctx.lineWidth = 0.7;
+            ctx.lineWidth = 0.85;
             ctx.stroke();
           }
 
-          // Whisper-thin constellation lines between nearby stars
+          // Clearly defined constellation lines between nearby stars
           for (let j = i + 1; j < particles.length; j++) {
             const p2 = particles[j];
             const dx = p.x - p2.x;
@@ -158,9 +158,9 @@ export default function ParticleCanvas() {
               ctx.beginPath();
               ctx.moveTo(p.x, p.y);
               ctx.lineTo(p2.x, p2.y);
-              const linkAlpha = (1 - dist / linkDistMax) * 0.075;
+              const linkAlpha = (1 - dist / linkDistMax) * 0.11;
               ctx.strokeStyle = `rgba(255, 255, 255, ${linkAlpha})`;
-              ctx.lineWidth = 0.5;
+              ctx.lineWidth = 0.65;
               ctx.stroke();
             }
           }
