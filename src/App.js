@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
@@ -159,57 +159,7 @@ const RF_SKILLS = [
 ];
 
 // ─────────────────────────────────────────
-// CURSOR
-// ─────────────────────────────────────────
 
-function Cursor() {
-  const cursorRef = useRef(null);
-  const ringRef = useRef(null);
-  const orbRef = useRef(null);
-  const pos = useRef({ x: 0, y: 0 });
-  const ring = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const onMove = (e) => {
-      pos.current = { x: e.clientX, y: e.clientY };
-      if (cursorRef.current)
-        cursorRef.current.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
-      if (orbRef.current)
-        orbRef.current.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
-    };
-    const onEnter = () => ringRef.current?.classList.add("hovered");
-    const onLeave = () => ringRef.current?.classList.remove("hovered");
-
-    document.addEventListener("mousemove", onMove);
-    document.querySelectorAll("a, button").forEach((el) => {
-      el.addEventListener("mouseenter", onEnter);
-      el.addEventListener("mouseleave", onLeave);
-    });
-
-    let raf;
-    const animate = () => {
-      ring.current.x += (pos.current.x - ring.current.x - 16) * 0.12;
-      ring.current.y += (pos.current.y - ring.current.y - 16) * 0.12;
-      if (ringRef.current)
-        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px)`;
-      raf = requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => {
-      document.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  return (
-    <>
-      <div className="cursor" ref={cursorRef} />
-      <div className="cursor-ring" ref={ringRef} />
-      <div className="orb" ref={orbRef} />
-    </>
-  );
-}
 
 // ─────────────────────────────────────────
 // NAV
@@ -1044,7 +994,6 @@ export default function App() {
       <div className="aurora-blob aurora-blob-1" />
       <div className="aurora-blob aurora-blob-2" />
       <div className="aurora-blob aurora-blob-3" />
-      <Cursor />
       <Nav />
       <Hero />
       <About />
