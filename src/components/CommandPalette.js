@@ -130,8 +130,6 @@ export default function CommandPalette() {
   };
 
   const handleInputKeyDown = (e) => {
-    sound.playHover();
-
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedIndex((prev) => (prev + 1) % Math.max(1, filtered.length));

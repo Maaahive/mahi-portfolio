@@ -23,29 +23,6 @@ class SoundEngine {
           this.playClick();
         }
       });
-
-      let isScrolling = false;
-      let scrollTimer = null;
-      window.addEventListener("scroll", () => {
-        isScrolling = true;
-        if (scrollTimer) clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => {
-          isScrolling = false;
-        }, 90);
-      }, { passive: true });
-
-      // Global hover sound delegation (throttled to max once per 140ms and paused during active scrolling)
-      window.addEventListener("mouseover", (e) => {
-        if (!this.enabled || isScrolling) return;
-        const now = Date.now();
-        if (now - this.lastHoverTime < 140) return;
-
-        const target = e.target;
-        if (target && target.closest("a, button, [role='button'], .project-card, .filter-chip")) {
-          this.lastHoverTime = now;
-          this.playHover();
-        }
-      }, { passive: true });
     }
   }
 
@@ -99,28 +76,7 @@ class SoundEngine {
   }
 
   playHover() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    try {
-      const now = this.ctx.currentTime;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(420, now);
-      osc.frequency.linearRampToValueAtTime(540, now + 0.045);
-
-      gain.gain.setValueAtTime(0.09, now);
-      gain.gain.linearRampToValueAtTime(0.001, now + 0.045);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(now);
-      osc.stop(now + 0.045);
-    } catch (_) {}
+    // Hover sounds removed per user request
   }
 
   playSuccess() {

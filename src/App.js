@@ -249,7 +249,6 @@ function Nav() {
                 duration={600}
                 offset={-80}
                 onClick={() => sound.playClick()}
-                onMouseEnter={() => sound.playHover()}
               >
                 {s}
               </Link>
@@ -676,10 +675,7 @@ function ProjectCard({ p, i }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: i * 0.08 }}
-      onMouseEnter={() => {
-        setHovered(true);
-        sound.playHover();
-      }}
+      onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <div
@@ -895,7 +891,6 @@ function Projects() {
                   sound.playClick();
                   setFilter(opt);
                 }}
-                onMouseEnter={() => sound.playHover()}
               >
                 {opt}
                 <span className="filter-count">{count}</span>
