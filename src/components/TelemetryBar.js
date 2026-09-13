@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { sound } from '../utils/audio';
-import './TelemetryBar.css';
+﻿import React, { useState, useEffect } from "react";
+import { sound } from "../utils/audio";
+import "./TelemetryBar.css";
 
 export default function TelemetryBar() {
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState("");
   const [ping, setPing] = useState(32);
   const [repoCount, setRepoCount] = useState(12);
   const [soundOn, setSoundOn] = useState(sound.enabled);
@@ -12,25 +12,25 @@ export default function TelemetryBar() {
     // 1. Live IST Clock
     const updateTime = () => {
       const now = new Date();
-      const istString = now.toLocaleTimeString('en-US', {
-        timeZone: 'Asia/Kolkata',
+      const istString = now.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Kolkata",
         hour12: true,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
       });
       setTime(istString);
     };
     updateTime();
     const clockInterval = setInterval(updateTime, 1000);
 
-    // 2. Simulated fluctuating ping
+    // 2. Simulated fluctuating network ping
     const pingInterval = setInterval(() => {
       setPing(Math.floor(26 + Math.random() * 16));
     }, 4000);
 
-    // 3. Fetch GitHub live repo count
-    fetch('https://api.github.com/users/Maaahive')
+    // 3. Live GitHub API count
+    fetch("https://api.github.com/users/Maaahive")
       .then((res) => res.json())
       .then((data) => {
         if (data && data.public_repos) {
@@ -39,24 +39,32 @@ export default function TelemetryBar() {
       })
       .catch(() => {});
 
+    // 4. Sync sound state changes
+    const onSoundChange = (e) => {
+      setSoundOn(e.detail);
+    };
+    window.addEventListener("sound-changed", onSoundChange);
+
     return () => {
       clearInterval(clockInterval);
       clearInterval(pingInterval);
+      window.removeEventListener("sound-changed", onSoundChange);
     };
   }, []);
 
   const handleToggleSound = () => {
     const newState = sound.toggle();
     setSoundOn(newState);
+    window.dispatchEvent(new CustomEvent("sound-changed", { detail: newState }));
   };
 
   const handleOpenPalette = () => {
     sound.playClick();
-    window.dispatchEvent(new CustomEvent('open-command-palette'));
+    window.dispatchEvent(new CustomEvent("open-command-palette"));
   };
 
   return (
-    <div className="telemetry-bar">
+    <header className="telemetry-bar">
       <div className="telemetry-inner">
         {/* Left: Availability Beacon */}
         <div className="telemetry-item telemetry-status">
@@ -83,17 +91,19 @@ export default function TelemetryBar() {
             <span className="telemetry-val">{repoCount} Repos</span>
           </div>
 
-          {/* Audio toggle */}
+          {/* Sound Toggle */}
           <button
-            className={`telemetry-btn ${soundOn ? 'active' : ''}`}
+            type="button"
+            className={`telemetry-btn telemetry-sound-btn ${soundOn ? "active" : ""}`}
             onClick={handleToggleSound}
-            title={soundOn ? 'Disable UI Sound Effects' : 'Enable UI Sound Effects'}
+            title={soundOn ? "Click to Mute Sound FX" : "Click to Enable Tactile Sound FX"}
           >
-            {soundOn ? '🔊 Audio: ON' : '🔈 Audio: OFF'}
+            <span>{soundOn ? "🔊 Audio: ON" : "🔈 Audio: OFF"}</span>
           </button>
 
-          {/* Command Palette Button */}
+          {/* Command Palette Trigger */}
           <button
+            type="button"
             className="telemetry-btn telemetry-cmd-btn"
             onClick={handleOpenPalette}
             title="Open Command Palette (Ctrl+K)"
@@ -103,6 +113,6 @@ export default function TelemetryBar() {
           </button>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
