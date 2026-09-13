@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   FiActivity,
   FiCpu,
@@ -14,7 +14,7 @@ import {
 import { sound } from '../utils/audio';
 import './SystemSpecsModal.css';
 
-export default function SystemSpecsModal({ isOpen, onClose }) {
+export default function SystemSpecsModal({ onClose }) {
   const [specs, setSpecs] = useState(null);
   const [ping, setPing] = useState(null);
   const [isPinging, setIsPinging] = useState(false);
@@ -22,7 +22,6 @@ export default function SystemSpecsModal({ isOpen, onClose }) {
 
   // Measure display refresh rate / FPS
   useEffect(() => {
-    if (!isOpen) return;
 
     let frameCount = 0;
     let startTime = performance.now();
@@ -42,12 +41,10 @@ export default function SystemSpecsModal({ isOpen, onClose }) {
 
     animId = requestAnimationFrame(measureFps);
     return () => cancelAnimationFrame(animId);
-  }, [isOpen]);
+  }, []);
 
   // Query hardware specs
   useEffect(() => {
-    if (!isOpen) return;
-
     try {
       // WebGL GPU Detection
       let gpuRenderer = 'Standard GPU / Hardware Acceleration';
@@ -103,7 +100,7 @@ export default function SystemSpecsModal({ isOpen, onClose }) {
         audio: 'Synthesizer Active (Web Audio API 2.0)',
       });
     } catch (_) {}
-  }, [isOpen]);
+  }, []);
 
   // Ping test
   const runPingTest = useCallback(async () => {
@@ -122,40 +119,38 @@ export default function SystemSpecsModal({ isOpen, onClose }) {
   }, []);
 
   useEffect(() => {
-    if (isOpen && ping === null) {
+    if (ping === null) {
       runPingTest();
     }
-  }, [isOpen, ping, runPingTest]);
+  }, [ping, runPingTest]);
 
   // Esc to close
   useEffect(() => {
-    if (!isOpen) return;
     const handleKey = (e) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+  }, [onClose]);
 
   return (
-    <AnimatePresence>
+    <motion.div
+      className="specs-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <motion.div
-        className="specs-overlay"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
+        className="specs-modal"
+        initial={{ scale: 0.94, y: 15, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        exit={{ scale: 0.94, y: 15, opacity: 0 }}
+        transition={{ duration: 0.22 }}
+        onClick={(e) => e.stopPropagation()}
       >
-        <motion.div
-          className="specs-modal"
-          initial={{ scale: 0.94, y: 15, opacity: 0 }}
-          animate={{ scale: 1, y: 0, opacity: 1 }}
-          exit={{ scale: 0.94, y: 15, opacity: 0 }}
-          transition={{ duration: 0.22 }}
-          onClick={(e) => e.stopPropagation()}
-        >
           {/* Header */}
           <div className="specs-header">
             <div className="specs-header-left">
@@ -258,6 +253,5 @@ export default function SystemSpecsModal({ isOpen, onClose }) {
           </div>
         </motion.div>
       </motion.div>
-    </AnimatePresence>
   );
 }

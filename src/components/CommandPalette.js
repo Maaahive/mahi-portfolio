@@ -195,12 +195,12 @@ export default function CommandPalette() {
     }
 
     if (cmd.action === 'specs') {
-      setShowSpecs(true);
+      setTimeout(() => setShowSpecs(true), 50);
       return;
     }
 
     if (cmd.action === 'hack') {
-      setShowHacker(true);
+      setTimeout(() => setShowHacker(true), 50);
       return;
     }
 
@@ -251,13 +251,13 @@ export default function CommandPalette() {
         return;
       }
       if (q === 'specs' || q === 'system' || q === 'gpu' || q === 'hardware') {
-        setShowSpecs(true);
         setIsOpen(false);
+        setTimeout(() => setShowSpecs(true), 50);
         return;
       }
-      if (q === 'hack' || q === 'heist' || q === 'terminal') {
-        setShowHacker(true);
+      if (q === 'hack' || q === 'heist' || q === 'terminal' || q === 'hacker') {
         setIsOpen(false);
+        setTimeout(() => setShowHacker(true), 50);
         return;
       }
       if (q === 'cyberpunk' || q === 'neon') {
@@ -382,20 +382,29 @@ export default function CommandPalette() {
     </AnimatePresence>
 
     {/* System Diagnostics Modal */}
-    <SystemSpecsModal
-      isOpen={showSpecs}
-      onClose={() => setShowSpecs(false)}
-    />
+    <AnimatePresence>
+      {showSpecs && (
+        <SystemSpecsModal
+          onClose={() => setShowSpecs(false)}
+        />
+      )}
+    </AnimatePresence>
 
     {/* Hacker Terminal Modal */}
-    <HackerTerminalModal
-      isOpen={showHacker}
-      onClose={() => setShowHacker(false)}
-      onTriggerMatrix={() => {
-        if (window.toggleMatrixMode) window.toggleMatrixMode();
-      }}
-      onTriggerSpecs={() => setShowSpecs(true)}
-    />
+    <AnimatePresence>
+      {showHacker && (
+        <HackerTerminalModal
+          onClose={() => setShowHacker(false)}
+          onTriggerMatrix={() => {
+            if (window.toggleMatrixMode) window.toggleMatrixMode();
+          }}
+          onTriggerSpecs={() => {
+            setShowHacker(false);
+            setTimeout(() => setShowSpecs(true), 50);
+          }}
+        />
+      )}
+    </AnimatePresence>
 
     {/* Konami Code God Mode Banner */}
     <AnimatePresence>
@@ -429,8 +438,8 @@ export default function CommandPalette() {
             <button
               className="k-btn k-btn-shell"
               onClick={() => {
-                setShowHacker(true);
                 setShowKonami(false);
+                setTimeout(() => setShowHacker(true), 50);
               }}
             >
               Hacker Terminal
@@ -438,8 +447,8 @@ export default function CommandPalette() {
             <button
               className="k-btn k-btn-specs"
               onClick={() => {
-                setShowSpecs(true);
                 setShowKonami(false);
+                setTimeout(() => setShowSpecs(true), 50);
               }}
             >
               Diagnostics

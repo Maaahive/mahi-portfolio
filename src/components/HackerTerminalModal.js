@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FiTerminal, FiX, FiMaximize2, FiMinimize2 } from 'react-icons/fi';
 import { sound } from '../utils/audio';
 import './HackerTerminalModal.css';
@@ -20,22 +20,17 @@ const INITIAL_LOGS = [
   { text: 'Type "help" to inspect available terminal commands, or "exit" to close.', type: 'system' },
 ];
 
-export default function HackerTerminalModal({ isOpen, onClose, onTriggerMatrix, onTriggerSpecs }) {
-  const [logs, setLogs] = useState([]);
+export default function HackerTerminalModal({ onClose, onTriggerMatrix, onTriggerSpecs }) {
+  const [logs, setLogs] = useState(INITIAL_LOGS.slice(0, 3));
   const [inputVal, setInputVal] = useState('');
   const [isMaximized, setIsMaximized] = useState(false);
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Play typewriter sequence on open
+  // Play typewriter sequence for remaining logs
   useEffect(() => {
-    if (!isOpen) {
-      setLogs([]);
-      return;
-    }
-
     sound.playClick();
-    let currentIdx = 0;
+    let currentIdx = 3;
     const interval = setInterval(() => {
       if (currentIdx < INITIAL_LOGS.length) {
         setLogs((prev) => [...prev, INITIAL_LOGS[currentIdx]]);
@@ -43,28 +38,25 @@ export default function HackerTerminalModal({ isOpen, onClose, onTriggerMatrix, 
       } else {
         clearInterval(interval);
       }
-    }, 70);
+    }, 60);
 
     return () => clearInterval(interval);
-  }, [isOpen]);
+  }, []);
 
   // Focus input and scroll down
   useEffect(() => {
-    if (isOpen) {
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-      inputRef.current?.focus();
-    }
-  }, [isOpen, logs]);
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    inputRef.current?.focus();
+  }, [logs]);
 
   // Esc to close
   useEffect(() => {
-    if (!isOpen) return;
     const handleKey = (e) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [isOpen, onClose]);
+  }, [onClose]);
 
   const handleCommand = (cmdStr) => {
     const cmd = cmdStr.trim().toLowerCase();
@@ -147,25 +139,24 @@ export default function HackerTerminalModal({ isOpen, onClose, onTriggerMatrix, 
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <AnimatePresence>
+    <motion.div
+      className="hacker-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <motion.div
-        className="hacker-overlay"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
+        className={`hacker-terminal ${isMaximized ? 'maximized' : ''}`}
+        initial={{ scale: 0.94, y: 15, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        exit={{ scale: 0.94, y: 15, opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        onClick={(e) => e.stopPropagation()}
       >
-        <motion.div
-          className={`hacker-terminal ${isMaximized ? 'maximized' : ''}`}
-          initial={{ scale: 0.92, y: 20, opacity: 0 }}
-          animate={{ scale: 1, y: 0, opacity: 1 }}
-          exit={{ scale: 0.92, y: 20, opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          onClick={(e) => e.stopPropagation()}
-        >
           {/* CRT scanline scan */}
           <div className="crt-scanline" />
 
@@ -226,6 +217,5 @@ export default function HackerTerminalModal({ isOpen, onClose, onTriggerMatrix, 
           </div>
         </motion.div>
       </motion.div>
-    </AnimatePresence>
   );
 }
