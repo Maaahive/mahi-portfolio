@@ -143,8 +143,8 @@ body::after {
   position: fixed;
   top: 0;
   left: 0;
-  pointer-events: none;
-  z-index: 9999;
+  pointer-events: none !important;
+  z-index: 999999 !important;
   will-change: transform;
 }
 .cursor-ring {
@@ -155,8 +155,8 @@ body::after {
   position: fixed;
   top: 0;
   left: 0;
-  pointer-events: none;
-  z-index: 9998;
+  pointer-events: none !important;
+  z-index: 999998 !important;
   will-change: transform;
   transition:
     width 0.2s,

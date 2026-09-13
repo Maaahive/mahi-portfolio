@@ -7,27 +7,18 @@ export default function Cursor() {
   const ring = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
-    let isMoving = false;
-    let moveTimeout = null;
-
     const onMove = (e) => {
       pos.current = { x: e.clientX, y: e.clientY };
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
       }
-      isMoving = true;
-      if (moveTimeout) clearTimeout(moveTimeout);
-      moveTimeout = setTimeout(() => {
-        isMoving = false;
-      }, 150);
     };
 
     const onOver = (e) => {
-      if (!isMoving) return; // ignore during fast scrolling to maintain 60/120fps
       if (
         e.target &&
         e.target.closest(
-          "a, button, [role='button'], .project-card, .clickable, .pd-gallery-thumb, .filter-chip"
+          "a, button, [role='button'], .project-card, .clickable, .pd-gallery-thumb, .filter-chip, .k-btn, .cmd-item, .spec-ping-btn"
         )
       ) {
         ringRef.current?.classList.add("hovered");
@@ -59,7 +50,6 @@ export default function Cursor() {
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseover", onOver);
-      if (moveTimeout) clearTimeout(moveTimeout);
       cancelAnimationFrame(raf);
     };
   }, []);

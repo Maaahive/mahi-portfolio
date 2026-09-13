@@ -238,71 +238,64 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   KONAMI GOD MODE TOAST
+   KONAMI GOD MODE TOAST (SLEEK & COMPACT)
    ───────────────────────────────────────────────────────────── */
 .konami-toast {
   position: fixed;
-  top: 72px;
+  top: 70px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 9999;
-  background: rgba(12, 12, 18, 0.94);
-  border: 1px solid #ffd700;
-  border-radius: 12px;
-  padding: 0.75rem 1.25rem;
-  box-shadow: 0 0 35px rgba(255, 215, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  background: rgba(13, 13, 20, 0.94);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(168, 85, 247, 0.2);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   max-width: 90vw;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-  animation: konamiGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes konamiGlow {
-  from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.25); }
-  to { box-shadow: 0 0 40px rgba(255, 215, 0, 0.55); }
+  font-family: inherit;
 }
 
 .konami-left {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .konami-badge-icon {
-  font-size: 1.4rem;
-  filter: drop-shadow(0 0 8px #ffd700);
+  font-size: 1.1rem;
+  color: #fbbf24;
 }
 
 .konami-headline {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: #ffd700;
-  letter-spacing: 0.08em;
+  color: #f3f4f6;
+  letter-spacing: 0.04em;
 }
 
 .konami-caption {
-  font-size: 0.7rem;
-  color: #c9d1d9;
-  margin-top: 0.15rem;
+  font-size: 0.68rem;
+  color: #9ca3af;
 }
 
 .konami-actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .k-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #fff;
-  border-radius: 5px;
-  padding: 0.3rem 0.65rem;
-  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e5e7eb;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
@@ -311,49 +304,38 @@
 }
 
 .k-btn:hover {
-  transform: translateY(-1px);
+  background: rgba(168, 85, 247, 0.25);
+  border-color: #a855f7;
+  color: #fff;
 }
 
 .k-btn-matrix {
-  border-color: #00ff88;
+  border-color: rgba(0, 255, 136, 0.35);
   color: #00ff88;
 }
 
 .k-btn-matrix:hover {
   background: #00ff88;
   color: #000;
-  box-shadow: 0 0 10px #00ff88;
 }
 
 .k-btn-shell {
-  border-color: #00e5ff;
-  color: #00e5ff;
-}
-
-.k-btn-shell:hover {
-  background: #00e5ff;
-  color: #000;
-  box-shadow: 0 0 10px #00e5ff;
+  border-color: rgba(192, 132, 252, 0.35);
+  color: #c084fc;
 }
 
 .k-btn-specs {
-  border-color: #ff6b4a;
+  border-color: rgba(255, 107, 74, 0.35);
   color: #ff6b4a;
-}
-
-.k-btn-specs:hover {
-  background: #ff6b4a;
-  color: #fff;
-  box-shadow: 0 0 10px #ff6b4a;
 }
 
 .k-btn-close {
   background: transparent;
   border: none;
-  color: #8b949e;
+  color: #6b7280;
   cursor: pointer;
-  font-size: 0.9rem;
-  padding: 0.2rem 0.4rem;
+  font-size: 0.85rem;
+  padding: 0.15rem 0.35rem;
   transition: color 0.2s;
 }
 
@@ -361,35 +343,37 @@
   color: #fff;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 680px) {
   .konami-toast {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    gap: 0.5rem;
   }
 }
 
 /* ─────────────────────────────────────────────────────────────
-   CYBERPUNK MODE OVERLAYS
+   CYBERPUNK MODE (CLEAN & SUBTLE OVERRIDES)
    ───────────────────────────────────────────────────────────── */
 .cyberpunk-hud-indicator {
   position: fixed;
-  bottom: 1.5rem;
-  left: 1.5rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
   z-index: 2000;
-  background: rgba(10, 5, 20, 0.9);
-  border: 1px solid #ff007f;
-  color: #ff007f;
-  border-radius: 6px;
-  padding: 0.45rem 0.85rem;
-  font-family: 'JetBrains Mono', monospace;
+  background: rgba(14, 11, 24, 0.92);
+  border: 1px solid rgba(192, 132, 252, 0.4);
+  color: #c084fc;
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  font-family: inherit;
   font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  box-shadow: 0 0 20px rgba(255, 0, 127, 0.35);
+  gap: 0.55rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(168, 85, 247, 0.15);
   backdrop-filter: blur(8px);
 }
 
@@ -397,53 +381,38 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #ff007f;
-  box-shadow: 0 0 8px #ff007f;
-  animation: hudPulse 1.2s ease-in-out infinite alternate;
+  background: #c084fc;
+  box-shadow: 0 0 8px #c084fc;
+  animation: hudPulse 1.4s ease-in-out infinite alternate;
 }
 
 .cyberpunk-hud-indicator button {
-  background: #ff007f;
+  background: rgba(192, 132, 252, 0.15);
   color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 0.2rem 0.5rem;
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
   font-size: 0.68rem;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .cyberpunk-hud-indicator button:hover {
-  background: #00ffff;
-  color: #000;
-  box-shadow: 0 0 10px #00ffff;
+  background: #a855f7;
+  border-color: #a855f7;
 }
 
-/* Global Cyberpunk Mode styling overrides */
-body.cyberpunk-mode {
-  text-shadow: 0 0 1px rgba(0, 255, 255, 0.4);
+/* Global subtle Cyberpunk Mode accent */
+body.cyberpunk-mode .nav {
+  border-bottom: 1px solid rgba(192, 132, 252, 0.35) !important;
+  box-shadow: 0 4px 25px rgba(168, 85, 247, 0.12) !important;
 }
 
-body.cyberpunk-mode::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-  background-size: 100% 4px;
-  z-index: 999;
-  opacity: 0.5;
+body.cyberpunk-mode .hero-heading {
+  background: linear-gradient(135deg, #fff 20%, #c084fc 60%, #ff6b4a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-body.cyberpunk-mode h1,
-body.cyberpunk-mode h2,
-body.cyberpunk-mode h3 {
-  text-shadow: 0 0 12px rgba(255, 0, 127, 0.5), 0 0 20px rgba(0, 255, 255, 0.3);
-}
-
-body.cyberpunk-mode .navbar {
-  border-bottom-color: rgba(255, 0, 127, 0.4) !important;
-  box-shadow: 0 0 20px rgba(255, 0, 127, 0.2) !important;
-}
 

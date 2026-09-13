@@ -186,13 +186,17 @@ export default function ParticleCanvas() {
     };
 
     if (matrixMode) {
+      ctx.fillStyle = '#040508';
+      ctx.fillRect(0, 0, width, height);
       renderMatrix();
     } else {
+      ctx.clearRect(0, 0, width, height);
       renderParticles();
     }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      ctx.clearRect(0, 0, width, height);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('scroll', onScroll);
