@@ -8,19 +8,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.25rem;
 }
 
 .specs-modal {
   width: 100%;
-  max-width: 660px;
-  background: #0c0c14;
-  border: 1px solid rgba(168, 85, 247, 0.28);
-  border-radius: 14px;
-  padding: 1.5rem 1.6rem;
+  max-width: 490px;
+  background: #090814;
+  border: 1px solid rgba(168, 85, 247, 0.32);
+  border-radius: 16px;
+  padding: 1.5rem;
   color: #f3f4f6;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(168, 85, 247, 0.14);
-  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(168, 85, 247, 0.12);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   position: relative;
   overflow: hidden;
 }
@@ -32,14 +32,14 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #a855f7, #ff6b4a, transparent);
+  background: linear-gradient(90deg, transparent, #a855f7, #6366f1, transparent);
 }
 
 .specs-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.3rem;
+  margin-bottom: 1.25rem;
 }
 
 .specs-header-left {
@@ -52,15 +52,9 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #a855f7;
-  box-shadow: 0 0 10px #a855f7;
+  background: #00ff88;
+  box-shadow: 0 0 8px #00ff88;
   display: inline-block;
-  animation: beaconPulse 1.6s ease-in-out infinite alternate;
-}
-
-@keyframes beaconPulse {
-  from { opacity: 0.4; transform: scale(0.85); }
-  to { opacity: 1; transform: scale(1.15); }
 }
 
 .specs-icon-pulse {
@@ -72,7 +66,7 @@
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #c084fc;
+  color: #e2e8f0;
 }
 
 .specs-close-btn {
@@ -93,21 +87,14 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
-.specs-subtitle {
-  font-size: 0.72rem;
-  color: #9ca3af;
-  margin-bottom: 1.2rem;
-  letter-spacing: 0.02em;
-}
-
 .specs-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.85rem;
+  gap: 0.75rem;
   margin-bottom: 1.25rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 500px) {
   .specs-grid {
     grid-template-columns: 1fr;
   }
@@ -115,14 +102,14 @@
 
 .spec-card {
   background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
   padding: 0.85rem 1rem;
   transition: all 0.2s ease;
 }
 
 .spec-card:hover {
-  border-color: rgba(168, 85, 247, 0.35);
+  border-color: rgba(168, 85, 247, 0.3);
   background: rgba(255, 255, 255, 0.04);
 }
 
@@ -130,9 +117,9 @@
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.66rem;
-  color: #9ca3af;
-  letter-spacing: 0.08em;
+  font-size: 0.64rem;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
   margin-bottom: 0.35rem;
   font-weight: 600;
 }
@@ -143,30 +130,23 @@
 }
 
 .spec-val-primary {
-  font-size: 0.86rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: #f9fafb;
+  color: #f1f5f9;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   word-break: break-word;
 }
 
 .spec-tag {
   font-size: 0.64rem;
-  background: rgba(168, 85, 247, 0.15);
+  background: rgba(168, 85, 247, 0.12);
   color: #c084fc;
   padding: 0.12rem 0.45rem;
   border-radius: 4px;
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  font-weight: 600;
-}
-
-.spec-val-meta {
-  font-size: 0.68rem;
-  color: #6b7280;
-  margin-top: 0.3rem;
-  line-height: 1.35;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  font-weight: 500;
 }
 
 .spec-ping-btn {
@@ -174,12 +154,13 @@
   border: 1px solid rgba(168, 85, 247, 0.25);
   color: #c084fc;
   border-radius: 4px;
-  padding: 0.2rem 0.45rem;
+  padding: 0.18rem 0.4rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+  margin-left: auto;
 }
 
 .spec-ping-btn:hover {
@@ -200,24 +181,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 0.85rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   font-size: 0.72rem;
 }
 
 .specs-status-pill {
-  color: #10b981;
+  color: #00ff88;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  font-size: 0.68rem;
 }
 
 .specs-dismiss-btn {
-  background: rgba(168, 85, 247, 0.12);
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  color: #c084fc;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
   border-radius: 6px;
-  padding: 0.4rem 0.85rem;
+  padding: 0.35rem 0.9rem;
   font-size: 0.72rem;
   font-family: inherit;
   cursor: pointer;
@@ -226,7 +207,7 @@
 }
 
 .specs-dismiss-btn:hover {
-  background: #a855f7;
-  border-color: #a855f7;
+  background: rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.4);
   color: #fff;
 }

@@ -6,9 +6,7 @@ import {
   FiMonitor,
   FiWifi,
   FiZap,
-  FiCheckCircle,
   FiX,
-  FiRadio,
   FiRefreshCw
 } from 'react-icons/fi';
 import { sound } from '../utils/audio';
@@ -156,40 +154,32 @@ export default function SystemSpecsModal({ onClose }) {
             <div className="specs-header-left">
               <span className="specs-beacon" />
               <FiActivity className="specs-icon-pulse" />
-              <span className="specs-title">SYSTEM TELEMETRY &amp; HARDWARE DIAGNOSTICS</span>
+              <span className="specs-title">SYSTEM DIAGNOSTICS</span>
             </div>
-            <button className="specs-close-btn" onClick={onClose} title="Close (Esc)">
+            <button className="specs-close-btn" onClick={onClose} title="Close">
               <FiX size={16} />
             </button>
           </div>
 
-          <div className="specs-subtitle">
-            Live WebGL hardware scan and environment profile detected for your client.
-          </div>
-
-          {/* Grid */}
+          {/* Clean 4-Item Grid */}
           <div className="specs-grid">
             {/* GPU */}
             <div className="spec-card">
               <div className="spec-card-head">
                 <FiZap className="spec-icon" />
-                <span className="spec-label">GPU RENDER ENGINE</span>
+                <span className="spec-label">GRAPHICS RENDERER</span>
               </div>
-              <div className="spec-val-primary">{specs?.gpu || 'Detecting hardware...'}</div>
-              <div className="spec-val-meta">Vendor: {specs?.vendor || 'Standard WebGL'}</div>
+              <div className="spec-val-primary">{specs?.gpu || 'Standard GPU'}</div>
             </div>
 
             {/* Display & Refresh */}
             <div className="spec-card">
               <div className="spec-card-head">
                 <FiMonitor className="spec-icon" />
-                <span className="spec-label">DISPLAY &amp; REFRESH RATE</span>
+                <span className="spec-label">DISPLAY &amp; REFRESH</span>
               </div>
               <div className="spec-val-primary">
-                {fps} Hz <span className="spec-tag">~{fps} FPS</span>
-              </div>
-              <div className="spec-val-meta">
-                {specs?.display} • {specs?.dpr}
+                {fps} FPS <span className="spec-tag">{specs?.display}</span>
               </div>
             </div>
 
@@ -197,58 +187,38 @@ export default function SystemSpecsModal({ onClose }) {
             <div className="spec-card">
               <div className="spec-card-head">
                 <FiCpu className="spec-icon" />
-                <span className="spec-label">PROCESSOR &amp; OS HOST</span>
+                <span className="spec-label">CPU &amp; PLATFORM</span>
               </div>
-              <div className="spec-val-primary">{specs?.cores}</div>
-              <div className="spec-val-meta">Platform: {specs?.platform}</div>
+              <div className="spec-val-primary">
+                {specs?.cores} <span className="spec-tag">{specs?.platform}</span>
+              </div>
             </div>
 
             {/* Network Latency */}
             <div className="spec-card">
               <div className="spec-card-head">
                 <FiWifi className="spec-icon" />
-                <span className="spec-label">EDGE CONNECTION &amp; LATENCY</span>
+                <span className="spec-label">NETWORK LATENCY</span>
               </div>
               <div className="spec-val-primary">
-                {ping !== null ? `${ping} ms RTT` : 'Measuring...'}
+                {ping !== null ? `${ping} ms` : 'Measuring...'}
                 <button
                   className="spec-ping-btn"
                   onClick={runPingTest}
                   disabled={isPinging}
                   title="Measure live ping latency"
                 >
-                  <FiRefreshCw className={isPinging ? 'spin' : ''} size={11} />
+                  <FiRefreshCw className={isPinging ? 'spin' : ''} size={12} />
                 </button>
               </div>
-              <div className="spec-val-meta">{specs?.network}</div>
-            </div>
-
-            {/* Memory Heap */}
-            <div className="spec-card">
-              <div className="spec-card-head">
-                <FiRadio className="spec-icon" />
-                <span className="spec-label">MEMORY HEAP ALLOCATION</span>
-              </div>
-              <div className="spec-val-primary">{specs?.memory}</div>
-              <div className="spec-val-meta">Client V8 / JavaScript Runtime Buffer</div>
-            </div>
-
-            {/* Audio Synthesis */}
-            <div className="spec-card">
-              <div className="spec-card-head">
-                <FiCheckCircle className="spec-icon" />
-                <span className="spec-label">AUDIO CO-PROCESSOR</span>
-              </div>
-              <div className="spec-val-primary">{specs?.audio}</div>
-              <div className="spec-val-meta">Zero Latency Oscillator Engine</div>
             </div>
           </div>
 
           {/* Footer Bar */}
           <div className="specs-footer">
-            <span className="specs-status-pill">● CLIENT STATUS: 100% OPERATIONAL</span>
+            <span className="specs-status-pill">● ALL SYSTEMS OPERATIONAL</span>
             <button className="specs-dismiss-btn" onClick={onClose}>
-              Dismiss Diagnostics [Esc]
+              Close
             </button>
           </div>
         </motion.div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiX, FiPlay, FiRotateCcw, FiVolume2, FiVolumeX, FiAward } from 'react-icons/fi';
 import { sound } from '../utils/audio';
@@ -64,10 +64,10 @@ export default function MiniGameModal({ onClose }) {
       gameRef.current.keys[e.code] = true;
       gameRef.current.keys[e.key] = true;
 
-      if ((e.code === 'Space' || e.key === ' ') && gameState === 'ready') {
-        startGame();
-      } else if ((e.code === 'Space' || e.key === ' ') && gameState === 'gameover') {
-        restartGame();
+      if (e.code === 'Space' || e.key === ' ') {
+        if (gameState === 'ready' || gameState === 'gameover') {
+          startGame();
+        }
       }
     };
 
@@ -78,11 +78,9 @@ export default function MiniGameModal({ onClose }) {
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
-    const g = gameRef.current;
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
-      if (g.reqId) cancelAnimationFrame(g.reqId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState, onClose]);
@@ -326,15 +324,30 @@ export default function MiniGameModal({ onClose }) {
     ctx.fill();
     ctx.restore();
 
-    g.reqId = requestAnimationFrame(updateGame);
   };
 
-  const startGame = useCallback(() => {
+  // Game animation loop - runs cleanly while gameState === 'playing'
+  useEffect(() => {
+    if (gameState !== 'playing') return;
+
+    let animId;
+    const loop = () => {
+      updateGame();
+      animId = requestAnimationFrame(loop);
+    };
+    animId = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(animId);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState]);
+
+  const startGame = () => {
     sound.playSuccess();
     setScore(0);
     setWave(1);
     setLives(3);
-    setGameState('playing');
 
     gameRef.current.score = 0;
     gameRef.current.wave = 1;
@@ -345,14 +358,9 @@ export default function MiniGameModal({ onClose }) {
     gameRef.current.particles = [];
     gameRef.current.player.x = 240;
     gameRef.current.lastSpawnTime = Date.now();
+    gameRef.current.lastShotTime = 0;
 
-    if (gameRef.current.reqId) cancelAnimationFrame(gameRef.current.reqId);
-    gameRef.current.reqId = requestAnimationFrame(updateGame);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [soundMuted]);
-
-  const restartGame = () => {
-    startGame();
+    setGameState('playing');
   };
 
   // Touch / mouse dragging for controls
@@ -458,7 +466,7 @@ export default function MiniGameModal({ onClose }) {
                 <span>[A] [D] or [←] [→] to Move</span>
                 <span>[SPACE] or [TAP] to Shoot</span>
               </div>
-              <button className="game-start-btn" onClick={startGame}>
+              <button className="game-start-btn" onClick={(e) => { e.stopPropagation(); startGame(); }}>
                 <FiPlay size={16} />
                 <span>START MISSION</span>
               </button>
@@ -476,7 +484,7 @@ export default function MiniGameModal({ onClose }) {
                   <div className="new-high-score">🏆 NEW ALL-TIME RECORD!</div>
                 )}
               </div>
-              <button className="game-start-btn" onClick={restartGame}>
+              <button className="game-start-btn" onClick={(e) => { e.stopPropagation(); startGame(); }}>
                 <FiRotateCcw size={15} />
                 <span>DEPLOY HOTFIX (PLAY AGAIN)</span>
               </button>
