@@ -2,9 +2,7 @@
 class SoundEngine {
   constructor() {
     this.ctx = null;
-    // Default to enabled if user hasn't explicitly muted, or keep saved preference
-    const saved = localStorage.getItem("sound_enabled");
-    this.enabled = saved === "true";
+    this.enabled = false;
     this.lastHoverTime = 0;
 
     // Listen globally on window for user interactions to unlock AudioContext

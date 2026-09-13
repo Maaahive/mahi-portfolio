@@ -169,7 +169,6 @@ const RF_SKILLS = [
 function Nav() {
   const [time, setTime] = useState("");
   const [ping, setPing] = useState(28);
-  const [soundOn, setSoundOn] = useState(sound.enabled);
 
   useEffect(() => {
     // 1. Real-time IST clock
@@ -193,24 +192,11 @@ function Nav() {
       setPing(Math.floor(25 + Math.random() * 14));
     }, 4000);
 
-    // 3. Sound sync listener
-    const onSoundChange = (e) => {
-      setSoundOn(e.detail);
-    };
-    window.addEventListener("sound-changed", onSoundChange);
-
     return () => {
       clearInterval(clockInterval);
       clearInterval(pingInterval);
-      window.removeEventListener("sound-changed", onSoundChange);
     };
   }, []);
-
-  const handleToggleSound = () => {
-    const newState = sound.toggle();
-    setSoundOn(newState);
-    window.dispatchEvent(new CustomEvent("sound-changed", { detail: newState }));
-  };
 
   const handleOpenPalette = () => {
     sound.playClick();
@@ -238,7 +224,7 @@ function Nav() {
         <span className="nav-telem-ping">{ping}ms</span>
       </div>
 
-      {/* Right: Nav Links + Audio Toggle + Palette Button */}
+      {/* Right: Nav Links + Palette Button */}
       <div className="nav-actions">
         <ul className="nav-links">
           {["about", "skills", "projects", "contact"].map((s) => (
@@ -256,25 +242,14 @@ function Nav() {
           ))}
         </ul>
 
-        <div className="nav-controls">
-          <button
-            type="button"
-            className={`nav-audio-toggle ${soundOn ? "active" : ""}`}
-            onClick={handleToggleSound}
-            title={soundOn ? "Audio FX: ON (Click to Mute)" : "Audio FX: OFF (Click to Enable)"}
-          >
-            <span>{soundOn ? "🔊 ON" : "🔈 OFF"}</span>
-          </button>
-
-          <button
-            type="button"
-            className="nav-cmd-trigger"
-            onClick={handleOpenPalette}
-            title="Open Command Palette (Ctrl+K)"
-          >
-            <span>⌘K</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          className="nav-cmd-trigger"
+          onClick={handleOpenPalette}
+          title="Open Command Palette (Ctrl+K)"
+        >
+          <span>⌘K</span>
+        </button>
       </div>
     </nav>
   );
