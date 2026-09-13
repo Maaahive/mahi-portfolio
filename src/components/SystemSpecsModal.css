@@ -1,0 +1,226 @@
+.specs-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 5, 8, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.specs-modal {
+  width: 100%;
+  max-width: 680px;
+  background: #090b10;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: #e6edf3;
+  box-shadow: 0 0 40px rgba(0, 242, 254, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  position: relative;
+  overflow: hidden;
+}
+
+.specs-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00f2fe, #ff6b4a, transparent);
+}
+
+.specs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.specs-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.specs-beacon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00f2fe;
+  box-shadow: 0 0 8px #00f2fe;
+  display: inline-block;
+  animation: beaconPulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes beaconPulse {
+  from { opacity: 0.4; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1.2); }
+}
+
+.specs-icon-pulse {
+  color: #00f2fe;
+}
+
+.specs-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #00f2fe;
+}
+
+.specs-close-btn {
+  background: transparent;
+  border: none;
+  color: #8b949e;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.specs-close-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.specs-subtitle {
+  font-size: 0.72rem;
+  color: #8b949e;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .specs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.spec-card {
+  background: rgba(16, 20, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.spec-card:hover {
+  border-color: rgba(0, 242, 254, 0.3);
+}
+
+.spec-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.68rem;
+  color: #8b949e;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.spec-icon {
+  color: #ff6b4a;
+  font-size: 0.85rem;
+}
+
+.spec-val-primary {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  word-break: break-word;
+}
+
+.spec-tag {
+  font-size: 0.65rem;
+  background: rgba(0, 242, 254, 0.15);
+  color: #00f2fe;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.spec-val-meta {
+  font-size: 0.68rem;
+  color: #7d8590;
+  margin-top: 0.3rem;
+  line-height: 1.35;
+}
+
+.spec-ping-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #00f2fe;
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.spec-ping-btn:hover {
+  background: rgba(0, 242, 254, 0.2);
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.specs-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.72rem;
+}
+
+.specs-status-pill {
+  color: #00ff88;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.specs-dismiss-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #c9d1d9;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.72rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.specs-dismiss-btn:hover {
+  background: #ff6b4a;
+  border-color: #ff6b4a;
+  color: #fff;
+}

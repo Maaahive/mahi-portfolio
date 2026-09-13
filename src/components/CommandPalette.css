@@ -236,3 +236,214 @@
     align-items: flex-start;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   KONAMI GOD MODE TOAST
+   ───────────────────────────────────────────────────────────── */
+.konami-toast {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: rgba(12, 12, 18, 0.94);
+  border: 1px solid #ffd700;
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 0 35px rgba(255, 215, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 90vw;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  animation: konamiGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes konamiGlow {
+  from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.25); }
+  to { box-shadow: 0 0 40px rgba(255, 215, 0, 0.55); }
+}
+
+.konami-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.konami-badge-icon {
+  font-size: 1.4rem;
+  filter: drop-shadow(0 0 8px #ffd700);
+}
+
+.konami-headline {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 0.08em;
+}
+
+.konami-caption {
+  font-size: 0.7rem;
+  color: #c9d1d9;
+  margin-top: 0.15rem;
+}
+
+.konami-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.k-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  border-radius: 5px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.k-btn:hover {
+  transform: translateY(-1px);
+}
+
+.k-btn-matrix {
+  border-color: #00ff88;
+  color: #00ff88;
+}
+
+.k-btn-matrix:hover {
+  background: #00ff88;
+  color: #000;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+.k-btn-shell {
+  border-color: #00e5ff;
+  color: #00e5ff;
+}
+
+.k-btn-shell:hover {
+  background: #00e5ff;
+  color: #000;
+  box-shadow: 0 0 10px #00e5ff;
+}
+
+.k-btn-specs {
+  border-color: #ff6b4a;
+  color: #ff6b4a;
+}
+
+.k-btn-specs:hover {
+  background: #ff6b4a;
+  color: #fff;
+  box-shadow: 0 0 10px #ff6b4a;
+}
+
+.k-btn-close {
+  background: transparent;
+  border: none;
+  color: #8b949e;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.2rem 0.4rem;
+  transition: color 0.2s;
+}
+
+.k-btn-close:hover {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .konami-toast {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CYBERPUNK MODE OVERLAYS
+   ───────────────────────────────────────────────────────────── */
+.cyberpunk-hud-indicator {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 2000;
+  background: rgba(10, 5, 20, 0.9);
+  border: 1px solid #ff007f;
+  color: #ff007f;
+  border-radius: 6px;
+  padding: 0.45rem 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.cyber-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff007f;
+  box-shadow: 0 0 8px #ff007f;
+  animation: hudPulse 1.2s ease-in-out infinite alternate;
+}
+
+.cyberpunk-hud-indicator button {
+  background: #ff007f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cyberpunk-hud-indicator button:hover {
+  background: #00ffff;
+  color: #000;
+  box-shadow: 0 0 10px #00ffff;
+}
+
+/* Global Cyberpunk Mode styling overrides */
+body.cyberpunk-mode {
+  text-shadow: 0 0 1px rgba(0, 255, 255, 0.4);
+}
+
+body.cyberpunk-mode::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 999;
+  opacity: 0.5;
+}
+
+body.cyberpunk-mode h1,
+body.cyberpunk-mode h2,
+body.cyberpunk-mode h3 {
+  text-shadow: 0 0 12px rgba(255, 0, 127, 0.5), 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+body.cyberpunk-mode .navbar {
+  border-bottom-color: rgba(255, 0, 127, 0.4) !important;
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.2) !important;
+}
+

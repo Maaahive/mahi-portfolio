@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -11,9 +11,12 @@ import {
   FiVolume2,
   FiX,
   FiZap,
+  FiActivity,
 } from 'react-icons/fi';
 import { sound } from '../utils/audio';
 import resumePdf from '../assets/resume.pdf';
+import SystemSpecsModal from './SystemSpecsModal';
+import HackerTerminalModal from './HackerTerminalModal';
 import './CommandPalette.css';
 
 const COMMANDS = [
@@ -21,11 +24,14 @@ const COMMANDS = [
   { id: 'skills', title: 'Explore Core Skills & Tech', category: 'Navigation', icon: FiLayers, shortcut: 'S' },
   { id: 'about', title: 'About Mahi Agarwal', category: 'Navigation', icon: FiTerminal, shortcut: 'A' },
   { id: 'contact', title: 'Send a Message / Contact', category: 'Navigation', icon: FiMail, shortcut: 'C' },
+  { id: 'specs', title: 'System Telemetry (Live WebGL GPU & Specs)', category: 'Tools', icon: FiActivity, action: 'specs' },
+  { id: 'hack', title: 'Hacker Terminal (Simulated Penetration Test)', category: 'Easter Eggs', icon: FiTerminal, action: 'hack' },
+  { id: 'matrix', title: 'Matrix Mode (Toggle Cyber Green Rain)', category: 'Easter Eggs', icon: FiTerminal, action: 'matrix' },
+  { id: 'cyberpunk', title: 'Cyberpunk Mode (CRT Scanlines & Neon Glow)', category: 'Easter Eggs', icon: FiZap, action: 'cyberpunk' },
   { id: 'off-track', title: 'Case Study: Off-Track (Desktop Music Player)', category: 'Case Studies', icon: FiZap, slug: '/projects/off-track' },
   { id: 'cartel', title: 'Case Study: Cartel (Real-Time Grocery App)', category: 'Case Studies', icon: FiZap, slug: '/projects/cartel' },
   { id: 'resume', title: 'Download / View Resume (PDF)', category: 'Documents', icon: FiFileText, action: 'resume' },
   { id: 'github', title: 'Open GitHub Profile (@Maaahive)', category: 'External', icon: FiExternalLink, action: 'github' },
-  { id: 'matrix', title: 'Matrix Mode (Toggle Cyber Green Rain)', category: 'Easter Eggs', icon: FiTerminal, action: 'matrix' },
   { id: 'sound', title: 'Toggle Audio FX (Sound Engine)', category: 'Settings', icon: FiVolume2, action: 'sound' },
 ];
 
@@ -34,9 +40,85 @@ export default function CommandPalette() {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [easterEggMessage, setEasterEggMessage] = useState(null);
+  const [showSpecs, setShowSpecs] = useState(false);
+  const [showHacker, setShowHacker] = useState(false);
+  const [showKonami, setShowKonami] = useState(false);
+  const [isCyberpunk, setIsCyberpunk] = useState(() => {
+    return localStorage.getItem('cyberpunk_mode') === 'true';
+  });
+
   const inputRef = useRef(null);
+  const konamiProgress = useRef([]);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const toggleCyberpunk = useCallback(() => {
+    setIsCyberpunk((prev) => {
+      const next = !prev;
+      localStorage.setItem('cyberpunk_mode', next ? 'true' : 'false');
+      if (next) {
+        document.body.classList.add('cyberpunk-mode');
+        sound.playSuccess();
+      } else {
+        document.body.classList.remove('cyberpunk-mode');
+        sound.playClick();
+      }
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (isCyberpunk) {
+      document.body.classList.add('cyberpunk-mode');
+    } else {
+      document.body.classList.remove('cyberpunk-mode');
+    }
+  }, [isCyberpunk]);
+
+  // Global Konami Code Listener (↑ ↑ ↓ ↓ ← → ← → B A)
+  useEffect(() => {
+    const konamiSequence = [
+      'arrowup',
+      'arrowup',
+      'arrowdown',
+      'arrowdown',
+      'arrowleft',
+      'arrowright',
+      'arrowleft',
+      'arrowright',
+      'b',
+      'a',
+    ];
+
+    const handleKeyDown = (e) => {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+        return;
+      }
+
+      const key = e.key.toLowerCase();
+      konamiProgress.current.push(key);
+
+      if (konamiProgress.current.length > konamiSequence.length) {
+        konamiProgress.current.shift();
+      }
+
+      if (konamiProgress.current.join('') === konamiSequence.join('')) {
+        sound.playSuccess();
+        setShowKonami(true);
+        konamiProgress.current = [];
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Auto-dismiss Konami banner after 9 seconds
+  useEffect(() => {
+    if (!showKonami) return;
+    const timer = setTimeout(() => setShowKonami(false), 9000);
+    return () => clearTimeout(timer);
+  }, [showKonami]);
 
   // Listen for Ctrl+K, Cmd+K, Escape, or custom event
   useEffect(() => {
@@ -105,9 +187,25 @@ export default function CommandPalette() {
     }
 
     if (cmd.action === 'matrix') {
+      sound.playGlitch();
       if (window.toggleMatrixMode) {
         window.toggleMatrixMode();
       }
+      return;
+    }
+
+    if (cmd.action === 'specs') {
+      setShowSpecs(true);
+      return;
+    }
+
+    if (cmd.action === 'hack') {
+      setShowHacker(true);
+      return;
+    }
+
+    if (cmd.action === 'cyberpunk') {
+      toggleCyberpunk();
       return;
     }
 
@@ -152,6 +250,21 @@ export default function CommandPalette() {
         setIsOpen(false);
         return;
       }
+      if (q === 'specs' || q === 'system' || q === 'gpu' || q === 'hardware') {
+        setShowSpecs(true);
+        setIsOpen(false);
+        return;
+      }
+      if (q === 'hack' || q === 'heist' || q === 'terminal') {
+        setShowHacker(true);
+        setIsOpen(false);
+        return;
+      }
+      if (q === 'cyberpunk' || q === 'neon') {
+        toggleCyberpunk();
+        setIsOpen(false);
+        return;
+      }
       if (q === 'clear') {
         setQuery('');
         setEasterEggMessage(null);
@@ -165,7 +278,8 @@ export default function CommandPalette() {
   };
 
   return (
-    <AnimatePresence>
+    <>
+      <AnimatePresence>
       {isOpen && (
         <motion.div
           className="cmd-overlay"
@@ -266,5 +380,92 @@ export default function CommandPalette() {
         </motion.div>
       )}
     </AnimatePresence>
+
+    {/* System Diagnostics Modal */}
+    <SystemSpecsModal
+      isOpen={showSpecs}
+      onClose={() => setShowSpecs(false)}
+    />
+
+    {/* Hacker Terminal Modal */}
+    <HackerTerminalModal
+      isOpen={showHacker}
+      onClose={() => setShowHacker(false)}
+      onTriggerMatrix={() => {
+        if (window.toggleMatrixMode) window.toggleMatrixMode();
+      }}
+      onTriggerSpecs={() => setShowSpecs(true)}
+    />
+
+    {/* Konami Code God Mode Banner */}
+    <AnimatePresence>
+      {showKonami && (
+        <motion.div
+          className="konami-toast"
+          initial={{ y: -60, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -60, opacity: 0 }}
+          transition={{ type: 'spring', damping: 20 }}
+        >
+          <div className="konami-left">
+            <span className="konami-badge-icon">⚡</span>
+            <div>
+              <div className="konami-headline">GOD MODE ACTIVATED (KONAMI PROTOCOL ACCEPTED)</div>
+              <div className="konami-caption">
+                +30 Dev Lives Granted! High-tech developer tools unlocked.
+              </div>
+            </div>
+          </div>
+          <div className="konami-actions">
+            <button
+              className="k-btn k-btn-matrix"
+              onClick={() => {
+                if (window.toggleMatrixMode) window.toggleMatrixMode();
+                setShowKonami(false);
+              }}
+            >
+              Matrix Rain
+            </button>
+            <button
+              className="k-btn k-btn-shell"
+              onClick={() => {
+                setShowHacker(true);
+                setShowKonami(false);
+              }}
+            >
+              Hacker Terminal
+            </button>
+            <button
+              className="k-btn k-btn-specs"
+              onClick={() => {
+                setShowSpecs(true);
+                setShowKonami(false);
+              }}
+            >
+              Diagnostics
+            </button>
+            <button
+              className="k-btn-close"
+              onClick={() => setShowKonami(false)}
+              title="Dismiss"
+            >
+              ✕
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+    {/* Cyberpunk Mode HUD Indicator */}
+    {isCyberpunk && (
+      <div className="cyberpunk-hud-indicator">
+        <span className="cyber-dot" />
+        <span>CYBERPUNK CRT: ACTIVE</span>
+        <button onClick={toggleCyberpunk} title="Switch back to normal mode">
+          Disable
+        </button>
+      </div>
+    )}
+  </>
   );
 }

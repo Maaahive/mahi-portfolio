@@ -23,9 +23,16 @@ export default function ParticleCanvas() {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
+    const fontSize = 15;
+    let columns = Math.max(1, Math.floor(width / fontSize));
+    let drops = Array(columns).fill(0).map(() => Math.floor(Math.random() * -50));
+    const chars = '0123456789ABCDEFHIJKLMNOXYZMAHI01010101985<>/*+-~#{}';
+
     const onResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+      columns = Math.max(1, Math.floor(width / fontSize));
+      drops = Array(columns).fill(0).map(() => Math.floor(Math.random() * -50));
     };
     window.addEventListener('resize', onResize);
 
@@ -48,12 +55,9 @@ export default function ParticleCanvas() {
 
     const renderMatrix = () => {
       if (!isTabActive) return;
-      const fontSize = 14;
-      const columns = Math.floor(width / fontSize);
-      const drops = Array(columns).fill(1);
-      const chars = '01ABCDEFMAHI01010101985';
 
-      ctx.fillStyle = 'rgba(5, 5, 8, 0.12)';
+      // Dark translucent wash to create the iconic trailing effect
+      ctx.fillStyle = 'rgba(3, 4, 6, 0.12)';
       ctx.fillRect(0, 0, width, height);
 
       ctx.font = `${fontSize}px monospace`;
@@ -63,8 +67,20 @@ export default function ParticleCanvas() {
         const x = i * fontSize;
         const y = drops[i] * fontSize;
 
-        ctx.fillStyle = Math.random() > 0.85 ? '#ffffff' : '#00ff88';
-        ctx.fillText(text, x, y);
+        if (y >= 0) {
+          if (Math.random() > 0.88) {
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = '#00ff88';
+            ctx.shadowBlur = 6;
+          } else {
+            ctx.fillStyle = '#00ff88';
+            ctx.shadowColor = '#00ff88';
+            ctx.shadowBlur = 2;
+          }
+
+          ctx.fillText(text, x, y);
+          ctx.shadowBlur = 0;
+        }
 
         if (y > height && Math.random() > 0.975) {
           drops[i] = 0;
@@ -185,13 +201,29 @@ export default function ParticleCanvas() {
     };
   }, [matrixMode]);
 
+  useEffect(() => {
+    if (!matrixMode) return;
+    const handleKey = (e) => {
+      if (e.key === 'Escape') {
+        setMatrixMode(false);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [matrixMode]);
+
   return (
     <>
       <canvas ref={canvasRef} className={`particle-canvas ${matrixMode ? 'matrix-active' : ''}`} />
       {matrixMode && (
         <div className="matrix-hud-banner">
-          <span>[ MATRIX PROTOCOL ACTIVE ]</span>
-          <button onClick={() => setMatrixMode(false)}>Exit Matrix</button>
+          <div className="matrix-hud-indicator">
+            <span className="matrix-hud-dot" />
+            <span>[ MATRIX PROTOCOL ACTIVE ]</span>
+          </div>
+          <button onClick={() => setMatrixMode(false)} title="Exit Matrix Mode (Esc)">
+            Exit Matrix [ESC]
+          </button>
         </div>
       )}
     </>
