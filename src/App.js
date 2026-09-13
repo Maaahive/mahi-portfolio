@@ -203,6 +203,17 @@ function Nav() {
     window.dispatchEvent(new CustomEvent("open-command-palette"));
   };
 
+  const handleOpenSpecs = () => {
+    sound.playClick();
+    window.dispatchEvent(new CustomEvent("open-specs-modal"));
+  };
+
+  const handleScrollToContact = () => {
+    sound.playClick();
+    const el = document.getElementById("contact");
+    el?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <nav className="nav">
       {/* Left: Brand + Available Status */}
@@ -210,19 +221,27 @@ function Nav() {
         <div className="nav-logo" onClick={() => sound.playClick()}>
           mahi.dev
         </div>
-        <div className="nav-status-pill" title="Open for Software Engineering Internships">
+        <button
+          className="nav-status-pill"
+          title="Open for Software Engineering Internships • Click to connect with Mahi"
+          onClick={handleScrollToContact}
+        >
           <span className="nav-status-dot" />
           <span className="nav-status-label">Available for SDE Internships</span>
-        </div>
+        </button>
       </div>
 
-      {/* Center: Minimalist Live Telemetry Capsule (Desktop) */}
-      <div className="nav-telemetry-capsule">
+      {/* Center: Live Telemetry Capsule (Desktop) */}
+      <button
+        className="nav-telemetry-capsule"
+        title="Live System Telemetry • Click to view hardware specs & diagnostic benchmarks"
+        onClick={handleOpenSpecs}
+      >
         <span className="nav-telem-loc">Noida [IST]</span>
         <span className="nav-telem-clock">{time}</span>
         <span className="nav-telem-divider">/</span>
         <span className="nav-telem-ping">{ping}ms</span>
-      </div>
+      </button>
 
       {/* Right: Nav Links + Palette Button */}
       <div className="nav-actions">

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import ProjectDetail from './ProjectDetail';
@@ -8,20 +8,24 @@ import Cursor from './Cursor';
 import ParticleCanvas from './components/ParticleCanvas';
 import CommandPalette from './components/CommandPalette';
 import MiniPlayer from './components/MiniPlayer';
+import ErrorBoundary from './ErrorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Cursor />
-      <ParticleCanvas />
-      <CommandPalette />
-      <MiniPlayer />
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/projects/:slug" element={<ProjectDetail />} />
-      </Routes>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Cursor />
+        <ParticleCanvas />
+        <CommandPalette />
+        <MiniPlayer />
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/projects/:slug" element={<ProjectDetail />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </ErrorBoundary>
   </React.StrictMode>
 );
 

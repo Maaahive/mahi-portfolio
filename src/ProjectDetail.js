@@ -193,9 +193,13 @@ export default function ProjectDetail() {
   if (!project) {
     return (
       <div className="pd-not-found">
-        <p>Project not found.</p>
-        <button onClick={() => navigate("/")} className="pd-back-btn">
-          Back to portfolio
+        <h2 style={{ color: '#fff', fontSize: '1.5rem', fontWeight: 600, margin: 0 }}>Case Study Not Found</h2>
+        <p style={{ color: '#9ca3af', maxWidth: '420px', textAlign: 'center', margin: 0 }}>
+          The requested project case study was not found or has returned to the main portfolio.
+        </p>
+        <button onClick={() => navigate("/")} className="pd-back-btn" style={{ marginTop: '0.5rem' }}>
+          <FiArrowLeft size={16} />
+          <span>Back to portfolio</span>
         </button>
       </div>
     );

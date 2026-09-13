@@ -138,12 +138,18 @@ export default function CommandPalette() {
       setIsOpen(true);
     };
 
+    const handleCustomSpecs = () => {
+      setShowSpecs(true);
+    };
+
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('open-command-palette', handleCustomOpen);
+    window.addEventListener('open-specs-modal', handleCustomSpecs);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('open-command-palette', handleCustomOpen);
+      window.removeEventListener('open-specs-modal', handleCustomSpecs);
     };
   }, [isOpen]);
 

@@ -21,31 +21,31 @@ const INITIAL_LOGS = [
 ];
 
 export default function HackerTerminalModal({ onClose, onTriggerMatrix, onTriggerSpecs }) {
-  const [logs, setLogs] = useState(INITIAL_LOGS.slice(0, 3));
+  const [logs, setLogs] = useState(INITIAL_LOGS);
   const [inputVal, setInputVal] = useState('');
   const [isMaximized, setIsMaximized] = useState(false);
-  const bottomRef = useRef(null);
+  const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Play typewriter sequence for remaining logs
+  // Play entry chime on open
   useEffect(() => {
     sound.playClick();
-    let currentIdx = 3;
-    const interval = setInterval(() => {
-      if (currentIdx < INITIAL_LOGS.length) {
-        setLogs((prev) => [...prev, INITIAL_LOGS[currentIdx]]);
-        currentIdx++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 60);
-
-    return () => clearInterval(interval);
   }, []);
 
-  // Focus input and scroll down
+  // Lock body scroll while modal is open
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, []);
+
+  // Internal terminal container auto-scroll (NEVER touches window.scroll)
+  useEffect(() => {
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
     inputRef.current?.focus();
   }, [logs]);
 
@@ -186,7 +186,11 @@ export default function HackerTerminalModal({ onClose, onTriggerMatrix, onTrigge
           </div>
 
           {/* Terminal Screen Body */}
-          <div className="terminal-body" onClick={() => inputRef.current?.focus()}>
+          <div
+            className="terminal-body"
+            ref={terminalBodyRef}
+            onClick={() => inputRef.current?.focus()}
+          >
             {logs.map((log, idx) => (
               <div key={idx} className={`term-line term-line-${log.type}`}>
                 {log.text}
@@ -207,7 +211,6 @@ export default function HackerTerminalModal({ onClose, onTriggerMatrix, onTrigge
                 autoComplete="off"
               />
             </div>
-            <div ref={bottomRef} />
           </div>
 
           {/* Terminal Footer */}
