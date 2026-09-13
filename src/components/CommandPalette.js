@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -12,11 +12,15 @@ import {
   FiX,
   FiZap,
   FiActivity,
+  FiPlay,
+  FiSmile,
 } from 'react-icons/fi';
 import { sound } from '../utils/audio';
 import resumePdf from '../assets/resume.pdf';
 import SystemSpecsModal from './SystemSpecsModal';
 import HackerTerminalModal from './HackerTerminalModal';
+import MiniGameModal from './MiniGameModal';
+import DevJokeModal from './DevJokeModal';
 import './CommandPalette.css';
 
 const COMMANDS = [
@@ -24,10 +28,11 @@ const COMMANDS = [
   { id: 'skills', title: 'Explore Core Skills & Tech', category: 'Navigation', icon: FiLayers, shortcut: 'S' },
   { id: 'about', title: 'About Mahi Agarwal', category: 'Navigation', icon: FiTerminal, shortcut: 'A' },
   { id: 'contact', title: 'Send a Message / Contact', category: 'Navigation', icon: FiMail, shortcut: 'C' },
+  { id: 'game', title: 'Play Mini-Game: Bug Blaster Arcade 👾', category: 'Easter Eggs', icon: FiPlay, action: 'game' },
+  { id: 'joke', title: 'Dev Humor: Random Programmer Joke / Roast 🎲', category: 'Easter Eggs', icon: FiSmile, action: 'joke' },
   { id: 'specs', title: 'System Telemetry (Live WebGL GPU & Specs)', category: 'Tools', icon: FiActivity, action: 'specs' },
   { id: 'hack', title: 'Hacker Terminal (Simulated Penetration Test)', category: 'Easter Eggs', icon: FiTerminal, action: 'hack' },
   { id: 'matrix', title: 'Matrix Mode (Toggle Cyber Green Rain)', category: 'Easter Eggs', icon: FiTerminal, action: 'matrix' },
-  { id: 'cyberpunk', title: 'Cyberpunk Mode (CRT Scanlines & Neon Glow)', category: 'Easter Eggs', icon: FiZap, action: 'cyberpunk' },
   { id: 'off-track', title: 'Case Study: Off-Track (Desktop Music Player)', category: 'Case Studies', icon: FiZap, slug: '/projects/off-track' },
   { id: 'cartel', title: 'Case Study: Cartel (Real-Time Grocery App)', category: 'Case Studies', icon: FiZap, slug: '/projects/cartel' },
   { id: 'resume', title: 'Download / View Resume (PDF)', category: 'Documents', icon: FiFileText, action: 'resume' },
@@ -42,38 +47,20 @@ export default function CommandPalette() {
   const [easterEggMessage, setEasterEggMessage] = useState(null);
   const [showSpecs, setShowSpecs] = useState(false);
   const [showHacker, setShowHacker] = useState(false);
+  const [showGame, setShowGame] = useState(false);
+  const [showJoke, setShowJoke] = useState(false);
   const [showKonami, setShowKonami] = useState(false);
-  const [isCyberpunk, setIsCyberpunk] = useState(() => {
-    return localStorage.getItem('cyberpunk_mode') === 'true';
-  });
 
   const inputRef = useRef(null);
   const konamiProgress = useRef([]);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const toggleCyberpunk = useCallback(() => {
-    setIsCyberpunk((prev) => {
-      const next = !prev;
-      localStorage.setItem('cyberpunk_mode', next ? 'true' : 'false');
-      if (next) {
-        document.body.classList.add('cyberpunk-mode');
-        sound.playSuccess();
-      } else {
-        document.body.classList.remove('cyberpunk-mode');
-        sound.playClick();
-      }
-      return next;
-    });
-  }, []);
-
+  // Clear any legacy cyberpunk class
   useEffect(() => {
-    if (isCyberpunk) {
-      document.body.classList.add('cyberpunk-mode');
-    } else {
-      document.body.classList.remove('cyberpunk-mode');
-    }
-  }, [isCyberpunk]);
+    document.body.classList.remove('cyberpunk-mode');
+    localStorage.removeItem('cyberpunk_mode');
+  }, []);
 
   // Global Konami Code Listener (↑ ↑ ↓ ↓ ← → ← → B A)
   useEffect(() => {
@@ -120,7 +107,7 @@ export default function CommandPalette() {
     return () => clearTimeout(timer);
   }, [showKonami]);
 
-  // Listen for Ctrl+K, Cmd+K, Escape, or custom event
+  // Listen for Ctrl+K, Cmd+K, Escape, or custom events
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -142,14 +129,26 @@ export default function CommandPalette() {
       setShowSpecs(true);
     };
 
+    const handleCustomGame = () => {
+      setShowGame(true);
+    };
+
+    const handleCustomJoke = () => {
+      setShowJoke(true);
+    };
+
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('open-command-palette', handleCustomOpen);
     window.addEventListener('open-specs-modal', handleCustomSpecs);
+    window.addEventListener('open-game-modal', handleCustomGame);
+    window.addEventListener('open-joke-modal', handleCustomJoke);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('open-command-palette', handleCustomOpen);
       window.removeEventListener('open-specs-modal', handleCustomSpecs);
+      window.removeEventListener('open-game-modal', handleCustomGame);
+      window.removeEventListener('open-joke-modal', handleCustomJoke);
     };
   }, [isOpen]);
 
@@ -210,8 +209,13 @@ export default function CommandPalette() {
       return;
     }
 
-    if (cmd.action === 'cyberpunk') {
-      toggleCyberpunk();
+    if (cmd.action === 'game') {
+      setTimeout(() => setShowGame(true), 50);
+      return;
+    }
+
+    if (cmd.action === 'joke') {
+      setTimeout(() => setShowJoke(true), 50);
       return;
     }
 
@@ -266,9 +270,14 @@ export default function CommandPalette() {
         setTimeout(() => setShowHacker(true), 50);
         return;
       }
-      if (q === 'cyberpunk' || q === 'neon') {
-        toggleCyberpunk();
+      if (q === 'game' || q === 'play' || q === 'arcade' || q === 'bug' || q === 'invaders') {
         setIsOpen(false);
+        setTimeout(() => setShowGame(true), 50);
+        return;
+      }
+      if (q === 'joke' || q === 'roast' || q === 'humor' || q === 'pun' || q === 'dad') {
+        setIsOpen(false);
+        setTimeout(() => setShowJoke(true), 50);
         return;
       }
       if (q === 'clear') {
@@ -380,10 +389,28 @@ export default function CommandPalette() {
             <div className="cmd-footer">
               <span>Use <kbd>↑</kbd> <kbd>↓</kbd> to navigate</span>
               <span><kbd>↵</kbd> to execute</span>
-              <span>Protip: type <code>matrix</code> or <code>sudo</code></span>
+              <span>Protip: type <code>game</code>, <code>joke</code>, or <code>matrix</code></span>
             </div>
           </motion.div>
         </motion.div>
+      )}
+    </AnimatePresence>
+
+    {/* Bug Blaster Mini Game Modal */}
+    <AnimatePresence>
+      {showGame && (
+        <MiniGameModal
+          onClose={() => setShowGame(false)}
+        />
+      )}
+    </AnimatePresence>
+
+    {/* Dev Joke Modal */}
+    <AnimatePresence>
+      {showJoke && (
+        <DevJokeModal
+          onClose={() => setShowJoke(false)}
+        />
       )}
     </AnimatePresence>
 
@@ -408,6 +435,14 @@ export default function CommandPalette() {
             setShowHacker(false);
             setTimeout(() => setShowSpecs(true), 50);
           }}
+          onTriggerGame={() => {
+            setShowHacker(false);
+            setTimeout(() => setShowGame(true), 50);
+          }}
+          onTriggerJoke={() => {
+            setShowHacker(false);
+            setTimeout(() => setShowJoke(true), 50);
+          }}
         />
       )}
     </AnimatePresence>
@@ -427,11 +462,30 @@ export default function CommandPalette() {
             <div>
               <div className="konami-headline">GOD MODE ACTIVATED (KONAMI PROTOCOL ACCEPTED)</div>
               <div className="konami-caption">
-                +30 Dev Lives Granted! High-tech developer tools unlocked.
+                +30 Dev Lives Granted! Arcade games and high-tech tools unlocked.
               </div>
             </div>
           </div>
           <div className="konami-actions">
+            <button
+              className="k-btn k-btn-matrix"
+              onClick={() => {
+                setShowKonami(false);
+                setTimeout(() => setShowGame(true), 50);
+              }}
+              style={{ background: 'linear-gradient(135deg, #a855f7, #6366f1)', color: '#fff' }}
+            >
+              👾 Bug Blaster
+            </button>
+            <button
+              className="k-btn k-btn-specs"
+              onClick={() => {
+                setShowKonami(false);
+                setTimeout(() => setShowJoke(true), 50);
+              }}
+            >
+              🎲 Dev Joke
+            </button>
             <button
               className="k-btn k-btn-matrix"
               onClick={() => {
@@ -448,16 +502,7 @@ export default function CommandPalette() {
                 setTimeout(() => setShowHacker(true), 50);
               }}
             >
-              Hacker Terminal
-            </button>
-            <button
-              className="k-btn k-btn-specs"
-              onClick={() => {
-                setShowKonami(false);
-                setTimeout(() => setShowSpecs(true), 50);
-              }}
-            >
-              Diagnostics
+              Terminal
             </button>
             <button
               className="k-btn-close"
@@ -470,17 +515,6 @@ export default function CommandPalette() {
         </motion.div>
       )}
     </AnimatePresence>
-
-    {/* Cyberpunk Mode HUD Indicator */}
-    {isCyberpunk && (
-      <div className="cyberpunk-hud-indicator">
-        <span className="cyber-dot" />
-        <span>CYBERPUNK CRT: ACTIVE</span>
-        <button onClick={toggleCyberpunk} title="Switch back to normal mode">
-          Disable
-        </button>
-      </div>
-    )}
   </>
   );
 }

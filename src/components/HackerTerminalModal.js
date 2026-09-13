@@ -20,7 +20,13 @@ const INITIAL_LOGS = [
   { text: 'Type "help" to inspect available terminal commands, or "exit" to close.', type: 'system' },
 ];
 
-export default function HackerTerminalModal({ onClose, onTriggerMatrix, onTriggerSpecs }) {
+export default function HackerTerminalModal({
+  onClose,
+  onTriggerMatrix,
+  onTriggerSpecs,
+  onTriggerGame,
+  onTriggerJoke,
+}) {
   const [logs, setLogs] = useState(INITIAL_LOGS);
   const [inputVal, setInputVal] = useState('');
   const [isMaximized, setIsMaximized] = useState(false);
@@ -68,6 +74,8 @@ export default function HackerTerminalModal({ onClose, onTriggerMatrix, onTrigge
       newLogs.push(
         { text: 'AVAILABLE COMMANDS:', type: 'system' },
         { text: '  help       - Display this command index', type: 'meta' },
+        { text: '  game       - Launch retro arcade mini-game (Bug Blaster 👾)', type: 'meta' },
+        { text: '  joke       - Print random programmer joke / roast 🎲', type: 'meta' },
         { text: '  skills     - Query Mahi\'s technical architecture & stack', type: 'meta' },
         { text: '  projects   - Query featured production deployments', type: 'meta' },
         { text: '  specs      - Run live hardware & GPU diagnostic scan', type: 'meta' },
@@ -76,6 +84,16 @@ export default function HackerTerminalModal({ onClose, onTriggerMatrix, onTrigge
         { text: '  sudo       - Elevate privileges', type: 'meta' },
         { text: '  clear      - Wipe terminal display', type: 'meta' },
         { text: '  exit       - Terminate terminal session', type: 'meta' }
+      );
+    } else if (cmd === 'game' || cmd === 'arcade' || cmd === 'play') {
+      onClose();
+      if (onTriggerGame) onTriggerGame();
+      return;
+    } else if (cmd === 'joke' || cmd === 'humor') {
+      newLogs.push(
+        { text: '[DEV HUMOR]', type: 'system' },
+        { text: '  Why do programmers always prefer dark mode?', type: 'info' },
+        { text: '  Because light attracts bugs. 🐛', type: 'success' }
       );
     } else if (cmd === 'skills') {
       newLogs.push(

@@ -167,83 +167,17 @@ const RF_SKILLS = [
 // ─────────────────────────────────────────
 
 function Nav() {
-  const [time, setTime] = useState("");
-  const [ping, setPing] = useState(28);
-
-  useEffect(() => {
-    // 1. Real-time IST clock
-    const updateTime = () => {
-      const now = new Date();
-      setTime(
-        now.toLocaleTimeString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour12: true,
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-      );
-    };
-    updateTime();
-    const clockInterval = setInterval(updateTime, 1000);
-
-    // 2. Simulated subtle network ping
-    const pingInterval = setInterval(() => {
-      setPing(Math.floor(25 + Math.random() * 14));
-    }, 4000);
-
-    return () => {
-      clearInterval(clockInterval);
-      clearInterval(pingInterval);
-    };
-  }, []);
-
   const handleOpenPalette = () => {
     sound.playClick();
     window.dispatchEvent(new CustomEvent("open-command-palette"));
   };
 
-  const handleOpenSpecs = () => {
-    sound.playClick();
-    window.dispatchEvent(new CustomEvent("open-specs-modal"));
-  };
-
-  const handleScrollToContact = () => {
-    sound.playClick();
-    const el = document.getElementById("contact");
-    el?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <nav className="nav">
-      {/* Left: Brand + Available Status */}
-      <div className="nav-brand-group">
-        <div className="nav-logo" onClick={() => sound.playClick()}>
-          mahi.dev
-        </div>
-        <button
-          className="nav-status-pill"
-          title="Open for Software Engineering Internships • Click to connect with Mahi"
-          onClick={handleScrollToContact}
-        >
-          <span className="nav-status-dot" />
-          <span className="nav-status-label">Available for SDE Internships</span>
-        </button>
+      <div className="nav-logo" onClick={() => sound.playClick()}>
+        mahi.dev
       </div>
 
-      {/* Center: Live Telemetry Capsule (Desktop) */}
-      <button
-        className="nav-telemetry-capsule"
-        title="Live System Telemetry • Click to view hardware specs & diagnostic benchmarks"
-        onClick={handleOpenSpecs}
-      >
-        <span className="nav-telem-loc">Noida [IST]</span>
-        <span className="nav-telem-clock">{time}</span>
-        <span className="nav-telem-divider">/</span>
-        <span className="nav-telem-ping">{ping}ms</span>
-      </button>
-
-      {/* Right: Nav Links + Palette Button */}
       <div className="nav-actions">
         <ul className="nav-links">
           {["about", "skills", "projects", "contact"].map((s) => (
