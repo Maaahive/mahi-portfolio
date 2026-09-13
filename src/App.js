@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
@@ -167,6 +167,51 @@ const RF_SKILLS = [
 // ─────────────────────────────────────────
 
 function Nav() {
+  const [time, setTime] = useState("");
+  const [ping, setPing] = useState(28);
+  const [soundOn, setSoundOn] = useState(sound.enabled);
+
+  useEffect(() => {
+    // 1. Real-time IST clock
+    const updateTime = () => {
+      const now = new Date();
+      setTime(
+        now.toLocaleTimeString("en-US", {
+          timeZone: "Asia/Kolkata",
+          hour12: true,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
+    };
+    updateTime();
+    const clockInterval = setInterval(updateTime, 1000);
+
+    // 2. Simulated subtle network ping
+    const pingInterval = setInterval(() => {
+      setPing(Math.floor(25 + Math.random() * 14));
+    }, 4000);
+
+    // 3. Sound sync listener
+    const onSoundChange = (e) => {
+      setSoundOn(e.detail);
+    };
+    window.addEventListener("sound-changed", onSoundChange);
+
+    return () => {
+      clearInterval(clockInterval);
+      clearInterval(pingInterval);
+      window.removeEventListener("sound-changed", onSoundChange);
+    };
+  }, []);
+
+  const handleToggleSound = () => {
+    const newState = sound.toggle();
+    setSoundOn(newState);
+    window.dispatchEvent(new CustomEvent("sound-changed", { detail: newState }));
+  };
+
   const handleOpenPalette = () => {
     sound.playClick();
     window.dispatchEvent(new CustomEvent("open-command-palette"));
@@ -174,34 +219,64 @@ function Nav() {
 
   return (
     <nav className="nav">
-      <div className="nav-logo" onClick={() => sound.playClick()}>
-        mahi.dev
+      {/* Left: Brand + Available Status */}
+      <div className="nav-brand-group">
+        <div className="nav-logo" onClick={() => sound.playClick()}>
+          mahi.dev
+        </div>
+        <div className="nav-status-pill" title="Open for Software Engineering Internships">
+          <span className="nav-status-dot" />
+          <span className="nav-status-label">Available for SDE Internships</span>
+        </div>
       </div>
-      <ul className="nav-links">
-        {["about", "skills", "projects", "contact"].map((s) => (
-          <li key={s}>
-            <Link
-              to={s}
-              smooth
-              duration={600}
-              offset={-80}
-              onClick={() => sound.playClick()}
-              onMouseEnter={() => sound.playHover()}
-            >
-              {s}
-            </Link>
-          </li>
-        ))}
-        <li>
+
+      {/* Center: Minimalist Live Telemetry Capsule (Desktop) */}
+      <div className="nav-telemetry-capsule">
+        <span className="nav-telem-loc">Noida [IST]</span>
+        <span className="nav-telem-clock">{time}</span>
+        <span className="nav-telem-divider">/</span>
+        <span className="nav-telem-ping">{ping}ms</span>
+      </div>
+
+      {/* Right: Nav Links + Audio Toggle + Palette Button */}
+      <div className="nav-actions">
+        <ul className="nav-links">
+          {["about", "skills", "projects", "contact"].map((s) => (
+            <li key={s}>
+              <Link
+                to={s}
+                smooth
+                duration={600}
+                offset={-80}
+                onClick={() => sound.playClick()}
+                onMouseEnter={() => sound.playHover()}
+              >
+                {s}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="nav-controls">
           <button
+            type="button"
+            className={`nav-audio-toggle ${soundOn ? "active" : ""}`}
+            onClick={handleToggleSound}
+            title={soundOn ? "Audio FX: ON (Click to Mute)" : "Audio FX: OFF (Click to Enable)"}
+          >
+            <span>{soundOn ? "🔊 ON" : "🔈 OFF"}</span>
+          </button>
+
+          <button
+            type="button"
             className="nav-cmd-trigger"
             onClick={handleOpenPalette}
             title="Open Command Palette (Ctrl+K)"
           >
             <span>⌘K</span>
           </button>
-        </li>
-      </ul>
+        </div>
+      </div>
     </nav>
   );
 }

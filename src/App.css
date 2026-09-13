@@ -186,32 +186,119 @@ body::after {
   transition: transform 0.8s ease;
 }
 
-/* ── NAV ── */
+/* ── UNIFIED SLEEK NAVBAR ── */
 .nav {
   position: fixed;
-  top: 38px;
+  top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  padding: 1.25rem 3rem;
+  height: 58px;
+  z-index: 1000;
+  padding: 0 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(10, 10, 15, 0.8);
-  backdrop-filter: blur(12px);
+  background: rgba(10, 10, 15, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
 }
+
+.nav-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .nav-logo {
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--purple);
   letter-spacing: 0.05em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
+.nav-logo:hover {
+  opacity: 0.85;
+}
+
+.nav-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(0, 255, 136, 0.06);
+  border: 1px solid rgba(0, 255, 136, 0.22);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #00ff88;
+  letter-spacing: 0.03em;
+}
+
+.nav-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
+  animation: radarPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes radarPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* Center Telemetry Capsule */
+.nav-telemetry-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 0.25rem 0.85rem;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+
+.nav-telem-loc {
+  color: var(--text-muted);
+}
+
+.nav-telem-clock {
+  color: #ff856a;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.nav-telem-divider {
+  opacity: 0.3;
+}
+
+.nav-telem-ping {
+  color: #00ff88;
+}
+
+/* Right Section */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.8rem;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
+
 .nav-links a {
   font-family: var(--mono);
   font-size: 0.75rem;
@@ -221,7 +308,9 @@ body::after {
   text-transform: uppercase;
   transition: color 0.2s;
   position: relative;
+  cursor: pointer;
 }
+
 .nav-links a::after {
   content: "";
   position: absolute;
@@ -232,11 +321,69 @@ body::after {
   background: var(--purple);
   transition: width 0.2s;
 }
+
 .nav-links a:hover {
   color: var(--purple);
 }
+
 .nav-links a:hover::after {
   width: 100%;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-audio-toggle {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-dim);
+  border-radius: 6px;
+  padding: 0.25rem 0.65rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-audio-toggle:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.nav-audio-toggle.active {
+  background: rgba(0, 255, 136, 0.08);
+  border-color: rgba(0, 255, 136, 0.35);
+  color: #00ff88;
+}
+
+@media (max-width: 980px) {
+  .nav-telemetry-capsule {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 1.25rem;
+  }
+  .nav-status-label {
+    display: none;
+  }
+  .nav-links {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 580px) {
+  .nav-links {
+    display: none;
+  }
 }
 
 /* ── HERO ── */

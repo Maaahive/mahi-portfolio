@@ -6,7 +6,6 @@ import App from './App';
 import ProjectDetail from './ProjectDetail';
 import Cursor from './Cursor';
 import ParticleCanvas from './components/ParticleCanvas';
-import TelemetryBar from './components/TelemetryBar';
 import CommandPalette from './components/CommandPalette';
 import MiniPlayer from './components/MiniPlayer';
 
@@ -16,7 +15,6 @@ root.render(
     <BrowserRouter>
       <Cursor />
       <ParticleCanvas />
-      <TelemetryBar />
       <CommandPalette />
       <MiniPlayer />
       <Routes>
