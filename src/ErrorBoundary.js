@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { FiAlertTriangle, FiRefreshCw, FiHome } from 'react-icons/fi';
 
 export default class ErrorBoundary extends React.Component {

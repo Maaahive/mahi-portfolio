@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiX, FiRefreshCw, FiCopy, FiCheck, FiSmile } from 'react-icons/fi';
 import { sound } from '../utils/audio';
@@ -136,7 +136,7 @@ export default function DevJokeModal({ onClose }) {
 
   const copyJoke = () => {
     sound.playSuccess();
-    const text = ${currentJoke.setup}\n;
+    const text = currentJoke.setup + '\n' + currentJoke.punchline;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -172,7 +172,7 @@ export default function DevJokeModal({ onClose }) {
 
         {/* Joke Content */}
         <div className="joke-body">
-          <div className="joke-category-tag" style={{ color: currentJoke.color, borderColor: ${currentJoke.color}40 }}>
+          <div className="joke-category-tag" style={{ color: currentJoke.color, borderColor: currentJoke.color + '40' }}>
             [{currentJoke.category}]
           </div>
 

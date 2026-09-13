@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { FiX, FiPlay, FiRotateCcw, FiVolume2, FiVolumeX, FiAward } from 'react-icons/fi';
 import { sound } from '../utils/audio';
@@ -78,11 +78,13 @@ export default function MiniGameModal({ onClose }) {
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
+    const g = gameRef.current;
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
-      if (gameRef.current.reqId) cancelAnimationFrame(gameRef.current.reqId);
+      if (g.reqId) cancelAnimationFrame(g.reqId);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState, onClose]);
 
   const createExplosion = (x, y, color) => {
@@ -346,6 +348,7 @@ export default function MiniGameModal({ onClose }) {
 
     if (gameRef.current.reqId) cancelAnimationFrame(gameRef.current.reqId);
     gameRef.current.reqId = requestAnimationFrame(updateGame);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [soundMuted]);
 
   const restartGame = () => {
