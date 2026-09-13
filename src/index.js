@@ -5,12 +5,20 @@ import './index.css';
 import App from './App';
 import ProjectDetail from './ProjectDetail';
 import Cursor from './Cursor';
+import ParticleCanvas from './components/ParticleCanvas';
+import TelemetryBar from './components/TelemetryBar';
+import CommandPalette from './components/CommandPalette';
+import MiniPlayer from './components/MiniPlayer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Cursor />
+      <ParticleCanvas />
+      <TelemetryBar />
+      <CommandPalette />
+      <MiniPlayer />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/projects/:slug" element={<ProjectDetail />} />

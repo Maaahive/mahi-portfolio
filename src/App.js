@@ -45,6 +45,7 @@ import interestCalc from "./assets/interest-calc.png";
 import professorPortfolio from "./assets/prof-shweta-srivastava.png";
 import resume from "./assets/resume.pdf";
 import "./App.css";
+import { sound } from "./utils/audio";
 
 // ─────────────────────────────────────────
 // DATA
@@ -166,17 +167,40 @@ const RF_SKILLS = [
 // ─────────────────────────────────────────
 
 function Nav() {
+  const handleOpenPalette = () => {
+    sound.playClick();
+    window.dispatchEvent(new CustomEvent("open-command-palette"));
+  };
+
   return (
     <nav className="nav">
-      <div className="nav-logo">mahi.dev</div>
+      <div className="nav-logo" onClick={() => sound.playClick()}>
+        mahi.dev
+      </div>
       <ul className="nav-links">
         {["about", "skills", "projects", "contact"].map((s) => (
           <li key={s}>
-            <Link to={s} smooth duration={600} offset={-80}>
+            <Link
+              to={s}
+              smooth
+              duration={600}
+              offset={-80}
+              onClick={() => sound.playClick()}
+              onMouseEnter={() => sound.playHover()}
+            >
               {s}
             </Link>
           </li>
         ))}
+        <li>
+          <button
+            className="nav-cmd-trigger"
+            onClick={handleOpenPalette}
+            title="Open Command Palette (Ctrl+K)"
+          >
+            <span>⌘K</span>
+          </button>
+        </li>
       </ul>
     </nav>
   );
@@ -569,13 +593,19 @@ function ProjectCard({ p, i }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: i * 0.08 }}
-      onMouseEnter={() => setHovered(true)}
+      onMouseEnter={() => {
+        setHovered(true);
+        sound.playHover();
+      }}
       onMouseLeave={() => setHovered(false)}
     >
       <div
         className="project-img-wrap"
         style={p.detailSlug ? { cursor: "pointer" } : {}}
-        onClick={p.detailSlug ? () => navigate(`/projects/${p.detailSlug}`) : undefined}
+        onClick={p.detailSlug ? () => {
+          sound.playClick();
+          navigate(`/projects/${p.detailSlug}`);
+        } : undefined}
       >
         {p.img ? (
           <img src={p.img} alt={p.name} className="project-img" />
@@ -733,7 +763,17 @@ function ProjectCard({ p, i }) {
   );
 }
 
+const FILTER_OPTIONS = ["All", "Electron", "React", "Node.js", "Socket.IO", "JavaScript"];
+
 function Projects() {
+  const [filter, setFilter] = useState("All");
+
+  const filteredProjects = filter === "All"
+    ? PROJECTS
+    : PROJECTS.filter((p) =>
+        p.tech.some((t) => t.toLowerCase().includes(filter.toLowerCase()))
+      );
+
   return (
     <section id="projects">
       <div className="section-wrapper">
@@ -754,10 +794,39 @@ function Projects() {
         >
           Things I've built
         </motion.h2>
+
+        {/* ── Interactive Tech Filter Matrix ── */}
+        <div className="projects-filter-bar">
+          {FILTER_OPTIONS.map((opt) => {
+            const count = opt === "All"
+              ? PROJECTS.length
+              : PROJECTS.filter((p) =>
+                  p.tech.some((t) => t.toLowerCase().includes(opt.toLowerCase()))
+                ).length;
+
+            return (
+              <button
+                key={opt}
+                className={`filter-chip ${filter === opt ? "active" : ""}`}
+                onClick={() => {
+                  sound.playClick();
+                  setFilter(opt);
+                }}
+                onMouseEnter={() => sound.playHover()}
+              >
+                {opt}
+                <span className="filter-count">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+
         <div className="projects-grid">
-          {PROJECTS.map((p, i) => (
-            <ProjectCard key={p.id} p={p} i={i} />
-          ))}
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((p, i) => (
+              <ProjectCard key={p.id} p={p} i={i} />
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </section>
