@@ -1,4 +1,4 @@
-﻿// Web Audio API Synthesizer - Tactile Sci-Fi Audio Engine
+// Web Audio API Synthesizer - Tactile Sci-Fi Audio Engine
 class SoundEngine {
   constructor() {
     this.ctx = null;

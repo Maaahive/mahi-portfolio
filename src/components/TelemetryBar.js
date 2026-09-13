@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { sound } from "../utils/audio";
 import "./TelemetryBar.css";
 
