@@ -94,3 +94,12 @@
   box-shadow: 0 0 12px #ffffff;
   transform: translateY(-1px);
 }
+
+/* Hide background aurora and grid during matrix mode for maximum performance and pure cyber aesthetic */
+body.matrix-mode-active .aurora-blob,
+body.matrix-mode-active .perspective-grid,
+body.matrix-mode-active::after {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+

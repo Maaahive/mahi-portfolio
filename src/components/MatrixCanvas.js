@@ -1,86 +1,97 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './ParticleCanvas.css';
 
 export default function MatrixCanvas() {
   const canvasRef = useRef(null);
   const [matrixMode, setMatrixMode] = useState(false);
 
-  // Register global toggle
-  useEffect(() => {
-    window.toggleMatrixMode = () => setMatrixMode((prev) => !prev);
-    return () => { delete window.toggleMatrixMode; };
+  const toggle = useCallback(() => {
+    setMatrixMode((prev) => !prev);
   }, []);
+
+  // Register global toggle on window
+  useEffect(() => {
+    window.toggleMatrixMode = toggle;
+    return () => {
+      delete window.toggleMatrixMode;
+    };
+  }, [toggle]);
 
   // Escape key to exit
   useEffect(() => {
     if (!matrixMode) return;
-    const onKey = (e) => { if (e.key === 'Escape') setMatrixMode(false); };
+    const onKey = (e) => {
+      if (e.key === 'Escape') setMatrixMode(false);
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [matrixMode]);
 
-  // Matrix rain render loop
+  // Handle matrix mode lifecycle, body class & canvas render
   useEffect(() => {
-    if (!matrixMode) return;
-
     const canvas = canvasRef.current;
     if (!canvas) return;
-    // willReadFrequently hint avoids GPU<->CPU readback stalls
-    const ctx = canvas.getContext('2d', { willReadFrequently: false });
+
+    if (!matrixMode) {
+      document.body.classList.remove('matrix-mode-active');
+      const ctx = canvas.getContext('2d');
+      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+
+    document.body.classList.add('matrix-mode-active');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
     const fontSize = 15;
     let columns = Math.max(1, Math.floor(width / fontSize));
-    let drops = Array(columns).fill(0).map(() => Math.floor(Math.random() * -50));
+    // Stagger drops across screen height so rain starts falling immediately
+    let drops = Array(columns)
+      .fill(0)
+      .map(() => Math.floor(Math.random() * (height / fontSize)));
     const chars = '0123456789ABCDEFHIJKLMNOXYZMAHI01010101985<>/*+-~#{}';
 
     const onResize = () => {
+      if (!canvas) return;
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
       columns = Math.max(1, Math.floor(width / fontSize));
-      drops = Array(columns).fill(0).map(() => Math.floor(Math.random() * -50));
+      drops = Array(columns)
+        .fill(0)
+        .map(() => Math.floor(Math.random() * (height / fontSize)));
       ctx.fillStyle = '#040508';
       ctx.fillRect(0, 0, width, height);
     };
     window.addEventListener('resize', onResize);
 
-    // Initial black fill
+    // Initial background wipe
     ctx.fillStyle = '#040508';
     ctx.fillRect(0, 0, width, height);
 
     let rafId;
-    let lastTime = 0;
-    const FPS = 30;
-    const INTERVAL = 1000 / FPS;
 
-    const render = (now) => {
-      rafId = requestAnimationFrame(render);
-      const delta = now - lastTime;
-      if (delta < INTERVAL) return; // throttle to 30fps
-      lastTime = now - (delta % INTERVAL);
-
-      // Fade trail
-      ctx.fillStyle = 'rgba(4, 5, 8, 0.13)';
+    const render = () => {
+      // Trailing fade wash
+      ctx.fillStyle = 'rgba(4, 5, 8, 0.12)';
       ctx.fillRect(0, 0, width, height);
 
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
-        const y = drops[i] * fontSize;
-        if (y < 0) { drops[i]++; continue; }
-
         const text = chars[Math.floor(Math.random() * chars.length)];
         const x = i * fontSize;
+        const y = drops[i] * fontSize;
 
-        // Bright white head ~12% of the time, green body otherwise
-        // No shadowBlur — it's very expensive on canvas
+        // Leading head has glowing white accent, body is vibrant cyber green
         if (Math.random() > 0.88) {
           ctx.fillStyle = '#e8ffe8';
         } else {
-          ctx.fillStyle = '#00e87a';
+          ctx.fillStyle = '#00ff88';
         }
+
         ctx.fillText(text, x, y);
 
         if (y > height && Math.random() > 0.975) {
@@ -88,6 +99,8 @@ export default function MatrixCanvas() {
         }
         drops[i]++;
       }
+
+      rafId = requestAnimationFrame(render);
     };
 
     rafId = requestAnimationFrame(render);
@@ -95,32 +108,35 @@ export default function MatrixCanvas() {
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', onResize);
-      // Clear canvas on exit
+      document.body.classList.remove('matrix-mode-active');
       if (canvas) {
-        const cx = canvas.getContext('2d');
-        cx.clearRect(0, 0, canvas.width, canvas.height);
+        const c = canvas.getContext('2d');
+        if (c) c.clearRect(0, 0, canvas.width, canvas.height);
       }
     };
   }, [matrixMode]);
-
-  if (!matrixMode) return null;
 
   return (
     <>
       <canvas
         ref={canvasRef}
-        className="particle-canvas matrix-active"
-        style={{ zIndex: 1 }}
+        className={`particle-canvas ${matrixMode ? 'matrix-active' : ''}`}
+        style={{
+          display: matrixMode ? 'block' : 'none',
+          zIndex: matrixMode ? 1 : 0,
+        }}
       />
-      <div className="matrix-hud-banner">
-        <div className="matrix-hud-indicator">
-          <span className="matrix-hud-dot" />
-          <span>[ MATRIX PROTOCOL ACTIVE ]</span>
+      {matrixMode && (
+        <div className="matrix-hud-banner">
+          <div className="matrix-hud-indicator">
+            <span className="matrix-hud-dot" />
+            <span>[ MATRIX PROTOCOL ACTIVE ]</span>
+          </div>
+          <button onClick={() => setMatrixMode(false)} title="Exit Matrix Mode (Esc)">
+            Exit Matrix [ESC]
+          </button>
         </div>
-        <button onClick={() => setMatrixMode(false)} title="Exit Matrix Mode (Esc)">
-          Exit Matrix [ESC]
-        </button>
-      </div>
+      )}
     </>
   );
 }
