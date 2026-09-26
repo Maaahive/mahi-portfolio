@@ -5,7 +5,6 @@ import './index.css';
 import App from './App';
 import ProjectDetail from './ProjectDetail';
 import Cursor from './Cursor';
-import ParticleCanvas from './components/ParticleCanvas';
 import CommandPalette from './components/CommandPalette';
 import MiniPlayer from './components/MiniPlayer';
 import ErrorBoundary from './ErrorBoundary';
@@ -16,7 +15,6 @@ root.render(
     <ErrorBoundary>
       <BrowserRouter>
         <Cursor />
-        <ParticleCanvas />
         <CommandPalette />
         <MiniPlayer />
         <Routes>

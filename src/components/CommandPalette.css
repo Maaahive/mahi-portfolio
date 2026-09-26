@@ -18,7 +18,7 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 107, 74, 0.15);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.04);
   font-family: inherit;
   display: flex;
   flex-direction: column;
@@ -69,7 +69,7 @@
 }
 
 .cmd-prompt-prefix {
-  color: #ff6b4a;
+  color: #a0a0b0;
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
   font-size: 1.1rem;
@@ -101,9 +101,9 @@
 
 .cmd-easter-egg {
   padding: 0.75rem 1.25rem;
-  background: rgba(255, 107, 74, 0.1);
-  border-bottom: 1px solid rgba(255, 107, 74, 0.2);
-  color: #ff856a;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #c0c0cc;
   font-family: 'Courier New', Courier, monospace;
   font-size: 0.82rem;
 }
@@ -131,8 +131,8 @@
 }
 
 .cmd-empty code {
-  color: #ff6b4a;
-  background: rgba(255, 107, 74, 0.1);
+  color: #b0b0c0;
+  background: rgba(255, 255, 255, 0.07);
   padding: 0.15rem 0.4rem;
   border-radius: 3px;
   font-family: monospace;
@@ -150,7 +150,7 @@
 }
 
 .cmd-item.selected {
-  background: rgba(255, 107, 74, 0.12);
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
 }
 
@@ -167,7 +167,7 @@
 }
 
 .cmd-item.selected .cmd-item-icon {
-  color: #ff6b4a;
+  color: #e0e0ee;
 }
 
 .cmd-item-text {
@@ -223,7 +223,7 @@
 }
 
 .cmd-footer code {
-  color: #ff856a;
+  color: #b0b0c0;
 }
 
 @media (max-width: 600px) {
@@ -325,8 +325,8 @@
 }
 
 .k-btn-specs {
-  border-color: rgba(255, 107, 74, 0.35);
-  color: #ff6b4a;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #b0b0c0;
 }
 
 .k-btn-close {
