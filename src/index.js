@@ -6,6 +6,7 @@ import App from './App';
 import ProjectDetail from './ProjectDetail';
 import Cursor from './Cursor';
 import CommandPalette from './components/CommandPalette';
+import MatrixCanvas from './components/MatrixCanvas';
 import MiniPlayer from './components/MiniPlayer';
 import ErrorBoundary from './ErrorBoundary';
 
@@ -15,6 +16,7 @@ root.render(
     <ErrorBoundary>
       <BrowserRouter>
         <Cursor />
+        <MatrixCanvas />
         <CommandPalette />
         <MiniPlayer />
         <Routes>
