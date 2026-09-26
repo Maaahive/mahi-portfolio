@@ -96,10 +96,9 @@ export default function MatrixCanvas() {
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', onResize);
       // Clear canvas on exit
-      const c = canvasRef.current;
-      if (c) {
-        const cx = c.getContext('2d');
-        cx.clearRect(0, 0, c.width, c.height);
+      if (canvas) {
+        const cx = canvas.getContext('2d');
+        cx.clearRect(0, 0, canvas.width, canvas.height);
       }
     };
   }, [matrixMode]);
