@@ -78,6 +78,7 @@ class SoundEngine {
   }
 
   playSuccess() {
+    if (!this.enabled) return;
     this.init();
     if (!this.ctx) return;
 

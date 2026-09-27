@@ -154,13 +154,19 @@ export default function CommandPalette() {
     };
   }, [isOpen]);
 
-  // Focus input on open
+  // Focus input on open & prefetch sub-modals in the background
   useEffect(() => {
     if (isOpen) {
       setQuery('');
       setSelectedIndex(0);
       setEasterEggMessage(null);
       setTimeout(() => inputRef.current?.focus(), 50);
+
+      // Silently prefetch modal chunks while user is browsing palette
+      import('./SystemSpecsModal');
+      import('./HackerTerminalModal');
+      import('./MiniGameModal');
+      import('./DevJokeModal');
     }
   }, [isOpen]);
 
@@ -202,22 +208,22 @@ export default function CommandPalette() {
     }
 
     if (cmd.action === 'specs') {
-      setTimeout(() => setShowSpecs(true), 50);
+      setTimeout(() => setShowSpecs(true), 30);
       return;
     }
 
     if (cmd.action === 'hack') {
-      setTimeout(() => setShowHacker(true), 50);
+      setTimeout(() => setShowHacker(true), 30);
       return;
     }
 
     if (cmd.action === 'game') {
-      setTimeout(() => setShowGame(true), 50);
+      setTimeout(() => setShowGame(true), 30);
       return;
     }
 
     if (cmd.action === 'joke') {
-      setTimeout(() => setShowJoke(true), 50);
+      setTimeout(() => setShowJoke(true), 30);
       return;
     }
 
@@ -226,16 +232,25 @@ export default function CommandPalette() {
       return;
     }
 
-    // Scroll to section on home page
+    // Scroll to section on home page after modal exit starts
+    const targetId = cmd.id;
     if (location.pathname !== '/') {
       navigate('/');
       setTimeout(() => {
-        const el = document.getElementById(cmd.id);
-        el?.scrollIntoView({ behavior: 'smooth' });
-      }, 150);
+        const el = document.getElementById(targetId);
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 100);
     } else {
-      const el = document.getElementById(cmd.id);
-      el?.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 40);
     }
   };
 
@@ -307,10 +322,10 @@ export default function CommandPalette() {
         >
           <motion.div
             className="cmd-modal"
-            initial={{ scale: 0.95, y: -20, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.95, y: -20, opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            initial={{ scale: 0.97, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.97, opacity: 0 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Terminal bar header */}
