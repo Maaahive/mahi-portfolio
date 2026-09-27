@@ -35,6 +35,7 @@ const COMMANDS = [
   { id: 'matrix', title: 'Matrix Mode (Toggle Cyber Green Rain)', category: 'Easter Eggs', icon: FiTerminal, action: 'matrix' },
   { id: 'off-track', title: 'Case Study: Off-Track (Desktop Music Player)', category: 'Case Studies', icon: FiZap, slug: '/projects/off-track' },
   { id: 'cartel', title: 'Case Study: Cartel (Real-Time Grocery App)', category: 'Case Studies', icon: FiZap, slug: '/projects/cartel' },
+  { id: 'siw-sensor', title: 'Case Study: ML-Assisted SIW Microwave Sensor (Core ECE)', category: 'Case Studies', icon: FiZap, slug: '/projects/siw-oil-sensor' },
   { id: 'resume', title: 'Download / View Resume (PDF)', category: 'Documents', icon: FiFileText, action: 'resume' },
   { id: 'github', title: 'Open GitHub Profile (@Maaahive)', category: 'External', icon: FiExternalLink, action: 'github' },
   { id: 'sound', title: 'Toggle Audio FX (Sound Engine)', category: 'Settings', icon: FiVolume2, action: 'sound' },

@@ -43,6 +43,7 @@ import cartel from "./assets/cartel.png";
 import girvi from "./assets/girvi-len-den.png";
 import interestCalc from "./assets/interest-calc.png";
 import professorPortfolio from "./assets/prof-shweta-srivastava.png";
+import siwSensor from "./assets/siw-sensor.jpg";
 import resume from "./assets/resume.pdf";
 import "./App.css";
 import { sound } from "./utils/audio";
@@ -78,6 +79,18 @@ const PROJECTS = [
   },
   {
     id: "003",
+    name: "ML-Assisted SIW Microwave Sensor",
+    desc: "Research paper & hardware prototype: Substrate Integrated Waveguide (SIW) resonant microwave sensor for non-destructive detection of edible oil adulteration. Integrates HFSS modeling, VNA RF characterization (7–12 GHz), a Tkinter dielectric calculation GUI, and a Random Forest ML classification pipeline.",
+    tech: ["Core ECE", "Ansys HFSS", "Python", "Machine Learning", "Scikit-Learn"],
+    img: siwSensor,
+    imgLabel: "[ siw-sensor-prototype.jpg ]",
+    github: null,
+    live: null,
+    status: "Research Paper",
+    detailSlug: "siw-oil-sensor",
+  },
+  {
+    id: "004",
     name: "Professor Portfolio",
     desc: "React portfolio for Prof. Shweta Srivastava, Director at JIIT Noida. Built from her actual CV — iterated through multiple design versions.",
     tech: ["React", "CSS", "Responsive"],
@@ -89,7 +102,7 @@ const PROJECTS = [
     status: "In Production",
   },
   {
-    id: "004",
+    id: "005",
     name: "Girvi Len Den",
     desc: "A loan tracking web app with a vintage UI. Per-entry interest rates, category selection, localStorage persistence, and Excel export.",
     tech: ["HTML", "CSS", "JavaScript", "localStorage"],
@@ -99,7 +112,7 @@ const PROJECTS = [
     live: null,
   },
   {
-    id: "005",
+    id: "006",
     name: "Interest Calculator",
     desc: "JS-based calculator with per-entry interest rates, multiple category selection, and Excel export. Handles edge cases gracefully.",
     tech: ["JavaScript", "Excel Export", "DOM"],
@@ -128,6 +141,12 @@ const TECH_ICON_MAP = {
   Electron: SiElectron,
   "Spotify API": SiSpotify,
   Spotify: SiSpotify,
+  "Core ECE": LuCircuitBoard,
+  "Ansys HFSS": SiAnsys,
+  "Machine Learning": SiScikitlearn,
+  "Scikit-Learn": SiScikitlearn,
+  "RF & Microwave": TbAntenna,
+  VNA: PiWaveformBold,
 };
 
 const SKILLS = [
@@ -769,7 +788,7 @@ function ProjectCard({ p, i }) {
   );
 }
 
-const FILTER_OPTIONS = ["All", "Electron", "React", "Node.js", "Socket.IO", "JavaScript"];
+const FILTER_OPTIONS = ["All", "Core ECE", "Electron", "React", "Node.js", "Python", "JavaScript"];
 
 function Projects() {
   const [filter, setFilter] = useState("All");

@@ -12,6 +12,9 @@ import {
   SiTailwindcss,
   SiGithub,
   SiExpress,
+  SiAnsys,
+  SiScikitlearn,
+  SiPython,
 } from "react-icons/si";
 import {
   FiArrowLeft,
@@ -22,7 +25,10 @@ import {
   FiGitBranch,
   FiMaximize2,
   FiX,
+  FiBookOpen,
 } from "react-icons/fi";
+import { PiWaveformBold } from "react-icons/pi";
+import { LuCircuitBoard } from "react-icons/lu";
 
 // Images - Off-Track
 import offTrackLogo from "./assets/projects/off-track/logo.png";
@@ -39,6 +45,16 @@ import cartelLobby from "./assets/projects/cartel/lobby.png";
 import cartelCatalog from "./assets/projects/cartel/catalog.png";
 import cartelSplitCart from "./assets/projects/cartel/split-cart.png";
 import cartelCheckout from "./assets/projects/cartel/checkout.png";
+
+// Images - SIW Sensor
+import siwPrototype from "./assets/projects/siw-sensor/sensor-prototype.jpg";
+import siwOilTesting from "./assets/projects/siw-sensor/oil-testing.jpg";
+import siwVnaSetup from "./assets/projects/siw-sensor/vna-setup.jpg";
+import siwOilsenseGui from "./assets/projects/siw-sensor/oilsense-gui.png";
+import siwOilsensePrediction from "./assets/projects/siw-sensor/oilsense-prediction.png";
+import siwDielectricGui from "./assets/projects/siw-sensor/dielectric-gui.png";
+import siwHfssModel from "./assets/projects/siw-sensor/hfss-model.png";
+import siwS11Response from "./assets/projects/siw-sensor/s11-response.png";
 
 import "./ProjectDetail.css";
 
@@ -177,6 +193,92 @@ const PROJECT_DETAILS = {
     ],
     reflection: "Cartel was my deep dive into real-time collaborative state. It forced me to think rigorously about distributed state ownership, WebSocket life cycles, and edge cases where multiple users interact with shared financial data simultaneously. Seeing over 23 developers clone and study the repository proved the relevance of the problem."
   },
+
+  "siw-oil-sensor": {
+    id: "003",
+    name: "ML-Assisted SIW Microwave Sensor",
+    logo: null,
+    tagline: "Substrate Integrated Waveguide (SIW) resonant microwave sensor for rapid, non-destructive edible oil adulteration detection, combined with RF characterization and a Machine Learning classification pipeline.",
+    status: "Research Paper & Prototype",
+    paperTitle: "MACHINE LEARNING-ASSISTED SIW MICROWAVE SENSOR FOR RAPID AND NON-DESTRUCTIVE DETECTION OF MUSTARD OIL ADULTERATION",
+    authors: "Mahi Agarwal, Navya Jain, Dr. Abhay Kumar, Dr. Nidhi Tewari, Prof. Shweta Srivastava",
+    affiliation: "Department of Electronics and Communication Engineering, Jaypee Institute of Information Technology, Noida",
+    heroImg: siwPrototype,
+    heroCaption: "Fabricated Substrate Integrated Waveguide (SIW) sensor prototype on FR-4 PCB with plated via fences, complementary split ring resonator (CSRR) sensing aperture, and 50Ω SMA connector.",
+    github: null,
+    live: null,
+    tech: [
+      { name: "Core ECE", Icon: LuCircuitBoard, color: "#10b981" },
+      { name: "Ansys HFSS", Icon: SiAnsys, color: "#f59e0b" },
+      { name: "RF & VNA", Icon: PiWaveformBold, color: "#a855f7" },
+      { name: "Machine Learning", Icon: SiScikitlearn, color: "#f97316" },
+      { name: "Python", Icon: SiPython, color: "#3776ab" },
+    ],
+    problem: [
+      "Edible oil adulteration—most notably blending premium mustard oil with cheaper palmolein or mineral oils—poses widespread consumer health hazards and commercial exploitation across global food supply chains.",
+      "Traditional testing techniques such as High-Performance Liquid Chromatography (HPLC), Argemone Oil Adulteration Kits, and Gas-Liquid Chromatography (GLC) provide chemical accuracy, but they are inherently destructive, slow, reagent-intensive, and require trained laboratory staff. This makes everyday screening in local markets and distribution checkpoints impossible.",
+      "We set out to engineer a low-cost, portable, reusable, and instantaneous alternative that characterizes liquid purity non-destructively through microwave dielectric perturbation (7 GHz to 12 GHz), supplemented by an automated software classification pipeline."
+    ],
+    howItWorks: [
+      "Electromagnetic Sensor Design: Modeled in Ansys HFSS, the sensor utilizes Substrate Integrated Waveguide (SIW) technology fabricated on an economical 1.6 mm FR-4 substrate (εr ≈ 4.4). Dense metalized via walls (1 mm diameter, 1.5 mm pitch) trap electromagnetic fields like a metallic cavity resonator while maintaining planar PCB simplicity. A pair of Complementary Split Ring Resonators (CSRRs) are etched at the tip to concentrate fringing electric fields in the sensing zone.",
+      "Dielectric Perturbation Sensing: When the CSRR aperture is immersed into oil, the liquid acts as a dielectric load. Because pure mustard oil and palmolein adulterant have differing dielectric permittivities (εr), altering the adulterant concentration (10% to 50%) shifts the resonant frequency (8.20 GHz – 8.38 GHz) and alters reflection loss (|S11|) measured on an Anritsu Vector Network Analyzer.",
+      "Dual-GUI & ML Inference Pipeline: To automate analysis, we engineered two custom software systems: a Tkinter GUI to calculate empirical dielectric constants from coaxial capacitance bench measurements (DSL-01), and 'OilSense', a dark-mode desktop app. OilSense feeds standardized VNA frequency-magnitude curves into a 300-tree Random Forest classifier to instantly predict impurity percentage tiers without manual S-parameter inspection."
+    ],
+    gallery: [
+      {
+        title: "Fabricated SIW Sensor Prototype",
+        desc: "Double-sided FR-4 PCB sensor showing the plated via fences, 50Ω microstrip feedline, SMA port, and dual CSRR defect sensing rings.",
+        img: siwPrototype,
+      },
+      {
+        title: "VNA In-Situ Immersion Testing",
+        desc: "Calibrated Anritsu VNA reflection measurement (S11) while dipping the CSRR sensing region into pure and adulterated mustard oil samples.",
+        img: siwOilTesting,
+      },
+      {
+        title: "OilSense ML Detection App",
+        desc: "Desktop machine learning application predicting adulteration levels and presenting immediate purity badges (e.g. '50% Adulteration - High Adulteration').",
+        img: siwOilsensePrediction,
+      },
+      {
+        title: "OilSense Architecture & Model Dashboard",
+        desc: "Trained Random Forest model interface evaluating 201-point frequency sweeps received directly from VNA CSV exports.",
+        img: siwOilsenseGui,
+      },
+      {
+        title: "Dielectric Constant Calculator GUI",
+        desc: "Custom Python Tkinter app fitting dC/dh slopes from the SES Instruments DSL-01 coaxial cylinder to calculate liquid dielectric constants (k ≈ 3.127 for pure oil).",
+        img: siwDielectricGui,
+      },
+      {
+        title: "Ansys HFSS Electromagnetic Model",
+        desc: "Full-wave 3D simulation setup including wave port excitation, via-wall cavity boundaries, and cylindrical sample container.",
+        img: siwHfssModel,
+      },
+      {
+        title: "Measured S11 Resonant Shifts",
+        desc: "Experimental return loss curves from 7 to 12 GHz showing monotonic resonance dips and depth changes from pure oil down to 50% adulteration.",
+        img: siwS11Response,
+      },
+      {
+        title: "Portable VNA Measurement Bench",
+        desc: "One-port calibration and testing station running frequency sweeps over the X-band (7 GHz – 12 GHz) with SOL calibration.",
+        img: siwVnaSetup,
+      },
+    ],
+    hardPart: [
+      "Optimizing High-Q Cavity Resonance on Lossy FR-4: Standard microwave substrates like Rogers RT/duroid offer low loss tangents but are cost-prohibitive for mass food-safety deployment. Standard FR-4 is lossy (tan δ ≈ 0.02), which broadens resonance dips and dampens Q-factor. We performed iterative parametric sweeps in HFSS—tuning via pitch, cavity dimensions, and CSRR ring widths—to produce sharp, repeatable resonance notches with over -20 dB return loss.",
+      "Navigating ML Generalization with Dense Waveform Sweeps: While our Random Forest model reached 95% training accuracy on the 1,407-point dataset, 5-fold cross-validation yielded 21.61% ± 2.36%. The challenge was that 201 sweep points across 6 closely spaced adulteration levels (10% to 50%) caused high variance between cross-validation folds. Addressing this required candid scientific analysis in the paper on the necessity of broader sample sets and continuous regression features.",
+      "Repeatable Immersion & Cross-Contamination Control: Viscous oils leave residual films that distort subsequent electromagnetic measurements. We established a rigorous cleaning protocol using 80% ethanol solvent washes and controlled drying intervals, combined with rigid foam jig fixtures to maintain exact millimeter immersion depth."
+    ],
+    stats: [
+      { value: "7–12 GHz", label: "Frequency Range", Icon: PiWaveformBold },
+      { value: "10%–50%", label: "Adulterant Range", Icon: FiEye },
+      { value: "5 Authors", label: "Paper Contributors", Icon: FiUsers },
+      { value: "1,407 pts", label: "VNA ML Points", Icon: LuCircuitBoard },
+    ],
+    reflection: "This project bridged the gap between electromagnetic theory, hardware prototyping, and modern software engineering. Taking a concept from Maxwell's equations and HFSS 3D modeling through PCB fabrication, VNA bench validation, and finally into Python GUIs and Machine Learning models showed me the true power of marrying core ECE hardware with intelligent software."
+  },
 };
 
 export default function ProjectDetail() {
@@ -252,6 +354,57 @@ export default function ProjectDetail() {
 
           <h1 className="pd-title">{project.name}</h1>
           <p className="pd-tagline">{project.tagline}</p>
+
+          {project.paperTitle && (
+            <div
+              className="pd-paper-banner"
+              style={{
+                background: "rgba(168, 85, 247, 0.08)",
+                border: "1px solid rgba(168, 85, 247, 0.25)",
+                borderRadius: "8px",
+                padding: "0.9rem 1.15rem",
+                margin: "1.1rem 0 1.25rem",
+                fontSize: "0.82rem",
+                color: "#e2e8f0",
+                textAlign: "left",
+              }}
+            >
+              <div
+                style={{
+                  color: "var(--purple-light, #c084fc)",
+                  fontWeight: 600,
+                  fontSize: "0.72rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  marginBottom: "0.4rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.45rem",
+                }}
+              >
+                <FiBookOpen size={14} /> Research Paper & Minor Project
+              </div>
+              <div
+                style={{
+                  fontWeight: 600,
+                  marginBottom: "0.4rem",
+                  color: "#f8fafc",
+                  fontSize: "0.86rem",
+                  lineHeight: 1.4,
+                }}
+              >
+                "{project.paperTitle}"
+              </div>
+              <div style={{ color: "#94a3b8", fontSize: "0.76rem", lineHeight: 1.5 }}>
+                <strong style={{ color: "#cbd5e1" }}>Authors:</strong> {project.authors}
+              </div>
+              {project.affiliation && (
+                <div style={{ color: "#64748b", fontSize: "0.72rem", marginTop: "0.25rem" }}>
+                  {project.affiliation}
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="pd-tech-row">
             {project.tech.map(({ name, Icon, color }) => (
