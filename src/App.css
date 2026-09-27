@@ -389,28 +389,39 @@ body::after {
   align-items: center;
 }
 
-/* ── PHOTO — tilted polaroid, scanline + rgb-glitch ── */
+/* ── PHOTO — tilted polaroid with ambient glow & subtle hover polish ── */
 .photo-frame {
   position: relative;
   width: 380px;
+  max-width: 100%;
   background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 14px 14px 56px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
-  transform: rotate(-4deg);
-  transition: transform 0.35s ease;
+  border: 1px solid rgba(168, 85, 247, 0.22);
+  border-radius: 8px;
+  padding: 14px 14px 48px;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.55),
+    0 0 35px -5px rgba(168, 85, 247, 0.16);
+  transform: rotate(-3deg);
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease;
 }
 .photo-frame:hover {
-  transform: rotate(0deg);
+  transform: rotate(0deg) translateY(-4px);
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.7),
+    0 0 45px 2px rgba(168, 85, 247, 0.3);
 }
 
 .photo-image-area {
   position: relative;
   width: 100%;
   height: 360px;
+  max-height: 70vw;
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: 4px;
   background: var(--bg2);
 }
 
@@ -419,11 +430,14 @@ body::after {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: filter 0.4s ease;
-  filter: grayscale(30%);
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.4s ease;
+  filter: contrast(1.02) brightness(0.98);
 }
 .photo-frame:hover .photo-img {
-  filter: grayscale(0%) brightness(1.05);
+  transform: scale(1.03);
+  filter: contrast(1.04) brightness(1.03);
 }
 
 .photo-placeholder {
@@ -443,140 +457,14 @@ body::after {
   left: 14px;
   right: 14px;
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.64rem;
   letter-spacing: 0.08em;
   color: var(--text-dim);
   text-align: center;
+  transition: color 0.3s ease;
 }
-
-/* ambient scan-line sweep, always on */
-.photo-scanline {
-  position: absolute;
-  top: -40%;
-  left: 0;
-  right: 0;
-  height: 40%;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(168, 85, 247, 0.12) 50%,
-    transparent 100%
-  );
-  animation: scan 3.5s linear infinite;
-}
-
-.photo-corner {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  z-index: 3;
-  opacity: 0;
-  transform: scale(0.75);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-.photo-frame:hover .photo-corner {
-  opacity: 1;
-  transform: scale(1);
-}
-.photo-corner.tl {
-  top: 8px;
-  left: 8px;
-  border-top: 2px solid var(--purple);
-  border-left: 2px solid var(--purple);
-}
-.photo-corner.tr {
-  top: 8px;
-  right: 8px;
-  border-top: 2px solid var(--purple);
-  border-right: 2px solid var(--purple);
-}
-.photo-corner.bl {
-  bottom: 8px;
-  left: 8px;
-  border-bottom: 2px solid var(--purple);
-  border-left: 2px solid var(--purple);
-}
-.photo-corner.br {
-  bottom: 8px;
-  right: 8px;
-  border-bottom: 2px solid var(--purple);
-  border-right: 2px solid var(--purple);
-}
-
-.photo-scanline {
-  position: absolute;
-  top: -100%;
-  left: 0;
-  right: 0;
-  height: 40%;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(168, 85, 247, 0.1) 50%,
-    transparent 100%
-  );
-}
-.photo-frame:hover .photo-scanline {
-  animation: scan 1.5s linear infinite;
-}
-@keyframes scan {
-  0% {
-    top: -40%;
-  }
-  100% {
-    top: 100%;
-  }
-}
-
-/* periodic rgb-split glitch flicker */
-.photo-image-area::before,
-.photo-image-area::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 3;
-  animation: glitchBar 7s infinite;
-}
-.photo-image-area::before {
-  background: #ff2b6d;
-}
-.photo-image-area::after {
-  background: #00e5ff;
-  animation-delay: 0.15s;
-}
-@keyframes glitchBar {
-  0%,
-  93%,
-  100% {
-    opacity: 0;
-    top: 35%;
-    transform: translateX(0);
-  }
-  94% {
-    opacity: 0.8;
-    top: 15%;
-    transform: translateX(-4px);
-  }
-  95% {
-    opacity: 0.6;
-    top: 70%;
-    transform: translateX(3px);
-  }
-  96% {
-    opacity: 0;
-    top: 40%;
-    transform: translateX(0);
-  }
+.photo-frame:hover .photo-caption {
+  color: var(--purple-light);
 }
 
 /* ── TERMINAL ── */

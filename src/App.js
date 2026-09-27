@@ -336,11 +336,10 @@ function Hero() {
           animate="visible"
           variants={fadeUp}
         >
-          {/* PHOTO — tilted polaroid with scanline + rgb-glitch flicker */}
-          <Tilt className="photo-frame" tiltMaxAngleX={10} tiltMaxAngleY={10} glareEnable={true} glareMaxOpacity={0.2} glareColor="#a855f7" glarePosition="all" scale={1.02} transitionSpeed={1200}>
+          {/* PHOTO — tilted polaroid with ambient glow and smooth hover polish */}
+          <Tilt className="photo-frame" tiltMaxAngleX={8} tiltMaxAngleY={8} glareEnable={true} glareMaxOpacity={0.12} glareColor="#a855f7" glarePosition="all" scale={1.01} transitionSpeed={1200}>
             <div className="photo-image-area">
               <img src={photo} alt="Mahi" className="photo-img" loading="eager" decoding="async" />
-              <div className="photo-scanline" />
             </div>
             <div className="photo-caption">[ mahi.jpg ]</div>
           </Tilt>
