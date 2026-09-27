@@ -5,10 +5,11 @@ import { sound } from '../utils/audio';
 import offTrackLogo from '../assets/projects/off-track/logo.webp';
 import './MiniPlayer.css';
 
-// 100% Pure instrumental dialogue-free lo-fi streams (no speech, no station ads)
+// 100% Verified, 24/7 global uptime instrumental lo-fi & chill beats (no speech, no station ads)
 const CHANNELS = [
   { name: 'Pure Lofi Beats (No Speech)', url: 'https://lofi.stream.laut.fm/lofi' },
-  { name: 'Chillhop Instrumental', url: 'https://ilm.stream35.radiohost.de/ilm_ilovechillhop_mp3-192' },
+  { name: 'Chilled Lofi Beats (24/7)', url: 'https://stream.zeno.fm/f3wvbbqmdg8uv' },
+  { name: 'SomaFM Groove Salad (Instrumental)', url: 'https://ice2.somafm.com/groovesalad-128-mp3' },
 ];
 
 export default function MiniPlayer() {
@@ -21,11 +22,13 @@ export default function MiniPlayer() {
 
   const currentChannel = CHANNELS[channelIdx];
 
+  // Global audio listener setup
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     audio.volume = 0.35;
+    audio.src = CHANNELS[0].url;
 
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
@@ -39,6 +42,26 @@ export default function MiniPlayer() {
     };
   }, []);
 
+  // Smooth station switching: load new source and resume if previously playing
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !audio.src) return;
+
+    const targetUrl = CHANNELS[channelIdx].url;
+    if (audio.src !== targetUrl) {
+      audio.src = targetUrl;
+      audio.load();
+      if (isPlaying) {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            setIsPlaying(false);
+          });
+        }
+      }
+    }
+  }, [channelIdx, isPlaying]);
+
   const togglePlay = () => {
     sound.playClick();
     const audio = audioRef.current;
@@ -47,7 +70,14 @@ export default function MiniPlayer() {
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play().catch(() => {});
+      if (!audio.src) {
+        audio.src = currentChannel.url;
+        audio.load();
+      }
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
     }
   };
 
@@ -61,20 +91,12 @@ export default function MiniPlayer() {
 
   const nextChannel = () => {
     sound.playClick();
-    const nextIdx = (channelIdx + 1) % CHANNELS.length;
-    setChannelIdx(nextIdx);
-    const audio = audioRef.current;
-    if (audio) {
-      audio.src = CHANNELS[nextIdx].url;
-      if (isPlaying) {
-        audio.play().catch(() => {});
-      }
-    }
+    setChannelIdx((prev) => (prev + 1) % CHANNELS.length);
   };
 
   return (
     <div className={`mini-player-root ${isCollapsed ? 'collapsed' : ''}`}>
-      <audio ref={audioRef} src={currentChannel.url} preload="none" />
+      <audio ref={audioRef} preload="none" />
 
       {/* Floating Widget Card */}
       <div className="mini-player-card">
