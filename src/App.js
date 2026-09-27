@@ -368,31 +368,49 @@ function Hero() {
           variants={fadeUp}
         >
           {/* PHOTO — tilted polaroid with ambient glow and smooth hover polish */}
-          <Tilt
-            className="photo-frame"
-            tiltEnable={typeof window !== "undefined" && !window.matchMedia("(pointer: coarse)").matches}
-            tiltMaxAngleX={8}
-            tiltMaxAngleY={8}
-            glareEnable={typeof window !== "undefined" && !window.matchMedia("(pointer: coarse)").matches}
-            glareMaxOpacity={0.12}
-            glareColor="#a855f7"
-            glarePosition="all"
-            scale={1.01}
-            transitionSpeed={1200}
-          >
-            <div className="photo-image-area">
-              <img
-                src={photo}
-                alt="Mahi Agarwal"
-                className="photo-img"
-                width="380"
-                height="454"
-                loading="eager"
-                decoding="async"
-              />
+          {typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches ? (
+            <div className="photo-frame">
+              <div className="photo-image-area">
+                <img
+                  src={photo}
+                  alt="Mahi Agarwal"
+                  className="photo-img"
+                  width="380"
+                  height="454"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                />
+              </div>
+              <div className="photo-caption">[ mahi.webp ]</div>
             </div>
-            <div className="photo-caption">[ mahi.webp ]</div>
-          </Tilt>
+          ) : (
+            <Tilt
+              className="photo-frame"
+              tiltMaxAngleX={8}
+              tiltMaxAngleY={8}
+              glareEnable={true}
+              glareMaxOpacity={0.12}
+              glareColor="#a855f7"
+              glarePosition="all"
+              scale={1.01}
+              transitionSpeed={1200}
+            >
+              <div className="photo-image-area">
+                <img
+                  src={photo}
+                  alt="Mahi Agarwal"
+                  className="photo-img"
+                  width="380"
+                  height="454"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                />
+              </div>
+              <div className="photo-caption">[ mahi.webp ]</div>
+            </Tilt>
+          )}
 
           {/* TERMINAL */}
           <div className="terminal">

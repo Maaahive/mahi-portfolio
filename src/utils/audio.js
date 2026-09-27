@@ -27,7 +27,7 @@ class SoundEngine {
   init() {
     try {
       if (!this.ctx) {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const AudioCtx = window.AudioContext;
         if (AudioCtx) {
           this.ctx = new AudioCtx();
         }

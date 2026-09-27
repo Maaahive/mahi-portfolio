@@ -49,13 +49,10 @@ export default function SystemSpecsModal({ onClose }) {
       let gpuVendor = 'Generic Vendor';
       try {
         const canvas = document.createElement('canvas');
-        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
         if (gl) {
-          const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-          if (debugInfo) {
-            gpuRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || gpuRenderer;
-            gpuVendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || gpuVendor;
-          }
+          gpuRenderer = gl.getParameter(gl.RENDERER) || gpuRenderer;
+          gpuVendor = gl.getParameter(gl.VENDOR) || gpuVendor;
         }
       } catch (_) {}
 
@@ -79,7 +76,7 @@ export default function SystemSpecsModal({ onClose }) {
       const dpr = `${window.devicePixelRatio || 1}x Retina / HiDPI`;
 
       // Platform & Cores
-      const platform = navigator.userAgentData?.platform || navigator.platform || 'Cross-Platform';
+      const platform = navigator.userAgentData?.platform || 'Cross-Platform';
       const cores = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} Logical Cores` : 'Multi-Core Active';
 
       // Network
