@@ -1,0 +1,28 @@
+# Mahi Agarwal
+
+> Final-year Electronics & Communication Engineering student at JIIT Noida. Full-stack developer specializing in React, Node.js, Python, ML pipelines, and RF / Microwave engineering.
+
+## Main Links
+
+- [Portfolio](https://www.mahiagarwal.com/): Official portfolio showcasing full-stack applications, RF research, and hardware projects.
+- [GitHub Profile](https://github.com/Maaahive): Open-source repositories, developer tools, and case studies.
+- [LinkedIn Profile](https://www.linkedin.com/in/mahi-agarwal-5ba73121b): Professional history, education, and credentials.
+- [Resume](https://www.mahiagarwal.com/static/media/resume.01d87e02df352aa77ae1.pdf): Detailed curriculum vitae covering education, projects, skills, and publications.
+
+## Featured Projects
+
+- [Off-Track](https://github.com/Maaahive/Off-Track): Lightweight floating frosted-glass desktop music player built with Electron, Node.js, and Spotify Web API integration.
+- [Cartel](https://cartel-f4hf.onrender.com/): Real-time group grocery ordering web app with live WebSocket synchronization and automated bill splitting.
+- [ML-Assisted SIW Microwave Sensor](https://www.mahiagarwal.com/projects/siw-oil-sensor): Research hardware prototype and ML classification pipeline for non-destructive detection of edible oil adulteration using Substrate Integrated Waveguides (SIW).
+- [Prof. Shweta Srivastava Portfolio](https://prof-shweta-srivastava.vercel.app/): Academic portfolio developed for the Director of JIIT Noida.
+
+## Core Technical Skills
+
+- Languages: Python, JavaScript, C++, SQL, HTML5, CSS3, Embedded C
+- Frameworks & Libraries: React, Node.js, Express, Socket.IO, Tailwind CSS, Framer Motion
+- Machine Learning & Data: Scikit-Learn, OpenCV, Pandas, NumPy
+- RF & Hardware Tools: Ansys HFSS, Vector Network Analyzer (VNA), Cadence Virtuoso, Proteus, Arduino, Raspberry Pi
+
+## Contact
+
+- Email: mahiagarwal985@gmail.com

@@ -2,36 +2,61 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#040508" />
     <meta
       name="description"
-      content="Mahi Agarwal — Full-Stack Developer & ECE Student at JIIT Noida. Building real things with React, Node.js, Python, and more."
+      content="Mahi Agarwal — Full-Stack Developer & ECE Student at JIIT Noida. Building real things with React, Node.js, Python, ML, and RF engineering."
     />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.mahiagarwal.com/" />
+
+    <!-- Google Fonts Preconnect and Stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.mahiagarwal.com/" />
+    <meta property="og:title" content="Mahi Agarwal — Portfolio" />
+    <meta
+      property="og:description"
+      content="Full-Stack Developer & ECE Student at JIIT Noida. Building real things with React, Node.js, Python, ML, and RF engineering."
+    />
+    <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.mahiagarwal.com/" />
+    <meta name="twitter:title" content="Mahi Agarwal — Portfolio" />
+    <meta
+      name="twitter:description"
+      content="Full-Stack Developer & ECE Student at JIIT Noida. Building real things with React, Node.js, Python, ML, and RF engineering."
+    />
+    <meta name="twitter:image" content="%PUBLIC_URL%/logo512.png" />
+
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Mahi Agarwal</title>
+    <title>Mahi Agarwal | Portfolio</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
     <!-- Cloudflare Web Analytics -->
-    <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4fe90ca6db9c40149daf1507323668ad"}'></script>
+    <script>
+      if (window.location.hostname.indexOf("localhost") === -1 && window.location.hostname.indexOf("127.0.0.1") === -1) {
+        var cfScript = document.createElement("script");
+        cfScript.defer = true;
+        cfScript.src = "https://static.cloudflareinsights.com/beacon.min.js";
+        cfScript.setAttribute("data-cf-beacon", '{"token": "4fe90ca6db9c40149daf1507323668ad"}');
+        document.body.appendChild(cfScript);
+      }
+    </script>
     <!-- End Cloudflare Web Analytics -->
   </body>
 </html>

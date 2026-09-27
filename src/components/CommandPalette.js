@@ -17,11 +17,12 @@ import {
 } from 'react-icons/fi';
 import { sound } from '../utils/audio';
 import resumePdf from '../assets/resume.pdf';
-import SystemSpecsModal from './SystemSpecsModal';
-import HackerTerminalModal from './HackerTerminalModal';
-import MiniGameModal from './MiniGameModal';
-import DevJokeModal from './DevJokeModal';
 import './CommandPalette.css';
+
+const SystemSpecsModal = React.lazy(() => import('./SystemSpecsModal'));
+const HackerTerminalModal = React.lazy(() => import('./HackerTerminalModal'));
+const MiniGameModal = React.lazy(() => import('./MiniGameModal'));
+const DevJokeModal = React.lazy(() => import('./DevJokeModal'));
 
 const COMMANDS = [
   { id: 'projects', title: 'Jump to Projects', category: 'Navigation', icon: FiCode, shortcut: 'P' },
@@ -397,56 +398,58 @@ export default function CommandPalette() {
       )}
     </AnimatePresence>
 
-    {/* Bug Blaster Mini Game Modal */}
-    <AnimatePresence>
-      {showGame && (
-        <MiniGameModal
-          onClose={() => setShowGame(false)}
-        />
-      )}
-    </AnimatePresence>
+    <React.Suspense fallback={null}>
+      {/* Bug Blaster Mini Game Modal */}
+      <AnimatePresence>
+        {showGame && (
+          <MiniGameModal
+            onClose={() => setShowGame(false)}
+          />
+        )}
+      </AnimatePresence>
 
-    {/* Dev Joke Modal */}
-    <AnimatePresence>
-      {showJoke && (
-        <DevJokeModal
-          onClose={() => setShowJoke(false)}
-        />
-      )}
-    </AnimatePresence>
+      {/* Dev Joke Modal */}
+      <AnimatePresence>
+        {showJoke && (
+          <DevJokeModal
+            onClose={() => setShowJoke(false)}
+          />
+        )}
+      </AnimatePresence>
 
-    {/* System Diagnostics Modal */}
-    <AnimatePresence>
-      {showSpecs && (
-        <SystemSpecsModal
-          onClose={() => setShowSpecs(false)}
-        />
-      )}
-    </AnimatePresence>
+      {/* System Diagnostics Modal */}
+      <AnimatePresence>
+        {showSpecs && (
+          <SystemSpecsModal
+            onClose={() => setShowSpecs(false)}
+          />
+        )}
+      </AnimatePresence>
 
-    {/* Hacker Terminal Modal */}
-    <AnimatePresence>
-      {showHacker && (
-        <HackerTerminalModal
-          onClose={() => setShowHacker(false)}
-          onTriggerMatrix={() => {
-            if (window.toggleMatrixMode) window.toggleMatrixMode();
-          }}
-          onTriggerSpecs={() => {
-            setShowHacker(false);
-            setTimeout(() => setShowSpecs(true), 50);
-          }}
-          onTriggerGame={() => {
-            setShowHacker(false);
-            setTimeout(() => setShowGame(true), 50);
-          }}
-          onTriggerJoke={() => {
-            setShowHacker(false);
-            setTimeout(() => setShowJoke(true), 50);
-          }}
-        />
-      )}
-    </AnimatePresence>
+      {/* Hacker Terminal Modal */}
+      <AnimatePresence>
+        {showHacker && (
+          <HackerTerminalModal
+            onClose={() => setShowHacker(false)}
+            onTriggerMatrix={() => {
+              if (window.toggleMatrixMode) window.toggleMatrixMode();
+            }}
+            onTriggerSpecs={() => {
+              setShowHacker(false);
+              setTimeout(() => setShowSpecs(true), 50);
+            }}
+            onTriggerGame={() => {
+              setShowHacker(false);
+              setTimeout(() => setShowGame(true), 50);
+            }}
+            onTriggerJoke={() => {
+              setShowHacker(false);
+              setTimeout(() => setShowJoke(true), 50);
+            }}
+          />
+        )}
+      </AnimatePresence>
+    </React.Suspense>
 
     {/* Konami Code God Mode Banner */}
     <AnimatePresence>

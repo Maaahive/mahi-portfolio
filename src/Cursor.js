@@ -1,12 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function Cursor() {
+  const [hasFinePointer, setHasFinePointer] = useState(false);
   const cursorRef = useRef(null);
   const ringRef = useRef(null);
   const pos = useRef({ x: -100, y: -100 });
   const ring = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
+    // Only activate custom cursor on devices with mouse/trackpad pointer
+    const mediaQuery = window.matchMedia("(pointer: fine)");
+    if (!mediaQuery.matches) return;
+    setHasFinePointer(true);
+
     const onMove = (e) => {
       pos.current = { x: e.clientX, y: e.clientY };
       if (cursorRef.current) {
@@ -45,7 +51,7 @@ export default function Cursor() {
       }
       raf = requestAnimationFrame(animate);
     };
-    animate();
+    raf = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", onMove);
@@ -53,6 +59,8 @@ export default function Cursor() {
       cancelAnimationFrame(raf);
     };
   }, []);
+
+  if (!hasFinePointer) return null;
 
   return (
     <>

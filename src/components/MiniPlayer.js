@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiPlay, FiPause, FiVolume2, FiVolumeX, FiChevronDown, FiChevronUp, FiExternalLink, FiSkipForward } from 'react-icons/fi';
 import { sound } from '../utils/audio';
-import offTrackLogo from '../assets/projects/off-track/logo.png';
+import offTrackLogo from '../assets/projects/off-track/logo.webp';
 import './MiniPlayer.css';
 
 // 100% Pure instrumental dialogue-free lo-fi streams (no speech, no station ads)
@@ -82,9 +82,13 @@ export default function MiniPlayer() {
         <div
           className={`mini-player-vinyl ${isPlaying ? 'playing' : ''}`}
           onClick={() => setIsCollapsed(!isCollapsed)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && setIsCollapsed(!isCollapsed)}
           title="Off-Track Audio Engine"
+          aria-label={isCollapsed ? "Expand Mini Player" : "Collapse Mini Player"}
         >
-          <img src={offTrackLogo} alt="Off-Track Logo" className="mini-player-logo-img" />
+          <img src={offTrackLogo} alt="Off-Track Logo" className="mini-player-logo-img" width="38" height="38" />
           <div className="mini-player-needle-dot" />
         </div>
 
@@ -97,8 +101,9 @@ export default function MiniPlayer() {
                   className="mini-player-case-study-btn"
                   onClick={() => navigate('/projects/off-track')}
                   title="View Off-Track Case Study"
+                  aria-label="View Off-Track Case Study"
                 >
-                  <FiExternalLink size={10} />
+                  <FiExternalLink size={10} aria-hidden="true" />
                 </button>
               </div>
               <div className="mini-player-track" title={currentChannel.name}>
@@ -106,7 +111,7 @@ export default function MiniPlayer() {
               </div>
 
               {/* Animated Equalizer Bars */}
-              <div className={`mini-player-equalizer ${isPlaying ? 'active' : ''}`}>
+              <div className={`mini-player-equalizer ${isPlaying ? 'active' : ''}`} aria-hidden="true">
                 <span className="eq-bar bar-1" />
                 <span className="eq-bar bar-2" />
                 <span className="eq-bar bar-3" />
@@ -121,32 +126,36 @@ export default function MiniPlayer() {
                 className="mini-player-ctrl-btn mini-player-play-btn"
                 onClick={togglePlay}
                 title={isPlaying ? 'Pause' : 'Play Lo-Fi Stream'}
+                aria-label={isPlaying ? 'Pause' : 'Play Lo-Fi Stream'}
               >
-                {isPlaying ? <FiPause size={13} /> : <FiPlay size={13} style={{ marginLeft: '2px' }} />}
+                {isPlaying ? <FiPause size={13} aria-hidden="true" /> : <FiPlay size={13} style={{ marginLeft: '2px' }} aria-hidden="true" />}
               </button>
 
               <button
                 className="mini-player-ctrl-btn"
                 onClick={nextChannel}
                 title={`Switch Station: ${CHANNELS[(channelIdx + 1) % CHANNELS.length].name}`}
+                aria-label="Switch Station"
               >
-                <FiSkipForward size={12} />
+                <FiSkipForward size={12} aria-hidden="true" />
               </button>
 
               <button
                 className="mini-player-ctrl-btn"
                 onClick={toggleMute}
                 title={isMuted ? 'Unmute' : 'Mute'}
+                aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
               >
-                {isMuted ? <FiVolumeX size={12} /> : <FiVolume2 size={12} />}
+                {isMuted ? <FiVolumeX size={12} aria-hidden="true" /> : <FiVolume2 size={12} aria-hidden="true" />}
               </button>
 
               <button
                 className="mini-player-ctrl-btn"
                 onClick={() => setIsCollapsed(true)}
                 title="Collapse player"
+                aria-label="Collapse player"
               >
-                <FiChevronDown size={12} />
+                <FiChevronDown size={12} aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -157,8 +166,9 @@ export default function MiniPlayer() {
             className="mini-player-expand-btn"
             onClick={() => setIsCollapsed(false)}
             title="Expand Off-Track Player"
+            aria-label="Expand Off-Track Player"
           >
-            <FiChevronUp size={12} />
+            <FiChevronUp size={12} aria-hidden="true" />
           </button>
         )}
       </div>

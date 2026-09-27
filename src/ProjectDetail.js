@@ -31,30 +31,30 @@ import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
 
 // Images - Off-Track
-import offTrackLogo from "./assets/projects/off-track/logo.png";
-import offTrackPlayer from "./assets/projects/off-track/player.png";
-import offTrackLyrics from "./assets/projects/off-track/lyrics.png";
-import offTrackAppearance from "./assets/projects/off-track/appearance.png";
-import offTrackShortcuts from "./assets/projects/off-track/shortcuts.png";
-import offTrackCovers from "./assets/projects/off-track/covers.png";
+import offTrackLogo from "./assets/projects/off-track/logo.webp";
+import offTrackPlayer from "./assets/projects/off-track/player.webp";
+import offTrackLyrics from "./assets/projects/off-track/lyrics.webp";
+import offTrackAppearance from "./assets/projects/off-track/appearance.webp";
+import offTrackShortcuts from "./assets/projects/off-track/shortcuts.webp";
+import offTrackCovers from "./assets/projects/off-track/covers.webp";
 import offTrackQueue from "./assets/projects/off-track/queue.png";
 
 // Images - Cartel
-import cartelLanding from "./assets/projects/cartel/landing.png";
-import cartelLobby from "./assets/projects/cartel/lobby.png";
-import cartelCatalog from "./assets/projects/cartel/catalog.png";
-import cartelSplitCart from "./assets/projects/cartel/split-cart.png";
-import cartelCheckout from "./assets/projects/cartel/checkout.png";
+import cartelLanding from "./assets/projects/cartel/landing.webp";
+import cartelLobby from "./assets/projects/cartel/lobby.webp";
+import cartelCatalog from "./assets/projects/cartel/catalog.webp";
+import cartelSplitCart from "./assets/projects/cartel/split-cart.webp";
+import cartelCheckout from "./assets/projects/cartel/checkout.webp";
 
 // Images - SIW Sensor
-import siwPrototype from "./assets/projects/siw-sensor/sensor-prototype.jpg";
-import siwOilTesting from "./assets/projects/siw-sensor/oil-testing.jpg";
-import siwVnaSetup from "./assets/projects/siw-sensor/vna-setup.jpg";
-import siwOilsenseGui from "./assets/projects/siw-sensor/oilsense-gui.png";
-import siwOilsensePrediction from "./assets/projects/siw-sensor/oilsense-prediction.png";
-import siwDielectricGui from "./assets/projects/siw-sensor/dielectric-gui.png";
-import siwHfssModel from "./assets/projects/siw-sensor/hfss-model.png";
-import siwS11Response from "./assets/projects/siw-sensor/s11-response.png";
+import siwPrototype from "./assets/projects/siw-sensor/sensor-prototype.webp";
+import siwOilTesting from "./assets/projects/siw-sensor/oil-testing.webp";
+import siwVnaSetup from "./assets/projects/siw-sensor/vna-setup.webp";
+import siwOilsenseGui from "./assets/projects/siw-sensor/oilsense-gui.webp";
+import siwOilsensePrediction from "./assets/projects/siw-sensor/oilsense-prediction.webp";
+import siwDielectricGui from "./assets/projects/siw-sensor/dielectric-gui.webp";
+import siwHfssModel from "./assets/projects/siw-sensor/hfss-model.webp";
+import siwS11Response from "./assets/projects/siw-sensor/s11-response.webp";
 
 import "./ProjectDetail.css";
 

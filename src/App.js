@@ -37,13 +37,13 @@ import { TbAntenna } from "react-icons/tb";
 import { PiWaveformBold } from "react-icons/pi";
 import { LuCircuitBoard } from "react-icons/lu";
 import Tilt from "react-parallax-tilt";
-import photo from "./assets/photo.png";
-import offTrack from "./assets/off-track.png";
+import photo from "./assets/photo.webp";
+import offTrack from "./assets/off-track.webp";
 import cartel from "./assets/cartel.png";
 import girvi from "./assets/girvi-len-den.png";
-import interestCalc from "./assets/interest-calc.png";
-import professorPortfolio from "./assets/prof-shweta-srivastava.png";
-import siwSensor from "./assets/siw-sensor.jpg";
+import interestCalc from "./assets/interest-calc.webp";
+import professorPortfolio from "./assets/prof-shweta-srivastava.webp";
+import siwSensor from "./assets/siw-sensor.webp";
 import resume from "./assets/resume.pdf";
 import "./App.css";
 import { sound } from "./utils/audio";
@@ -193,7 +193,14 @@ function Nav() {
 
   return (
     <nav className="nav">
-      <div className="nav-logo" onClick={() => sound.playClick()}>
+      <div
+        className="nav-logo"
+        role="button"
+        tabIndex={0}
+        onClick={() => sound.playClick()}
+        onKeyDown={(e) => e.key === "Enter" && sound.playClick()}
+        aria-label="mahi.dev logo"
+      >
         mahi.dev
       </div>
 
@@ -203,6 +210,7 @@ function Nav() {
             <li key={s}>
               <Link
                 to={s}
+                href={`#${s}`}
                 smooth
                 duration={600}
                 offset={-80}
@@ -219,6 +227,7 @@ function Nav() {
           className="nav-cmd-trigger"
           onClick={handleOpenPalette}
           title="Open Command Palette (Ctrl+K)"
+          aria-label="Open Command Palette (Ctrl+K)"
         >
           <span>⌘K</span>
         </button>
@@ -321,6 +330,7 @@ function Hero() {
           >
             <Link
               to="projects"
+              href="#projects"
               smooth
               duration={600}
               offset={-80}
@@ -330,6 +340,7 @@ function Hero() {
             </Link>
             <Link
               to="contact"
+              href="#contact"
               smooth
               duration={600}
               offset={-80}
@@ -342,8 +353,9 @@ function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline"
+              aria-label="View Mahi's Resume PDF in new tab"
             >
-              <FiFileText size={15} /> Resume
+              <FiFileText size={15} aria-hidden="true" /> Resume
             </a>
           </motion.div>
         </div>
@@ -356,11 +368,30 @@ function Hero() {
           variants={fadeUp}
         >
           {/* PHOTO — tilted polaroid with ambient glow and smooth hover polish */}
-          <Tilt className="photo-frame" tiltMaxAngleX={8} tiltMaxAngleY={8} glareEnable={true} glareMaxOpacity={0.12} glareColor="#a855f7" glarePosition="all" scale={1.01} transitionSpeed={1200}>
+          <Tilt
+            className="photo-frame"
+            tiltEnable={typeof window !== "undefined" && !window.matchMedia("(pointer: coarse)").matches}
+            tiltMaxAngleX={8}
+            tiltMaxAngleY={8}
+            glareEnable={typeof window !== "undefined" && !window.matchMedia("(pointer: coarse)").matches}
+            glareMaxOpacity={0.12}
+            glareColor="#a855f7"
+            glarePosition="all"
+            scale={1.01}
+            transitionSpeed={1200}
+          >
             <div className="photo-image-area">
-              <img src={photo} alt="Mahi" className="photo-img" loading="eager" decoding="async" />
+              <img
+                src={photo}
+                alt="Mahi Agarwal"
+                className="photo-img"
+                width="380"
+                height="454"
+                loading="eager"
+                decoding="async"
+              />
             </div>
-            <div className="photo-caption">[ mahi.jpg ]</div>
+            <div className="photo-caption">[ mahi.webp ]</div>
           </Tilt>
 
           {/* TERMINAL */}
@@ -524,6 +555,8 @@ function SkillIcon({ skill, i }) {
   return (
     <motion.div
       className="skill-icon-card"
+      role="img"
+      aria-label={name}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -536,8 +569,9 @@ function SkillIcon({ skill, i }) {
         animate={{ scale: hovered ? 1.25 : 1, y: hovered ? -6 : 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 18 }}
         style={{ color: hovered ? color : "var(--text-muted)" }}
+        aria-hidden="true"
       >
-        <Icon size={42} />
+        <Icon size={42} aria-hidden="true" />
       </motion.div>
 
       <AnimatePresence>
@@ -633,7 +667,15 @@ function ProjectCard({ p, i }) {
         } : undefined}
       >
         {p.img ? (
-          <img src={p.img} alt={p.name} className="project-img" loading="lazy" decoding="async" />
+          <img
+            src={p.img}
+            alt={p.name}
+            className="project-img"
+            width="600"
+            height="340"
+            loading="lazy"
+            decoding="async"
+          />
         ) : (
           <div className="project-img-placeholder">
             <div className="mockup-bar">
@@ -643,7 +685,7 @@ function ProjectCard({ p, i }) {
               <span className="mockup-url">{p.imgLabel}</span>
             </div>
             <div className="mockup-body">
-              <FiCode size={26} />
+              <FiCode size={26} aria-hidden="true" />
             </div>
           </div>
         )}
@@ -661,6 +703,7 @@ function ProjectCard({ p, i }) {
                   className="project-overlay-badge"
                   onClick={(e) => { e.stopPropagation(); navigate(`/projects/${p.detailSlug}`); }}
                   style={{ background: "rgba(255,255,255,0.12)", border: "none", cursor: "pointer", color: "#fff" }}
+                  aria-label={`View ${p.name} Case Study`}
                 >
                   Case Study
                 </button>
@@ -671,9 +714,10 @@ function ProjectCard({ p, i }) {
                   target="_blank"
                   rel="noreferrer"
                   className="project-overlay-badge"
+                  aria-label={`View ${p.name} source code on GitHub`}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <SiGithub size={22} />
+                  <SiGithub size={22} aria-hidden="true" />
                 </a>
               )}
               {p.live && (
@@ -683,9 +727,10 @@ function ProjectCard({ p, i }) {
                   rel="noreferrer"
                   className="project-overlay-badge"
                   title={p.liveLabel || "Live Site"}
+                  aria-label={`Open ${p.name} ${p.liveLabel || "live site"}`}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <FiExternalLink size={22} />
+                  <FiExternalLink size={22} aria-hidden="true" />
                 </a>
               )}
             </motion.div>
@@ -701,7 +746,7 @@ function ProjectCard({ p, i }) {
         {/* ── stat strip ── */}
         <div className="project-stats">
           <span className="project-stat">
-            <FiCode size={11} />
+            <FiCode size={11} aria-hidden="true" />
             {p.tech.length} tech{p.tech.length !== 1 ? "s" : ""}
           </span>
           {p.status && (
@@ -717,8 +762,9 @@ function ProjectCard({ p, i }) {
                 target="_blank"
                 rel="noreferrer"
                 className="project-stat project-stat-link"
+                aria-label={`Open ${p.name} ${p.liveLabel || "live site"}`}
               >
-                <FiExternalLink size={11} /> {p.liveLabel || "Live Site"}
+                <FiExternalLink size={11} aria-hidden="true" /> {p.liveLabel || "Live Site"}
               </a>
             )}
             {p.github && p.github !== "#" && (
@@ -727,8 +773,9 @@ function ProjectCard({ p, i }) {
                 target="_blank"
                 rel="noreferrer"
                 className="project-stat project-stat-link"
+                aria-label={`View ${p.name} source code on GitHub`}
               >
-                <SiGithub size={11} /> Source
+                <SiGithub size={11} aria-hidden="true" /> Source
               </a>
             )}
           </div>
@@ -740,7 +787,7 @@ function ProjectCard({ p, i }) {
               const TechIcon = TECH_ICON_MAP[t];
               return (
                 <span className="tech-tag" key={t}>
-                  {TechIcon && <TechIcon size={11} />}
+                  {TechIcon && <TechIcon size={11} aria-hidden="true" />}
                   {t}
                 </span>
               );
@@ -752,9 +799,10 @@ function ProjectCard({ p, i }) {
                 onClick={() => navigate(`/projects/${p.detailSlug}`)}
                 className="project-github-link"
                 title="Case Study"
+                aria-label={`View ${p.name} Case Study`}
                 style={{ background: "none", border: "none", cursor: "pointer", padding: 0, color: "inherit" }}
               >
-                <FiFileText size={16} />
+                <FiFileText size={16} aria-hidden="true" />
               </button>
             )}
             {p.live && (
@@ -764,8 +812,9 @@ function ProjectCard({ p, i }) {
                 rel="noreferrer"
                 className="project-github-link"
                 title={p.liveLabel || "Live Site"}
+                aria-label={`Open ${p.name} ${p.liveLabel || "live site"}`}
               >
-                <FiExternalLink size={16} />
+                <FiExternalLink size={16} aria-hidden="true" />
               </a>
             )}
             {p.github && p.github !== "#" && (
@@ -775,8 +824,9 @@ function ProjectCard({ p, i }) {
                 rel="noreferrer"
                 className="project-github-link"
                 title="Source Code"
+                aria-label={`View ${p.name} source code on GitHub`}
               >
-                <SiGithub size={16} />
+                <SiGithub size={16} aria-hidden="true" />
               </a>
             )}
           </div>
@@ -956,24 +1006,27 @@ function Contact() {
               <a
                 href="mailto:mahiagarwal985@gmail.com"
                 className="contact-link"
+                aria-label="Send email to Mahi Agarwal"
               >
-                <MdEmail size={16} /> Email
+                <MdEmail size={16} aria-hidden="true" /> Email
               </a>
               <a
                 href="https://github.com/Maaahive"
                 target="_blank"
                 rel="noreferrer"
                 className="contact-link"
+                aria-label="View Mahi's GitHub Profile"
               >
-                <SiGithub size={16} /> GitHub
+                <SiGithub size={16} aria-hidden="true" /> GitHub
               </a>
               <a
                 href="https://www.linkedin.com/in/mahi-agarwal-5ba73121b"
                 target="_blank"
                 rel="noreferrer"
                 className="contact-link"
+                aria-label="View Mahi's LinkedIn Profile"
               >
-                <FaLinkedin size={16} /> LinkedIn
+                <FaLinkedin size={16} aria-hidden="true" /> LinkedIn
               </a>
             </motion.div>
           </div>
@@ -987,29 +1040,34 @@ function Contact() {
           >
             <div className="contact-form-wrap">
               <div className="form-field">
-                <label className="form-label">FULL NAME</label>
+                <label className="form-label" htmlFor="contact-name">FULL NAME</label>
                 <input
+                  id="contact-name"
                   className="form-input"
                   name="name"
                   placeholder="Your name"
                   value={form.name}
                   onChange={handleChange}
+                  autoComplete="name"
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">EMAIL ADDRESS</label>
+                <label className="form-label" htmlFor="contact-email">EMAIL ADDRESS</label>
                 <input
+                  id="contact-email"
                   className="form-input"
                   name="email"
                   type="email"
                   placeholder="your@email.com"
                   value={form.email}
                   onChange={handleChange}
+                  autoComplete="email"
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">MESSAGE</label>
+                <label className="form-label" htmlFor="contact-message">MESSAGE</label>
                 <textarea
+                  id="contact-message"
                   className="form-input form-textarea"
                   name="message"
                   placeholder="Tell me about your project..."
@@ -1084,15 +1142,17 @@ export default function App() {
   return (
     <>
       {/* aurora background blobs */}
-      <div className="aurora-blob aurora-blob-1" />
-      <div className="aurora-blob aurora-blob-2" />
-      <div className="aurora-blob aurora-blob-3" />
+      <div className="aurora-blob aurora-blob-1" aria-hidden="true" />
+      <div className="aurora-blob aurora-blob-2" aria-hidden="true" />
+      <div className="aurora-blob aurora-blob-3" aria-hidden="true" />
       <Nav />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Contact />
+      <main id="main-content">
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Contact />
+      </main>
       <Footer />
     </>
   );
